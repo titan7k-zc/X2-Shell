@@ -15,13 +15,47 @@ Scope {
     property bool anchorLeft: false
     property bool anchorRight: false
 
+
     property int menuHeight: 500
-    property int menuWidth: 1900
-    property int menuTopRad: 22
+    property int menuWidth: 1200
+    property int menuTopRad: 20
+
+
 
     property color menuColor: Theme.bar_bg
-    property int animDuration: 420
+    property int animDuration: 520
     property int animEasing: Easing.InOutQuad
+
+
+
+
+    property int menueLoc: {
+        if (anchorTop && anchorLeft)       return 1
+        else if (anchorTop && anchorRight) return 3
+        else if (anchorTop)                return 2
+        else if (anchorBottom && anchorRight) return 5
+        else if (anchorBottom && anchorLeft)  return 7
+        else if (anchorBottom)             return 6
+        else if (anchorRight)              return 4
+        else if (anchorLeft)               return 8
+        return 2 // default
+    }
+
+
+    property real h_ani:{
+        if (anchorTop||anchorBottom){
+            return 1.2
+        }else{
+            return 1
+        }
+    }
+    property real w_ani:{
+        if (anchorLeft||anchorRight){
+            return 1.2
+        }else{
+            return 1
+        }
+    }
 
     PanelWindow {
         id: menuWindow
@@ -35,8 +69,7 @@ Scope {
         anchors.left: root.anchorLeft
         anchors.right: root.anchorRight
 
-        // Surface is ALWAYS full size while it might be visible.
-        // No per-frame Wayland resize -> no glitch.
+
         implicitWidth: root.menuWidth+root.menuTopRad*2
         implicitHeight: root.menuHeight+root.menuTopRad*2
 
@@ -69,7 +102,7 @@ Scope {
 
             Rectangle {
                 id: menu
-                width: root.menuWidth //root.show ? root.menuWidth : 0   // Behavior on height only running so removed 
+                width: /*root.menuWidth*/ root.show ? root.menuWidth : 0   // Behavior on height only running so removed 
                 height: root.show ? root.menuHeight : 0
 
                 anchors.top: root.anchorTop ? parent.top : undefined
@@ -83,39 +116,147 @@ Scope {
 
                 property int safeRad: Math.max(0, Math.min(root.menuTopRad, width / 2, height / 2))
 
-                topLeftRadius:     (root.anchorBottom || root.anchorRight) ? safeRad : 0
-                topRightRadius:    (root.anchorBottom || root.anchorLeft)  ? safeRad : 0
-                bottomLeftRadius:  (root.anchorTop || root.anchorRight)    ? safeRad : 0
-                bottomRightRadius: (root.anchorTop || root.anchorLeft)     ? safeRad : 0
+                topLeftRadius:     (root.menueLoc===4 || root.menueLoc===5 || root.menueLoc===6 ) ? safeRad : 0
+                topRightRadius:    (root.menueLoc===6 || root.menueLoc===7 || root.menueLoc===8 )  ? safeRad : 0
+                bottomLeftRadius:  (root.menueLoc===2 || root.menueLoc===3 || root.menueLoc===4 )     ? safeRad : 0
+                bottomRightRadius: (root.menueLoc===8 || root.menueLoc===1 || root.menueLoc===2 )      ? safeRad : 0
 
-                // Behavior on width {
-                //     id: sizeAnimW
-                //     NumberAnimation { duration: root.animDuration; easing.type: root.animEasing }
-                // }
                 Behavior on height {
                     id: sizeAnimH
-                    NumberAnimation { duration: root.animDuration; easing.type: root.animEasing }
+                    NumberAnimation { duration: root.animDuration/root.h_ani; easing.type: root.animEasing }
+                }
+                Behavior on width {
+                    id: sizeAnimW
+                    NumberAnimation { duration: root.animDuration/root.w_ani; easing.type: root.animEasing }
                 }
             }
 
+
+
+
+
+
+            // curve 1
             Curves {
-                anchors.left: menu.right   // attach to the RIGHT edge of the rectangle, curve flares outward
-                anchors.top: root.anchorTop ? menu.top : undefined
-                anchors.bottom: root.anchorBottom ? menu.bottom : undefined
+                anchors.left: {
+                    if (root.menueLoc===1 || root.menueLoc===8){
+                        return menu.left
+                    }else if (root.menueLoc===6 || root.menueLoc===7){
+                        return menu.right
+                    }else {
+                        return undefined
+                    }
+
+                }
+
+                anchors.right: {
+                    if (root.menueLoc ===4 ||root.menueLoc ===5){
+                        return menu.right
+                    }else if (root.menueLoc===2 || root.menueLoc===3){
+                        return menu.left
+                    }else {
+                        return undefined
+                    }
+
+                }
+
+
+                anchors.top: {
+                    if (root.menueLoc===2 || root.menueLoc===3){
+                        return menu.top
+                    }else if (root.menueLoc===1 || root.menueLoc===8){
+                        return menu.bottom
+                    }else{
+                        return undefined
+                    }
+
+                }
+
+
+
+                anchors.bottom: {
+                    if(root.menueLoc===6 || root.menueLoc===7){
+                        return menu.bottom
+                    }else if (root.menueLoc ===4 ||root.menueLoc ===5){
+                        return menu.top
+                    }else{
+                        return undefined
+                    }
+
+                }
+
+                isTop: root.menueLoc===1 ||root.menueLoc===2 ||root.menueLoc===3 ||root.menueLoc===8 
+                mirrorred: root.menueLoc===2 ||root.menueLoc===3 ||root.menueLoc===4 ||root.menueLoc===5 
+
                 radius: menu.safeRad
                 color: root.menuColor
-                isTop: root.anchorTop
-                mirrorred: false
             }
+            
+
+
+
+
+        
+            // curve 2
             Curves {
-                anchors.right: menu.left  // attach to the LEFT edge of the rectangle
-                anchors.top: root.anchorTop ? menu.top : undefined
-                anchors.bottom: root.anchorBottom ? menu.bottom : undefined
+                anchors.left: {
+                    if (root.menueLoc === 7 || root.menueLoc === 8) {
+                        return menu.left
+                    } else if (root.menueLoc === 1 || root.menueLoc === 2) {
+                        return menu.right
+                    } else {
+                        return undefined
+                    }
+                }
+
+                anchors.right: {
+                    if (root.menueLoc === 3 || root.menueLoc === 4) {
+                        return menu.right
+                    } else if (root.menueLoc === 5 || root.menueLoc === 6) {
+                        return menu.left
+                    } else {
+                        return undefined
+                    }
+                }
+
+                anchors.top: {
+                    if (root.menueLoc === 1 || root.menueLoc === 2) {
+                        return menu.top
+                    } else if (root.menueLoc === 3 || root.menueLoc === 4) {
+                        return menu.bottom
+                    } else {
+                        return undefined
+                    }
+                }
+
+                anchors.bottom: {
+                    if (root.menueLoc === 5 || root.menueLoc === 6) {
+                        return menu.bottom
+                    } else if (root.menueLoc === 7 || root.menueLoc === 8) {
+                        return menu.top
+                    } else {
+                        return undefined
+                    }
+                }
+
+                isTop: root.menueLoc === 1 ||
+                    root.menueLoc === 2 ||
+                    root.menueLoc === 3 ||
+                    root.menueLoc === 4
+
+                mirrorred: root.menueLoc === 3 ||
+                        root.menueLoc === 4 ||
+                        root.menueLoc === 5 ||
+                        root.menueLoc === 6
+
                 radius: menu.safeRad
                 color: root.menuColor
-                isTop: root.anchorTop
-                mirrorred: true
             }
+
+
+
+
+
 
         }
 

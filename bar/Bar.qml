@@ -44,11 +44,14 @@ Scope{
                     anchors.horizontalCenter:parent.horizontalCenter
                     height:topBarWindow.barWidth
                     width:240
-                    color:"red"
+                    color:"#000"
                     z:10
 
                     MouseArea{
                         anchors.fill:parent
+                        // onClicked:{
+                        //     mainpop.show=!mainpop.show
+                        // }
                         hoverEnabled:true
                         onEntered:{
                             mainpop.show=true
