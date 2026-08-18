@@ -23,7 +23,7 @@ Scope {
 
 
     property color menuColor: Theme.bar_bg
-    property int animDuration: 520
+    property int animDuration: 420
     property int animEasing: Easing.InOutQuad
 
 
