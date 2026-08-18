@@ -16,6 +16,7 @@ Item {
         property int hei: 40
         property int wid: 200
         property int rad: root.rad
+        preferredRendererType: Shape.CurveRenderer
 
         ShapePath {
             id: shp
@@ -75,11 +76,12 @@ Item {
         source: leftB
 
         shadowEnabled: true
-        shadowBlur: 1.0
+        shadowBlur: 0.6
         shadowScale: 1
-        shadowVerticalOffset: -6
-        shadowHorizontalOffset: 0
-        opacity: 0.6
+        // shadowColor:'#000000'
+        shadowVerticalOffset:-3
+        shadowHorizontalOffset: 2
+        opacity: 0.7
     }
 
     // Workspace {

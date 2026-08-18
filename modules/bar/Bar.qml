@@ -51,16 +51,30 @@ Scope{
                     }
                 }
 
-                // shadow
+                // // shadow
+                // MultiEffect {
+                //     anchors.fill: shape
+                //     source: shape
+                //     shadowEnabled: true
+                //     shadowBlur: 1.0
+                //     shadowScale: 1
+                //     shadowVerticalOffset: 6
+                //     shadowHorizontalOffset: 0
+                //     opacity: 0.6
+                // }
+
+
                 MultiEffect {
                     anchors.fill: shape
                     source: shape
+
                     shadowEnabled: true
-                    shadowBlur: 1.0
+                    shadowBlur: 0.6
                     shadowScale: 1
-                    shadowVerticalOffset: 6
-                    shadowHorizontalOffset: 0
-                    opacity: 0.6
+                    // shadowColor:'#000000'
+                    shadowVerticalOffset:0
+                    shadowHorizontalOffset: -3
+                    opacity: 0.7
                 }
             }
 
@@ -94,15 +108,17 @@ Scope{
                 }
 
                 // shadow
-                MultiEffect {
+                 MultiEffect {
                     anchors.fill: shape2
                     source: shape2
+
                     shadowEnabled: true
-                    shadowBlur: 1.0
+                    shadowBlur: 0.6
                     shadowScale: 1
-                    shadowVerticalOffset: 0
-                    shadowHorizontalOffset: -2
-                    opacity: 0.6
+                    // shadowColor:'#000000'
+                    shadowVerticalOffset:0
+                    shadowHorizontalOffset: 3
+                    opacity: 0.7
                 }
             }
 

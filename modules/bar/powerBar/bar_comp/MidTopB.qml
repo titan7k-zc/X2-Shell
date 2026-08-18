@@ -33,6 +33,7 @@ Item {
 
     Shape {
         id: shape
+        preferredRendererType: Shape.CurveRenderer
 
         ShapePath {
             id: shp
@@ -115,12 +116,15 @@ Item {
         anchors.fill: shape
         source: shape
         shadowEnabled: true
-        shadowBlur: 1.0
+        shadowBlur: 0.6  //1
         shadowScale: 1
-        shadowVerticalOffset: 6
+        shadowVerticalOffset: 3 //6
         shadowHorizontalOffset: 0
-        opacity: 0.6
+        opacity: 0.7 //0.6
     }
+
+
+
 
     Rectangle {
         id: min_time
