@@ -17,7 +17,7 @@ Scope {
 
 
     property int menuHeight: 500
-    property int menuWidth: 1200
+    property int menuWidth: 1600
     property int menuTopRad: 20
 
 
@@ -117,9 +117,9 @@ Scope {
                 property int safeRad: Math.max(0, Math.min(root.menuTopRad, width / 2, height / 2))
 
                 topLeftRadius:     (root.menueLoc===4 || root.menueLoc===5 || root.menueLoc===6 ) ? safeRad : 0
-                topRightRadius:    (root.menueLoc===6 || root.menueLoc===7 || root.menueLoc===8 )  ? safeRad : 0
-                bottomLeftRadius:  (root.menueLoc===2 || root.menueLoc===3 || root.menueLoc===4 )     ? safeRad : 0
-                bottomRightRadius: (root.menueLoc===8 || root.menueLoc===1 || root.menueLoc===2 )      ? safeRad : 0
+                topRightRadius:    (root.menueLoc===6 || root.menueLoc===7 || root.menueLoc===8 ) ? safeRad : 0
+                bottomLeftRadius:  (root.menueLoc===2 || root.menueLoc===3 || root.menueLoc===4 ) ? safeRad : 0
+                bottomRightRadius: (root.menueLoc===8 || root.menueLoc===1 || root.menueLoc===2 ) ? safeRad : 0
 
                 Behavior on height {
                     id: sizeAnimH
@@ -129,6 +129,32 @@ Scope {
                     id: sizeAnimW
                     NumberAnimation { duration: root.animDuration/root.w_ani; easing.type: root.animEasing }
                 }
+
+
+
+
+
+
+
+                // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------menue itms
+                Rectangle{
+                    id: maxArea
+                    anchors.margins: 20
+                    anchors.bottomMargin: 20
+                    anchors.fill: parent
+                    color: '#4c005931'
+                    radius: menu.safeRad
+                    clip: true                    
+
+                    opacity: 1
+                    scale: 1
+                    visible: true
+                }
+
+
+
+
+
             }
 
 
@@ -192,10 +218,6 @@ Scope {
                 color: root.menuColor
             }
             
-
-
-
-
         
             // curve 2
             Curves {
