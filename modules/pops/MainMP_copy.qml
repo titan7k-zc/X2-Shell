@@ -16,9 +16,9 @@ Scope {
     property bool anchorRight: false
 
 
-    property int menuHeight: maxArea.itemHei+40
-    property int menuWidth:  maxArea.itemWid+40
-    required property int rad
+    property int menuHeight: maxArea.implicitHeight+40
+    property int menuWidth: maxArea.implicitWidth+40
+    property int menuTopRad: 20
 
 
 
@@ -27,7 +27,7 @@ Scope {
     property int animEasing: Easing.InOutQuad
 
 
-    default property alias content: contentGrid.data
+    default property alias content: maxArea.data
 
 
 
@@ -47,14 +47,14 @@ Scope {
 
     property real h_ani:{
         if (anchorTop||anchorBottom){
-            return 1.4
+            return 1.2
         }else{
             return 1
         }
     }
     property real w_ani:{
         if (anchorLeft||anchorRight){
-            return 1.4
+            return 1.2
         }else{
             return 1
         }
@@ -73,8 +73,8 @@ Scope {
         anchors.right: root.anchorRight
 
 
-        implicitWidth: root.menuWidth+root.rad*2
-        implicitHeight: root.menuHeight+root.rad*2
+        implicitWidth: root.menuWidth+root.menuTopRad*2
+        implicitHeight: root.menuHeight+root.menuTopRad*2
 
         // Only actually detach/hide the surface once fully closed
         visible: root.show || sizeAnimW.running || sizeAnimH.running
@@ -117,7 +117,7 @@ Scope {
 
                 color: root.menuColor
 
-                property int safeRad: Math.max(0, Math.min(root.rad, width / 2, height / 2))
+                property int safeRad: Math.max(0, Math.min(root.menuTopRad, width / 2, height / 2))
 
                 topLeftRadius:     (root.menueLoc===4 || root.menueLoc===5 || root.menueLoc===6 ) ? safeRad : 0
                 topRightRadius:    (root.menueLoc===6 || root.menueLoc===7 || root.menueLoc===8 ) ? safeRad : 0
@@ -138,34 +138,23 @@ Scope {
                 clip:true
 
 
-                // -------------------------------------------------------------   Real menue   ---------------------------------------------------------------------------------------------------------------------menue itms
-                Rectangle {
+                // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------menue itms
+                Rectangle{
                     id: maxArea
                     anchors.centerIn: parent
 
-                    height: Math.max(0, menu.height - 40)
-                    width: Math.max(0, menu.width - 40)
-
+                    implicitHeight:400
+                    implicitWidth:100
                     color: '#4c005931'
                     radius: menu.safeRad
-                    clip: true
-
-                    property real itemHei:500
-                    property real itemWid:100
-
-                    Grid {
-                        id: contentGrid
-                        anchors.centerIn: parent
-                        spacing: 8
-                        // injected Popup{ ... } children get reparented here 
-                    }
-
-
-                    opacity: root.show ? 1 : 0.2
-                    Behavior on opacity {
-                        NumberAnimation { duration: root.animDuration/2; easing.type: root.animEasing }
-                    }
+                    clip: true                    
+                    // visible:false
                 }
+
+
+
+
+
             }
 
 

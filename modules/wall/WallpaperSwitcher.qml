@@ -71,7 +71,41 @@ Item {
                         anchors.fill: parent
                         anchors.margins: 7
                         radius: 6
-                        color: "transparent"
+                        color: "Transparent"
+
+                        Text {
+                            id: loadingIcon
+
+                            text: ""
+                            anchors.centerIn: parent
+                            opacity:0.2
+
+                            color: Theme.t1
+
+                            visible: img.status !== Image.Ready
+
+                            scale: 1.0
+
+
+                            SequentialAnimation on scale {
+                                loops: Animation.Infinite
+
+                                NumberAnimation {
+                                    from: 1.0
+                                    to: 3.5
+                                    duration: 800
+                                    easing.type: Easing.InOutQuad
+                                }
+
+                                NumberAnimation {
+                                    from: 3.5
+                                    to: 1.0
+                                    duration: 800
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
+                        }
+
 
                         scale: mouseArea.pressed ? 0.92 : 1.0
                         Behavior on scale {
@@ -113,6 +147,7 @@ Item {
                         MouseArea {
                             id: mouseArea
                             anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 let path = img.source.toString().replace("file://", "");
                                 wallpaperSetter.command = ["awww", "img", "--transition-type", "any", "--transition-duration", "2", "--transition-fps", "60", path];

@@ -1,11 +1,10 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 
 import "./bar_comp"
-import "../../../components"
-import "../../../config"
+
+
 
 Scope {
     id: bar

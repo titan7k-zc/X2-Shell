@@ -9,7 +9,9 @@ Singleton{
     
     // main colors
     property color t1: '#4e495f' //4e495f   - text
-    property color ic_n: '#4e495f' //a77ad9a8   - text
+    property color ic: '#4e495f' //a77ad9a8   - text
+    property color ic_n: '#787090' //a77ad9a8   - text
+    property color ic_s: '#005a92' //a77ad9a8   - text
     
     
     // bar bg
@@ -30,21 +32,21 @@ Singleton{
 
     // volume
     property color vol: root.t1
-    property color voli:root.ic_n
+    property color voli:root.ic
 
 
     // battery
     property color bat: root.t1
-    property color batin:root.ic_n
+    property color batin:root.ic
         //--- stoped (temp)
     property color batic:"#ff5048"
     property color baticn:"#ffa478"
 
 
     // workspaces /3dd1b0
-    property color wf:"#3dd1b0"
-    property color wa:"#f5e2c5"
-    property color wn:root.ic_n
+    property color wf:ic_s//"#3dd1b0"
+    property color wa:ic_n//"#f5e2c5"
+    property color wn:root.ic
 
 
 

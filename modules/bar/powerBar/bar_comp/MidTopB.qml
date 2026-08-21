@@ -3,6 +3,7 @@ import QtQuick.Shapes
 import QtQuick.Effects
 import "../../../../components"
 import "../../../../config"
+import "../../../../services"
 
 
 Item {
@@ -144,10 +145,23 @@ Item {
             NumberAnimation { duration: 300; easing.type: Easing.OutBack; easing.overshoot: 1.1 }
         }
 
-        Time {
+
+
+        // clock1 (s)
+        Text {
+            id:txt
             anchors.centerIn: parent
-            show: true
+            text:Time.hour+":"+Time.minute
+            font {
+                family: "Quicksand"
+                letterSpacing: 0
+                pixelSize: 20
+                weight: Font.Bold
+            }
+
+            color:Theme.tim
         }
+        
     }
 
     Rectangle {
@@ -197,7 +211,6 @@ Item {
                 model: [
                     "Overview",
                     "Wallpapers",
-                    "Theme",
                     "Settings"
                 ]
 

@@ -1,4 +1,5 @@
 import "../../components"
+import "../../services"
 import "../../config"
 import QtQuick 2.15
 import QtQuick.Layouts
@@ -56,13 +57,9 @@ Item {
 
                         spacing: 5
 
-                        Time {
-                            id: tim
-                            show: false
-                        }
 
                         Text {
-                            text: tim.hou + "\n" + tim.mini
+                            text: Time.hour + "\n" + Time.minute
 
                             color: Theme.tim
 
@@ -84,7 +81,7 @@ Item {
                         Text {
                             opacity: 0.7
 
-                            text: tim.date
+                            text: Time.date
                             color: Theme.tim
 
                             font.family: "Nunito"

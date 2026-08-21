@@ -14,7 +14,7 @@ Item {
         id: leftB
 
         property int hei: 40
-        property int wid: 200
+        property int wid: 650
         property int rad: root.rad
         preferredRendererType: Shape.CurveRenderer
 

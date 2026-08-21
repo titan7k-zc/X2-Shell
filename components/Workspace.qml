@@ -94,11 +94,15 @@ Item {
                     text: ""
                     color: Theme.wf
                     opacity: wbutton.isActive ? 1 : 0
+                    scale: wbutton.isActive ? 1.25 : 0
                     font {
                         pixelSize: 14
                         weight: 500
                     }
                     Behavior on opacity {
+                        NumberAnimation { duration: 150 }
+                    }
+                    Behavior on scale {
                         NumberAnimation { duration: 150 }
                     }
                 }

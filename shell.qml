@@ -4,4 +4,5 @@ import "./modules/bar"
 
 ShellRoot{
     Bar{}
+    
 }

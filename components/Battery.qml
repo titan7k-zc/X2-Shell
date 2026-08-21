@@ -31,7 +31,7 @@ Row {
         //                    :root.level<=40?Theme.baticn
         //                    :Theme.batin
 
-        color:Theme.ic_n
+        color:Theme.ic
                          
         font {
             family: "JetBrainsMono Nerd Font Propo"
