@@ -6,13 +6,13 @@ import QtQuick.Effects
 import "../../../../config"
 import "../../../../components"
 import "../../../../services"
-import "../../../pops"
 
 Item {
     id: root
     implicitWidth: rightB.wid
     implicitHeight: rightB.hei + rightB.rad
     required property real rad
+
 
     Shape {
         id: rightB
@@ -374,27 +374,13 @@ Item {
             }
 
 
-            MainMP{
-                id:right_power_pop
-                show:false
-                anchorRight:true
 
-                rad:root.rad
-
-            }
-
-
-            MouseArea{
-                anchors.fill:row_up
-                onClicked: {
-                    right_power_pop.show=!right_power_pop.show
-                }
-            }
         }
 
         
 
     }
+
 
 }
 

@@ -16,18 +16,19 @@ Scope {
     property bool anchorRight: false
 
 
-    property int menuHeight: maxArea.itemHei+40
-    property int menuWidth:  maxArea.itemWid+40
+    property int menuHeight: maxArea.itemHei+20
+    property int menuWidth:  maxArea.itemWid+20
     required property int rad
 
 
 
     property color menuColor: Theme.bar_bg
-    property int animDuration: 420
+    property int animDuration: 320
     property int animEasing: Easing.InOutQuad
 
 
-    default property alias content: contentGrid.data
+    default property alias content: load.data
+    required property var file
 
 
 
@@ -77,7 +78,7 @@ Scope {
         implicitHeight: root.menuHeight+root.rad*2
 
         // Only actually detach/hide the surface once fully closed
-        visible: root.show || sizeAnimW.running || sizeAnimH.running
+        visible: menu.height!==0
 
         
 
@@ -124,46 +125,52 @@ Scope {
                 bottomLeftRadius:  (root.menueLoc===2 || root.menueLoc===3 || root.menueLoc===4 ) ? safeRad : 0
                 bottomRightRadius: (root.menueLoc===8 || root.menueLoc===1 || root.menueLoc===2 ) ? safeRad : 0
 
-                Behavior on height {
-                    id: sizeAnimH
-                    NumberAnimation { duration: root.animDuration/root.h_ani; easing.type: root.animEasing }
-                }
-                Behavior on width {
-                    id: sizeAnimW
-                    NumberAnimation { duration: root.animDuration/root.w_ani; easing.type: root.animEasing }
-                }
+                Behavior on height {NumberAnimation {id: sizeAnimH; duration: root.animDuration/root.h_ani; easing.type: root.animEasing }}
+                Behavior on width {NumberAnimation { id: sizeAnimW;duration: root.animDuration/root.w_ani; easing.type: root.animEasing }}
 
 
 
                 clip:true
 
 
-                // -------------------------------------------------------------   Real menue   ---------------------------------------------------------------------------------------------------------------------menue itms
+                // -------------------------------------------------------------   Real menu   ---------------------------------------------------------------------------------------------------------------------menu itms
                 Rectangle {
                     id: maxArea
                     anchors.centerIn: parent
 
-                    height: Math.max(0, menu.height - 40)
-                    width: Math.max(0, menu.width - 40)
+                    height: Math.max(0, menu.height - 20)
+                    width: Math.max(0, menu.width - 20)
 
-                    color: '#4c005931'
+                    color: 'Transparent'
                     radius: menu.safeRad
                     clip: true
 
-                    property real itemHei:500
-                    property real itemWid:100
+                    property real itemHei:load.height
+                    property real itemWid:load.width
 
-                    Grid {
-                        id: contentGrid
+
+
+                    Loader {
+                        id: load
+                        width: load.item ? load.item.implicitWidth : 0
+                        height: load.item ? load.item.implicitHeight : 0
                         anchors.centerIn: parent
-                        spacing: 8
-                        // injected Popup{ ... } children get reparented here 
+                        scale: root.show ? 1 : 0
+                        active: true
+                        source:root.file
+
+                        Behavior on scale {
+                            NumberAnimation { duration: root.animDuration; easing.type: root.animEasing }
+                        }
                     }
+
+
+
 
 
                     opacity: root.show ? 1 : 0.2
                     Behavior on opacity {
-                        NumberAnimation { duration: root.animDuration/2; easing.type: root.animEasing }
+                        NumberAnimation { duration: root.animDuration; easing.type: root.animEasing }
                     }
                 }
             }

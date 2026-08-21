@@ -11,7 +11,7 @@ Singleton{
     property color t1: '#4e495f' //4e495f   - text
     property color ic: '#4e495f' //a77ad9a8   - text
     property color ic_n: '#787090' //a77ad9a8   - text
-    property color ic_s: '#005a92' //a77ad9a8   - text
+    property color ic_s: '#920000' //a77ad9a8   - text
     
     
     // bar bg

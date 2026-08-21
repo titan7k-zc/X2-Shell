@@ -12,11 +12,11 @@ Singleton {
     property real cpuTemp: 0
     property real gpuUsage: 0
     property real gpuTemp: 0
+    property real storageUsage: 0    // percentage used
 
     property real downloadSpeed: 0   // bytes/sec
     property real uploadSpeed: 0     // bytes/sec
     property string uptimeString: "0m"
-    property real storageUsage: 0    // percentage used
 
     property var _lastIdle: 0
     property var _lastTotal: 0
@@ -54,9 +54,26 @@ Singleton {
 
     function parseRam() {
         const text = memFile.text();
-        const total = parseInt(text.match(/MemTotal:\s+(\d+)/)[1]);
-        const avail = parseInt(text.match(/MemAvailable:\s+(\d+)/)[1]);
-        root.ramUsage = ((total - avail) / total) * 100;
+
+        const totalMatch = text.match(/MemTotal:\s+(\d+)/);
+        const availMatch = text.match(/MemAvailable:\s+(\d+)/);
+
+        if (!totalMatch || !availMatch)
+            return;
+
+        const total = Number(totalMatch[1]);
+        const avail = Number(availMatch[1]);
+
+        if (!Number.isFinite(total) || !Number.isFinite(avail) || total <= 0)
+            return;
+
+        root.ramUsage = Math.max(
+            0,
+            Math.min(
+                100,
+                ((total - avail) / total) * 100
+            )
+        );
     }
 
     // ---------------- CPU TEMP via FileView (hwmon) ----------------

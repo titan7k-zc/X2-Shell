@@ -3,9 +3,9 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import "../../config"
-import "../../components"
-import "../pops"
-import "./powerBar"
+import "./powerBar/bar_comp"
+import "../shortcuts"
+
 
 
 
@@ -16,6 +16,9 @@ Scope{
     property int shadowSpace: 12   // extra room so the shadow isn't clipped
     property int rootRadius: 20
     property int lrBarWid: 15
+    property int hei: 60
+    property int toph: 40
+    property real rad:rootRadius
 
     Variants{
         model:Quickshell.screens
@@ -24,7 +27,9 @@ Scope{
             id:screenRoot
             required property var modelData
 
-            // right bar
+            // ============================================================
+            // Right Bar
+            // ============================================================
             PanelWindow{
                 id:rightBarWindow
                 property int barWidth: root.lrBarWid
@@ -50,18 +55,6 @@ Scope{
                         color: root.borderColor
                     }
                 }
-
-                // // shadow
-                // MultiEffect {
-                //     anchors.fill: shape
-                //     source: shape
-                //     shadowEnabled: true
-                //     shadowBlur: 1.0
-                //     shadowScale: 1
-                //     shadowVerticalOffset: 6
-                //     shadowHorizontalOffset: 0
-                //     opacity: 0.6
-                // }
 
 
                 MultiEffect {
@@ -93,7 +86,7 @@ Scope{
                 property real value:80
                 
                 property var midMask: Region {
-                    item: fakeBrightness
+                    item: null
                 }
                 mask:midMask
 
@@ -106,9 +99,9 @@ Scope{
             }
 
 
-
-
-            // left bar
+            // ============================================================
+            // Left Bar
+            // ============================================================
             PanelWindow{
                 id:leftBarWindow
                 property int barWidth: root.lrBarWid
@@ -150,10 +143,192 @@ Scope{
                 }
             }
 
-            // topbar    
-            TopBotB{
-                rad:root.rootRadius
+
+            // ============================================================
+            // Top root
+            // ============================================================
+            PanelWindow {
+                id: topbar
+
+                WlrLayershell.layer: WlrLayer.Top
+
+                anchors {
+                    top: true
+                    left: true
+                    right: true
+                    
+                }
+                
+                exclusiveZone: root.toph   // handles reserved space
+
+                color: "transparent"
+                
+                // margins.top: -root.toph
+
+                implicitHeight: root.hei
+
+                LeftTopB {
+                    id: leftB
+
+                    rad:root.rad
+
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+                }
+
+                RightTopB {
+                    id: rightB
+
+                    rad:root.rad
+
+                    anchors {
+                        right: parent.right
+                        top: parent.top
+                    }
+                }
             }
+            // ============================================================
+            // Bottom root
+            // ============================================================
+            PanelWindow {
+                id: bottomBar
+
+                WlrLayershell.layer: WlrLayer.Top
+
+                anchors {
+                    bottom: true
+                    left: true
+                    right: true
+                    
+                }
+                
+                exclusiveZone: root.toph   // handles reserved space
+
+                color: "Transparent"
+                
+                // margins.top: -root.toph
+
+                implicitHeight: root.hei
+
+                LeftBottomB {
+                    id: leftBot
+
+                    rad:root.rad
+
+                    anchors {
+                        left: parent.left
+                        bottom: parent.bottom
+                    }
+                }
+
+                RightBottomB {
+                    id: rightBot
+
+                    rad:root.rad
+
+                    anchors {
+                        right: parent.right
+                        bottom: parent.bottom
+                    }
+                }
+            }
+
+            // ============================================================
+            // MIDDLE POPUP
+            // ============================================================
+            PanelWindow {
+                id: midpop
+
+                color: "transparent"
+
+                anchors {
+                    top: true
+                    right: true
+                    left: true
+                    bottom: true
+                }
+
+                WlrLayershell.layer:mb.clic?WlrLayer.Overlay: WlrLayer.Top
+
+                exclusiveZone: 0
+
+                margins.top: -root.toph
+
+                property var midMask: Region {
+                    item: mb
+                }
+
+                mask: midMask
+
+                MidTopB {
+                    id: mb
+
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    openRad:root.rad+(root.rad/2)
+                    closeRed:{
+                        if (root.rad<22){
+                            return root.rad
+                        }else{
+                            return 22
+                        }
+                    }
+                }
+            }
+
+            // ============================================================
+            // Popup Handler
+            // ============================================================
+            PanelWindow {
+                id: closePopsArea
+
+                screen: screenRoot.modelData
+
+                WlrLayershell.layer: WlrLayer.Top
+
+                implicitWidth: screenRoot.modelData.width
+                implicitHeight: screenRoot.modelData.height
+
+                color:'Transparent'
+                // color:'#26ff0000'  // for debug
+
+
+                property bool popEnabled: mb.clic || ipch.powerPop  // activator
+                property var popItem
+
+                property var tMask: Region {
+                    item: null
+                }
+
+                mask: popEnabled ? null : tMask
+
+                MouseArea {
+                    anchors.fill: parent
+                    enabled: closePopsArea.popEnabled
+
+
+                    // close
+                    onClicked: {
+                        mb.clic = false
+                        ipch.powerPop=false
+                        console.log("closed from 'closePopsArea'")
+                    }
+                }
+            }
+
+
+
+            // ============================================================
+            // IPC Handler
+            // ============================================================
+            IPCHandler{
+                id:ipch
+
+            }
+
+
+
             
         }
     }
