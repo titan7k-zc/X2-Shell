@@ -6,7 +6,7 @@ import Qt5Compat.GraphicalEffects
 
 import "../../config/"
 
-Item {
+FocusScope {
     id: wall
     implicitWidth: tab.implicitWidth
     implicitHeight: tab.implicitHeight
@@ -31,8 +31,8 @@ Item {
         implicitWidth: imgArea.implicitWidth
 
         radius: 10
-        color: Theme.tab_bg
-        border.color: Theme.tab_bor
+        color: Colors.tab_bg
+        border.color: Colors.tab_bor
         border.width: 2
 
         Rectangle {
@@ -80,7 +80,7 @@ Item {
                             anchors.centerIn: parent
                             opacity:0.2
 
-                            color: Theme.t1
+                            color: Colors.t1
 
                             visible: img.status !== Image.Ready
 

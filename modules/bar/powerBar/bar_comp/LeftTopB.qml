@@ -24,7 +24,7 @@ Item {
             id: shp
 
             strokeColor: "transparent"
-            fillColor: Theme.bar_bg
+            fillColor: Colors.bar_bg
 
             startX: 0
             startY: 0

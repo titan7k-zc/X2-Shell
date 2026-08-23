@@ -11,18 +11,19 @@ Singleton{
     property color t1: '#4e495f' //4e495f   - text
     property color ic: '#4e495f' //a77ad9a8   - text
     property color ic_n: '#787090' //a77ad9a8   - text
-    property color ic_s: '#920000' //a77ad9a8   - text
+    property color ic_s: '#4fa0c8' //a77ad9a8   - text
+    property color ic_ss: '#50787090' //a77ad9a8   - text
     
     
     // bar bg
     property color bar_bg:'#000000'
 
     // overview 
-    property color ov_bg:'#002f2f2f'
+    property color ov_bg:'#2d393939'
 
 
     // wallpaper Switcher
-    property color tab_bg: '#00000000'
+    property color tab_bg: "Transparent"
     property color tab_bor: '#004e495f'
 
 
@@ -39,8 +40,8 @@ Singleton{
     property color bat: root.t1
     property color batin:root.ic
         //--- stoped (temp)
-    property color batic:"#ff5048"
-    property color baticn:"#ffa478"
+    // property color batic:"#ff5048"
+    // property color baticn:"#ffa478"
 
 
     // workspaces /3dd1b0

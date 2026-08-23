@@ -4,7 +4,7 @@ Item {
     id: root
 
     required property int value      // 0-100
-    required property string ic      // icon glyph text
+    property string ic:""      // icon glyph text
 
     property real hi_off:0
     property real vi_off:0
@@ -117,7 +117,7 @@ Item {
         anchors.centerIn: parent
         anchors.horizontalCenterOffset:root.hi_off
         anchors.verticalCenterOffset:root.vi_off
-        text: root.ic
+        text: root.ic!==""?root.ic:root.value
         color: root.icColor
         font.pixelSize: Math.min(root.width, root.height) * root.iconSizeRatio
         font.family: root.iconFontFamily.length > 0 ? root.iconFontFamily : iconText.font.family

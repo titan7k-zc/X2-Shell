@@ -48,7 +48,7 @@ Item {
                     Layout.fillHeight: true
 
                     radius: 25
-                    color: Theme.ov_bg
+                    color: Colors.ov_bg
                     
 
                     ColumnLayout {
@@ -61,7 +61,7 @@ Item {
                         Text {
                             text: Time.hour + "\n" + Time.minute
 
-                            color: Theme.tim
+                            color: Colors.tim
 
                             font.family: "Nunito"
                             font.weight: Font.ExtraBold
@@ -82,7 +82,7 @@ Item {
                             opacity: 0.7
 
                             text: Time.date
-                            color: Theme.tim
+                            color: Colors.tim
 
                             font.family: "Nunito"
                             font.weight: Font.Bold
@@ -101,7 +101,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 25
-                    color: Theme.ov_bg
+                    color: Colors.ov_bg
                 }
 
                 Rectangle {
@@ -110,7 +110,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 25
-                    color: Theme.ov_bg
+                    color: Colors.ov_bg
                 }
 
                 Rectangle {
@@ -119,7 +119,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 25
-                    color: Theme.ov_bg
+                    color: Colors.ov_bg
                 }
 
                 Rectangle {
@@ -129,7 +129,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 25
-                    color: Theme.ov_bg
+                    color: Colors.ov_bg
                 }
 
             }

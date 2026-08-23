@@ -1,19 +1,36 @@
 import QtQuick
 import QtQuick.Shapes
 import QtQuick.Effects
-import "../../../../components"
+import Quickshell.Io
 import "../../../../config"
 import "../../../../services"
 
 
-Item {
+FocusScope {
     id: midB
-    anchors.horizontalCenter: parent.horizontalCenter
 
+    property bool clic: false
+
+
+    IpcHandler {
+        target: "midB"
+        function toggle() {
+            midB.clic=!midB.clic;
+        }
+
+    }
+
+    focus: clic  
+
+    Keys.onLeftPressed: cycleTab(-1)
+    Keys.onRightPressed: cycleTab(1)
+    Keys.onEscapePressed: midB.clic = false
+
+
+    anchors.horizontalCenter: parent.horizontalCenter
     implicitWidth: wid
     implicitHeight: hei
 
-    property bool clic: false
     property int wid: 550
     property int hei: 40
     property int rad:openRad
@@ -32,6 +49,16 @@ Item {
         NumberAnimation { duration: 380; easing.type: Easing.InOutQuad }
     }
 
+
+
+    function cycleTab(step) {
+        var tabs = tabRepeater.model
+        var idx = tabs.indexOf(midB.activeTab)
+        if (idx < 0) idx = 0
+        idx = (idx + step + tabs.length) % tabs.length
+        midB.activeTab = tabs[idx]
+    }
+
     Shape {
         id: shape
         preferredRendererType: Shape.CurveRenderer
@@ -40,7 +67,7 @@ Item {
             id: shp
 
             strokeColor: "transparent"
-            fillColor: Theme.bar_bg
+            fillColor: Colors.bar_bg
 
             startX: 0
             startY: 0
@@ -159,7 +186,7 @@ Item {
                 weight: Font.Bold
             }
 
-            color:Theme.tim
+            color:Colors.tim
         }
         
     }
@@ -211,8 +238,9 @@ Item {
                 model: [
                     "Overview",
                     "Wallpapers",
-                    "Settings"
+                    "Apps"
                 ]
+                
 
                 delegate: Rectangle {
                     required property string modelData
@@ -227,7 +255,7 @@ Item {
 
                         text: modelData
 
-                        color: Theme.t1
+                        color: Colors.t1
                         font.bold: true
 
                         opacity: midB.activeTab === modelData ? 1.0 : 0.55
@@ -242,10 +270,21 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-
+                        
                         onClicked: {
                             midB.activeTab = modelData
                         }
+
+
+                        onWheel: (wheel) => {
+                            if (wheel.angleDelta.y > 0) {
+                                midB.cycleTab(1)
+                            } else if (wheel.angleDelta.y < 0) {
+                                midB.cycleTab(-1)
+                            }
+                            wheel.accepted = true;
+                        }
+                        
                     }
                 }
             }
@@ -263,7 +302,7 @@ Item {
             height: 4
 
             radius: 20
-            color: Theme.t1
+            color: Colors.t1
 
             y: tabRow.y + tabRow.height - height
 
@@ -313,30 +352,64 @@ Item {
 
             // Crossfade the panel content in whenever it (re)loads, i.e.
             // on first open and whenever activeTab swaps the source.
-            onLoaded: contentFade.restart()
+            onLoaded: {
+                opacity_ani.restart() 
+                // scale_ani.restart()
+            }
 
             NumberAnimation {
-                id: contentFade
+                id: opacity_ani
                 target: wl
                 property: "opacity"
                 from: 0
                 to: 1
-                duration: 280
+                duration: 480
                 easing.type: Easing.OutQuad
             }
-
-            // Component.onCompleted: {
-            //     setSource("../../../wall/WallpaperSwitcher.qml", {});
+            // NumberAnimation {
+            //     id: scale_ani
+            //     target: wl
+            //     property: "scale"
+            //     from: 0.9
+            //     to: 0.97
+            //     duration: 480
+            //     easing.type: Easing.OutQuad
             // }
-
 
             source:{
                 if (midB.activeTab === "Overview"){
                     return "../../../overview/Overview.qml"
                 }else if (midB.activeTab === "Wallpapers"){
                     return "../../../wall/WallpaperSwitcher.qml"
+                }else if (midB.activeTab ==="Apps"){
+                    return "../../../applauncher/AppLauncher.qml"
                 }
             }
+
+
+
+            // Binding {
+            //     target: wl.item
+            //     property: "isParentActive"
+            //     value: midB.clic
+            //     when: wl.item !== null
+            // }
+
+
+            
+
+            onItemChanged: {
+                if (!item)
+                    return
+
+                if (typeof item.closed === "function") {
+                    item.closed.connect(function() {
+                        midB.clic = false
+                    })
+                }
+            }
+
+            
         }
     }
 

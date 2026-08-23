@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Effects
 import Quickshell
+import Quickshell.Io
 import Quickshell.Wayland
 import "../../config"
+import "../../components"
 import "./powerBar/bar_comp"
-import "../shortcuts"
 
 
 
@@ -12,7 +13,7 @@ import "../shortcuts"
 
 Scope{
     id:root
-    property color borderColor:Theme.bar_bg
+    property color borderColor:Colors.bar_bg
     property int shadowSpace: 12   // extra room so the shadow isn't clipped
     property int rootRadius: 20
     property int lrBarWid: 15
@@ -145,7 +146,7 @@ Scope{
 
 
             // ============================================================
-            // Top root
+            // Top Right
             // ============================================================
             PanelWindow {
                 id: topbar
@@ -190,7 +191,7 @@ Scope{
                 }
             }
             // ============================================================
-            // Bottom root
+            // Bottom Right
             // ============================================================
             PanelWindow {
                 id: bottomBar
@@ -251,6 +252,7 @@ Scope{
                 }
 
                 WlrLayershell.layer:mb.clic?WlrLayer.Overlay: WlrLayer.Top
+                WlrLayershell.keyboardFocus: mb.clic ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
                 exclusiveZone: 0
 
@@ -278,54 +280,71 @@ Scope{
             }
 
             // ============================================================
-            // Popup Handler
+            // Popup close Handler
             // ============================================================
-            PanelWindow {
-                id: closePopsArea
 
-                screen: screenRoot.modelData
+            // temp: disabled because esc handles  close so no need outside click close
 
-                WlrLayershell.layer: WlrLayer.Top
+            // PanelWindow {
+            //     id: closePopsArea
 
-                implicitWidth: screenRoot.modelData.width
-                implicitHeight: screenRoot.modelData.height
+            //     screen: screenRoot.modelData
 
-                color:'Transparent'
-                // color:'#26ff0000'  // for debug
+            //     WlrLayershell.layer: WlrLayer.Top
 
+            //     implicitWidth: screenRoot.modelData.width
+            //     implicitHeight: screenRoot.modelData.height
 
-                property bool popEnabled: mb.clic || ipch.powerPop  // activator
-                property var popItem
-
-                property var tMask: Region {
-                    item: null
-                }
-
-                mask: popEnabled ? null : tMask
-
-                MouseArea {
-                    anchors.fill: parent
-                    enabled: closePopsArea.popEnabled
+            //     color:'Transparent'
+            //     // color:'#26ff0000'  // for debug
 
 
-                    // close
-                    onClicked: {
-                        mb.clic = false
-                        ipch.powerPop=false
-                        console.log("closed from 'closePopsArea'")
+            //     property bool popEnabled: mb.clic || ipch.powerPop  // activator
+            //     property var popItem
+
+            //     property var tMask: Region {
+            //         item: null
+            //     }
+
+            //     mask: popEnabled ? null : tMask
+
+            //     MouseArea {
+            //         anchors.fill: parent
+            //         enabled: closePopsArea.popEnabled
+
+
+            //         // close
+            //         onClicked: {
+            //             mb.clic = false
+            //             ipch.powerPop=false
+            //             console.log("closed from 'closePopsArea'")
+            //         }
+            //     }
+            // }
+
+
+
+            // ============================================================
+            // Popups Handler
+            // ============================================================
+                Pop8{
+                    id:right_power_pop
+                    show:false
+                    anchorRight:true
+
+                    rad:20
+                    
+                    file:"../modules/powerMenu/PowerMenu.qml"
+
+                    
+                    IpcHandler {
+                        target: "power"
+                        function toggle() {
+                            right_power_pop.show=!right_power_pop.show;
+                        }
+
                     }
                 }
-            }
-
-
-
-            // ============================================================
-            // IPC Handler
-            // ============================================================
-            IPCHandler{
-                id:ipch
-
-            }
 
 
 

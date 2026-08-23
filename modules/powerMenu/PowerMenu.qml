@@ -3,13 +3,14 @@ import QtQuick.Layouts
 import Quickshell
 import "../../config/"
 
-Item{
+FocusScope{
     id:root
     implicitHeight:menu.implicitHeight
     implicitWidth:menu.implicitWidth
     property int radius:8
     property color buttonColor:"Black"
-    property color buttonIcoColor:Theme.ic
+    property color buttonIcoColor:Colors.ic
+    property color buttonFocIcoColor:Colors.ic_s
     Rectangle{
         id:menu
         implicitWidth:menuCol.implicitWidth
@@ -24,10 +25,19 @@ Item{
             
 
             Rectangle{
+                id:power
                 color:root.buttonColor
                 Layout.preferredWidth: 50
                 Layout.preferredHeight: 50
                 radius:root.radius
+                focus:true
+                KeyNavigation.up: suspend
+                KeyNavigation.down: reboot
+
+                Keys.onReturnPressed:{
+                    Quickshell.execDetached(["systemctl", "poweroff"])
+                }
+
 
 
                 Text{
@@ -35,7 +45,7 @@ Item{
                     anchors.horizontalCenterOffset:1
                     text:""
                     font.pixelSize:35
-                    color:root.buttonIcoColor
+                    color:parent.focus?root.buttonFocIcoColor:root.buttonIcoColor
                 }  
 
 
@@ -64,18 +74,26 @@ Item{
                           
             }
             Rectangle{
+                id:reboot
                 color:root.buttonColor
                 Layout.preferredWidth: 50
                 Layout.preferredHeight: 50
                 radius:root.radius
+                focus:false
+                KeyNavigation.up: power
+                KeyNavigation.down: suspend
 
+
+                Keys.onReturnPressed:{
+                    Quickshell.execDetached(["systemctl", "reboot"])
+                }
 
                 Text{
                     anchors.centerIn:parent
                     anchors.horizontalCenterOffset:-1
                     text:"󰑐"
                     font.pixelSize:40
-                    color:root.buttonIcoColor
+                    color:parent.focus?root.buttonFocIcoColor:root.buttonIcoColor
                 }
                 MouseArea {
                     id: restartButtonMouseArea
@@ -98,17 +116,25 @@ Item{
 
             }
             Rectangle{
+                id:suspend
                 color:root.buttonColor
                 Layout.preferredWidth: 50
                 Layout.preferredHeight: 50
                 radius:root.radius
+                focus:false
+                KeyNavigation.up: reboot
+                KeyNavigation.down: power 
+
+                Keys.onReturnPressed:{
+                    Quickshell.execDetached(["systemctl", "suspend"])
+                }
 
                 Text{
                     anchors.centerIn:parent
                     anchors.horizontalCenterOffset:1
                     text:""
                     font.pixelSize:35
-                    color:root.buttonIcoColor
+                    color:parent.focus?root.buttonFocIcoColor:root.buttonIcoColor
                 }
 
                 MouseArea {

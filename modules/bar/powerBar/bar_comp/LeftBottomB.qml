@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Shapes
 import QtQuick.Effects
 import "../../../../config"
-import "../../../../components"
 
 Item {
     id: root
@@ -22,7 +21,7 @@ Item {
             id: shp
 
             strokeColor: "transparent"
-            fillColor: Theme.bar_bg
+            fillColor: Colors.bar_bg
 
             startX: 0
             startY: leftB.hei + leftB.rad

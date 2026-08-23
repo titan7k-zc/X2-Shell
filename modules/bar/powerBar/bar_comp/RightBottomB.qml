@@ -24,7 +24,7 @@ Item {
         ShapePath {
             id: shp
             strokeColor: "transparent"
-            fillColor: Theme.bar_bg
+            fillColor: Colors.bar_bg
 
             startX: 0
             startY: rightB.hei + rightB.rad
@@ -114,8 +114,8 @@ Item {
                     value: SysMon.cpuUsage
                     ic: ""
                     i_scl:1.3
-                    igColor: Theme.ic_s
-                    icColor: Theme.ic_n
+                    igColor: Colors.ic_s
+                    icColor: Colors.ic_n
                     // trackColor:"gray"
                 }
                 Rou_Indicator {
@@ -127,8 +127,8 @@ Item {
                     value: SysMon.cpuTemp
                     ic: ""
                     i_scl:1.4
-                    igColor: Theme.ic_s
-                    icColor: Theme.ic_n
+                    igColor: Colors.ic_s
+                    icColor: Colors.ic_n
                     // trackColor:"gray"
                 }
             }
@@ -174,8 +174,8 @@ Item {
                     width: height 
                     value:SysMon.gpuUsage
                     ic: "󰊹"
-                    igColor: Theme.ic_s
-                    icColor: Theme.ic_n
+                    igColor: Colors.ic_s
+                    icColor: Colors.ic_n
                     // trackColor:"gray"
                 }
                 Rou_Indicator {
@@ -187,8 +187,8 @@ Item {
                     width: height 
                     value: SysMon.gpuTemp
                     ic: ""
-                    igColor: Theme.ic_s
-                    icColor: Theme.ic_n
+                    igColor: Colors.ic_s
+                    icColor: Colors.ic_n
                     // trackColor:"gray"
                 }
             }
@@ -234,8 +234,8 @@ Item {
                     width: height 
                     value: SysMon.storageUsage
                     ic: ""
-                    igColor: Theme.ic_s
-                    icColor: Theme.ic_n
+                    igColor: Colors.ic_s
+                    icColor: Colors.ic_n
                     // trackColor:"gray"
                 }
                 Rou_Indicator {
@@ -246,8 +246,8 @@ Item {
                     width: height 
                     value: SysMon.ramUsage
                     ic: ""
-                    igColor: Theme.ic_s
-                    icColor: Theme.ic_n
+                    igColor: Colors.ic_s
+                    icColor: Colors.ic_n
                     // trackColor:"gray"
                 }
             }
@@ -297,7 +297,7 @@ Item {
                         else
                             return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
                     }
-                    color: Theme.ic_n
+                    color: Colors.ic_n
                     font.pixelSize:15
                 }
 
@@ -310,7 +310,7 @@ Item {
                         else
                             return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
                     }
-                    color: Theme.ic_n
+                    color: Colors.ic_n
                     font.pixelSize:15
                 }
             }
@@ -351,7 +351,7 @@ Item {
                     id: uptimeIcon
                     property var ico:["","󱤌","","󰹻",]
                     text: ico[1]
-                    color: Theme.ic_n
+                    color: Colors.ic_s
                     font.pixelSize:20
 
                     RotationAnimation {
@@ -368,7 +368,7 @@ Item {
                     anchors.verticalCenter: uptimeIcon.verticalCenter
                     anchors.verticalCenterOffset:1
                     text: SysMon.uptimeString
-                    color: Theme.ic_n
+                    color: Colors.ic_n
                 }
 
             }
