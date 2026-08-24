@@ -67,7 +67,7 @@ FocusScope {
             id: shp
 
             strokeColor: "transparent"
-            fillColor: Colors.bar_bg
+            fillColor: Colors.sBG
 
             startX: 0
             startY: 0
@@ -186,7 +186,7 @@ FocusScope {
                 weight: Font.Bold
             }
 
-            color:Colors.tim
+            color:Colors.tMain
         }
         
     }
@@ -255,7 +255,7 @@ FocusScope {
 
                         text: modelData
 
-                        color: Colors.t1
+                        color: Colors.tMain
                         font.bold: true
 
                         opacity: midB.activeTab === modelData ? 1.0 : 0.55
@@ -302,7 +302,7 @@ FocusScope {
             height: 4
 
             radius: 20
-            color: Colors.t1
+            color: Colors.iFocus
 
             y: tabRow.y + tabRow.height - height
 
@@ -350,8 +350,6 @@ FocusScope {
             active: true
             opacity: 0
 
-            // Crossfade the panel content in whenever it (re)loads, i.e.
-            // on first open and whenever activeTab swaps the source.
             onLoaded: {
                 opacity_ani.restart() 
                 // scale_ani.restart()

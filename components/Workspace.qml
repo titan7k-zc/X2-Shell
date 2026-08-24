@@ -92,7 +92,7 @@ Item {
                     id: activeLabel
                     anchors.centerIn: parent
                     text: ""
-                    color: Colors.wf
+                    color: Colors.iActive
                     opacity: wbutton.isActive ? 1 : 0
                     scale: wbutton.isActive ? 1.25 : 0
                     font {
@@ -111,7 +111,7 @@ Item {
                     id: inactiveLabel
                     anchors.centerIn: parent
                     text: ""
-                    color: wbutton.ws ? Colors.wa : Colors.wn
+                    color: wbutton.ws ? Colors.iAlive : Colors.iMain
                     opacity: wbutton.isActive ? 0 : 1
                     font {
                         pixelSize: 14

@@ -21,7 +21,7 @@ Item {
         ShapePath {
             id: shp
             strokeColor: "transparent"
-            fillColor: Colors.bar_bg
+            fillColor: Colors.sBG
 
             startX: 0
             startY: 0

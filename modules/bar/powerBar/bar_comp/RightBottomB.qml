@@ -24,7 +24,7 @@ Item {
         ShapePath {
             id: shp
             strokeColor: "transparent"
-            fillColor: Colors.bar_bg
+            fillColor: Colors.sBG
 
             startX: 0
             startY: rightB.hei + rightB.rad
@@ -111,11 +111,11 @@ Item {
                     vi_off: 0.1
                     scale:1
                     width: height 
-                    value: SysMon.cpuUsage
+                    value: SystemMonitor.cpuUsage
                     ic: ""
                     i_scl:1.3
-                    igColor: Colors.ic_s
-                    icColor: Colors.ic_n
+                    igColor: Colors.iActive
+                    icColor: Colors.iMain
                     // trackColor:"gray"
                 }
                 Rou_Indicator {
@@ -124,11 +124,11 @@ Item {
                     vi_off: -0.2
                     scale:1
                     width: height 
-                    value: SysMon.cpuTemp
+                    value: SystemMonitor.cpuTemp
                     ic: ""
                     i_scl:1.4
-                    igColor: Colors.ic_s
-                    icColor: Colors.ic_n
+                    igColor: Colors.iActive
+                    icColor: Colors.iMain
                     // trackColor:"gray"
                 }
             }
@@ -172,10 +172,10 @@ Item {
                     scale:1
                     i_scl:1.5
                     width: height 
-                    value:SysMon.gpuUsage
+                    value:SystemMonitor.gpuUsage
                     ic: "󰊹"
-                    igColor: Colors.ic_s
-                    icColor: Colors.ic_n
+                    igColor: Colors.iActive
+                    icColor: Colors.iMain
                     // trackColor:"gray"
                 }
                 Rou_Indicator {
@@ -185,10 +185,10 @@ Item {
                     scale:1
                     i_scl:1.4
                     width: height 
-                    value: SysMon.gpuTemp
+                    value: SystemMonitor.gpuTemp
                     ic: ""
-                    igColor: Colors.ic_s
-                    icColor: Colors.ic_n
+                    igColor: Colors.iActive
+                    icColor: Colors.iMain
                     // trackColor:"gray"
                 }
             }
@@ -232,10 +232,10 @@ Item {
                     scale:1
                     i_scl:1.4
                     width: height 
-                    value: SysMon.storageUsage
+                    value: SystemMonitor.storageUsage
                     ic: ""
-                    igColor: Colors.ic_s
-                    icColor: Colors.ic_n
+                    igColor: Colors.iActive
+                    icColor: Colors.iMain
                     // trackColor:"gray"
                 }
                 Rou_Indicator {
@@ -244,10 +244,10 @@ Item {
                     vi_off: -0.2
                     scale:1
                     width: height 
-                    value: SysMon.ramUsage
+                    value: SystemMonitor.ramUsage
                     ic: ""
-                    igColor: Colors.ic_s
-                    icColor: Colors.ic_n
+                    igColor: Colors.iActive
+                    icColor: Colors.iMain
                     // trackColor:"gray"
                 }
             }
@@ -290,27 +290,27 @@ Item {
 
                 Text {
                     text: {
-                        const speed = SysMon.downloadSpeed
+                        const speed = SystemMonitor.downloadSpeed
 
                         if (speed < 1024 * 1024)
                             return "  " + (speed / 1024).toFixed(1) + " KB/s"
                         else
                             return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
                     }
-                    color: Colors.ic_n
+                    color: Colors.iMain
                     font.pixelSize:15
                 }
 
                 Text {
                     text: {
-                        const speed = SysMon.uploadSpeed
+                        const speed = SystemMonitor.uploadSpeed
 
                         if (speed < 1024 * 1024)
                             return "  " + (speed / 1024).toFixed(1) + " KB/s"
                         else
                             return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
                     }
-                    color: Colors.ic_n
+                    color: Colors.iMain
                     font.pixelSize:15
                 }
             }
@@ -351,7 +351,7 @@ Item {
                     id: uptimeIcon
                     property var ico:["","󱤌","","󰹻",]
                     text: ico[1]
-                    color: Colors.ic_s
+                    color: Colors.iActive
                     font.pixelSize:20
 
                     RotationAnimation {
@@ -367,8 +367,8 @@ Item {
                 Text {
                     anchors.verticalCenter: uptimeIcon.verticalCenter
                     anchors.verticalCenterOffset:1
-                    text: SysMon.uptimeString
-                    color: Colors.ic_n
+                    text: SystemMonitor.uptimeString
+                    color: Colors.iMain
                 }
 
             }

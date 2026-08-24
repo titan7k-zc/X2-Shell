@@ -4,6 +4,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import "../../config"
+import "../../services"
 import "../../components"
 import "./powerBar/bar_comp"
 
@@ -13,7 +14,7 @@ import "./powerBar/bar_comp"
 
 Scope{
     id:root
-    property color borderColor:Colors.bar_bg
+    property color borderColor:Colors.sBG
     property int shadowSpace: 12   // extra room so the shadow isn't clipped
     property int rootRadius: 20
     property int lrBarWid: 15
@@ -146,7 +147,7 @@ Scope{
 
 
             // ============================================================
-            // Top Right
+            // Top Left, Right bars
             // ============================================================
             PanelWindow {
                 id: topbar
@@ -191,7 +192,7 @@ Scope{
                 }
             }
             // ============================================================
-            // Bottom Right
+            // Bottom Left ,Right bars
             // ============================================================
             PanelWindow {
                 id: bottomBar
@@ -327,28 +328,27 @@ Scope{
             // ============================================================
             // Popups Handler
             // ============================================================
-                Pop8{
-                    id:right_power_pop
-                    show:false
-                    anchorRight:true
 
-                    rad:20
-                    
-                    file:"../modules/powerMenu/PowerMenu.qml"
+            Pop8{
+                id:right_power_pop
+                show:false
+                anchorRight:true
 
-                    
-                    IpcHandler {
-                        target: "power"
-                        function toggle() {
-                            right_power_pop.show=!right_power_pop.show;
-                        }
+                rad:20
+                
+                file:"../modules/powerMenu/PowerMenu.qml"
 
+                
+                IpcHandler {
+                    target: "power"
+                    function toggle() {
+                        right_power_pop.show=!right_power_pop.show;
                     }
+
                 }
+            }
 
 
-
-            
         }
     }
 

@@ -4,64 +4,25 @@ pragma Singleton
 
 Singleton{
     id:root
+
+
+
+    // ===> Shape
+    property color sBG:"#000000"            // bar bg
+    property color sFG:'#344e495f'        // overview rectangles - #2d393939
+
+    // ===> Text
+    property color tMain: '#4e495f'         // main text color
+    property color tLow: '#79949494'        // date color in overview
+
+    // ===> Item
+    property color iMain: '#4e495f'         // normal 
+    property color iAlive: '#968383'        // any data or blink 
+    property color iActive: '#ef2a68'       // active color
     
-    //================================ Colors
-    
-    // main colors
-    property color t1: '#4e495f' //4e495f   - text
-    property color ic: '#4e495f' //a77ad9a8   - text
-    property color ic_n: '#787090' //a77ad9a8   - text
-    property color ic_s: '#4fa0c8' //a77ad9a8   - text
-    property color ic_ss: '#50787090' //a77ad9a8   - text
-    
-    
-    // bar bg
-    property color bar_bg:'#000000'
-
-    // overview 
-    property color ov_bg:'#2d393939'
-
-
-    // wallpaper Switcher
-    property color tab_bg: "Transparent"
-    property color tab_bor: '#004e495f'
-
-
-    // time
-    property color tim: root.t1
-    
-
-    // volume
-    property color vol: root.t1
-    property color voli:root.ic
-
-
-    // battery
-    property color bat: root.t1
-    property color batin:root.ic
-        //--- stoped (temp)
-    // property color batic:"#ff5048"
-    // property color baticn:"#ffa478"
-
-
-    // workspaces /3dd1b0
-    property color wf:ic_s//"#3dd1b0"
-    property color wa:ic_n//"#f5e2c5"
-    property color wn:root.ic
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    property color iFocus: tMain              // bar bottom 
+    property color iFocusLow: "#21949494"            // applauncher select focus
+    property color iFocusHeigh: iActive       // power active
 
 
 

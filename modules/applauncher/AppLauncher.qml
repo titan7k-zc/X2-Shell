@@ -56,9 +56,9 @@ FocusScope {
     readonly property color colorPanelBg: "black"
     readonly property color colorBorder: "transparent"
     readonly property color colorTextPrimary: "#F3E7BF"
-    readonly property color colorTextDim: Colors.t1
+    readonly property color colorTextDim: Colors.tMain
     readonly property color colorBlue: "#9F7355"
-    readonly property color colorAccentFill: Colors.ic_ss
+    readonly property color colorAccentFill: Colors.iFocusLow
     readonly property color colorAccentIcon: "transparent"
     readonly property color colorSearchBg: Qt.rgba(1, 1, 1, 0.07)
     readonly property color colorSearchBorderFocus: "gray"

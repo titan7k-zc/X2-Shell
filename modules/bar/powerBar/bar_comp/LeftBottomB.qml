@@ -3,6 +3,7 @@ import QtQuick.Shapes
 import QtQuick.Effects
 import "../../../../config"
 
+
 Item {
     id: root
     implicitWidth: leftB.wid
@@ -21,7 +22,7 @@ Item {
             id: shp
 
             strokeColor: "transparent"
-            fillColor: Colors.bar_bg
+            fillColor: Colors.sBG
 
             startX: 0
             startY: leftB.hei + leftB.rad

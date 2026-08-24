@@ -26,12 +26,7 @@ Row {
 
     Text{
         text:root.icon
-        // color:root.charging?Colors.batin
-        //                    :root.level<=15?Colors.batic
-        //                    :root.level<=40?Colors.baticn
-        //                    :Colors.batin
-
-        color:Colors.ic
+        color:Colors.iMain
                          
         font {
             family: "JetBrainsMono Nerd Font Propo"
@@ -45,7 +40,7 @@ Row {
 
     Text {
         text: root.level+"%"
-        color:Colors.bat
+        color:Colors.tMain
 
 
 

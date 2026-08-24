@@ -9,6 +9,7 @@ Item {
 
     implicitWidth: tab.implicitWidth
     implicitHeight: tab.implicitHeight
+    property real rad:10
 
     Rectangle {
         id: tab // for frame
@@ -23,7 +24,7 @@ Item {
         Rectangle {
             id: dasgArea
 
-            implicitWidth: 800
+            implicitWidth: 1200
             implicitHeight: 400
             color: "Transparent"
             clip: true
@@ -33,8 +34,8 @@ Item {
             GridLayout {
                 anchors.fill: parent
                 anchors.margins: 10
-                columns: 4
-                rows: 2
+                // columns: 4
+                // rows: 2
                 columnSpacing: 15
                 rowSpacing: 15
                 
@@ -47,8 +48,9 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
 
-                    radius: 25
-                    color: Colors.ov_bg
+
+                    radius: ov.rad
+                    color: Colors.sFG
                     
 
                     ColumnLayout {
@@ -61,7 +63,7 @@ Item {
                         Text {
                             text: Time.hour + "\n" + Time.minute
 
-                            color: Colors.tim
+                            color: Colors.tMain
 
                             font.family: "Nunito"
                             font.weight: Font.ExtraBold
@@ -82,7 +84,7 @@ Item {
                             opacity: 0.7
 
                             text: Time.date
-                            color: Colors.tim
+                            color: Colors.tLow
 
                             font.family: "Nunito"
                             font.weight: Font.Bold
@@ -100,8 +102,46 @@ Item {
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    radius: 25
-                    color: Colors.ov_bg
+                    radius: ov.rad
+                    color: Colors.sFG
+
+
+                    Row{
+                        anchors.centerIn:parent
+                        spacing:20
+                        Rectangle{
+                            anchors.verticalCenter:parent.verticalCenter
+                            width:150
+                            height:150
+                            color:"Transparent"
+                            radius:20
+
+
+                            AnimatedImage {
+                                anchors.fill: parent
+                                source: "../../assets/gif/cute-cat-kawaii.gif"
+
+                                fillMode: Image.PreserveAspectCrop
+                                clip: true
+                                opacity:0.7
+                            }
+                        }
+                        Text{
+                            anchors.verticalCenter:parent.verticalCenter
+                            anchors.verticalCenterOffset:15
+                            text:"󰌽  : X2 Shell\n  : Titan"
+                            color:Colors.tMain
+                            font.family: "Nunito"
+                            font.weight: Font.Bold
+                            font.pixelSize:20
+
+                            // lineHeight:0.8
+
+                        }
+                    }
+
+
+                    
                 }
 
                 Rectangle {
@@ -109,8 +149,9 @@ Item {
                     Layout.row: 0
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    radius: 25
-                    color: Colors.ov_bg
+                    radius: ov.rad
+                    color: Colors.sFG
+                    
                 }
 
                 Rectangle {
@@ -118,8 +159,9 @@ Item {
                     Layout.row: 1
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    radius: 25
-                    color: Colors.ov_bg
+                    radius: ov.rad
+                    color: Colors.sFG
+                    
                 }
 
                 Rectangle {
@@ -128,10 +170,26 @@ Item {
                     Layout.columnSpan: 2
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    radius: 25
-                    color: Colors.ov_bg
+                    radius: ov.rad
+                    color: Colors.sFG
+
                 }
 
+                Rectangle {
+                    Layout.column: 4
+                    Layout.row: 0
+                    Layout.rowSpan:2
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    radius: ov.rad
+                    color: Colors.sFG
+                    
+                    SpotifyPlayer{
+                        anchors.centerIn:parent
+                        // anchors.verticalCenterOffset:-2
+                        // anchors.horizontalCenterOffset:-2
+                    }
+                }
             }
 
         }

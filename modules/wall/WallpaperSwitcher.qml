@@ -31,8 +31,8 @@ FocusScope {
         implicitWidth: imgArea.implicitWidth
 
         radius: 10
-        color: Colors.tab_bg
-        border.color: Colors.tab_bor
+        color: "Transparent"
+        border.color: "Transparent"
         border.width: 2
 
         Rectangle {
@@ -80,7 +80,7 @@ FocusScope {
                             anchors.centerIn: parent
                             opacity:0.2
 
-                            color: Colors.t1
+                            color: Colors.tMain
 
                             visible: img.status !== Image.Ready
 
