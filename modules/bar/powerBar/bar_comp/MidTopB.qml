@@ -298,11 +298,11 @@ FocusScope {
         Rectangle {
             id: activeIndicator
 
-            width: 130
+            width: 100
             height: 4
 
             radius: 20
-            color: Colors.iFocus
+            color:  Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.7)
 
             y: tabRow.y + tabRow.height - height
 

@@ -4,7 +4,6 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import "../../config"
-import "../../services"
 import "../../components"
 import "./powerBar/bar_comp"
 
@@ -73,6 +72,10 @@ Scope{
                 }
             }
 
+
+            // ============================================================
+            // fakeBrightness overlay
+            // ============================================================
 
             PanelWindow{
                 id:fakeBrightness

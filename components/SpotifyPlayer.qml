@@ -13,7 +13,7 @@ Item {
     id: root
     // height: 180
     // width: height * 2
-    width: 190
+    width: 180
     height: width * 1.8
 
     Rectangle {
@@ -27,12 +27,18 @@ Item {
 
             // ---------------- album art ----------------
             ClippingRectangle {
-                Layout.preferredWidth: Math.min(root.width,root.height)   //Math.min(root.height - (root.height / 8),root.width - (root.width / 8))
+                id: albumArt
+                Layout.preferredWidth: Math.min(root.width, root.height)
                 Layout.preferredHeight: Layout.preferredWidth
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                radius: Layout.preferredWidth/2
-                opacity:0.7
+                radius: Layout.preferredWidth / 2
+                opacity: 0.7
                 color: "#2a2a35"
+
+                antialiasing: true
+                layer.enabled: true
+                layer.smooth: true
+                layer.samples: 4   // try 8 if it's still visibly rough
 
                 Image {
                     id: artImage
@@ -41,7 +47,7 @@ Item {
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
                     cache: false
-                    // if the live/remote url fails to load, fall back to the cache
+                    antialiasing: true
                     onStatusChanged: {
                         if (status === Image.Error &&
                             source.toString() !== ("file://" + Spotify.artCachePath)) {
@@ -49,16 +55,17 @@ Item {
                         }
                     }
                 }
-
-                // placeholder when there's truly nothing to show yet
-                Text {
-                    anchors.centerIn: parent
-                    visible: artImage.status !== Image.Ready
-                    text: Spotify.running ? "" : "\u266B"
-                    color: "#55555f"
-                    font.pixelSize: 96
-                }
             }
+
+            //     // placeholder when there's truly nothing to show yet
+            //     Text {
+            //         anchors.centerIn: parent
+            //         visible: artImage.status !== Image.Ready
+            //         text: Spotify.running ? "" : "\u266B"
+            //         color: "#55555f"
+            //         font.pixelSize: 96
+            //     }
+            // }
 
             // ---------------- track info ----------------
             ColumnLayout {
@@ -92,7 +99,7 @@ Item {
 
                     Rectangle {
                         width: 35; height: width; radius: width / 2
-                        color: "#26262e"
+                        color: Colors.tMain//"#26262e"
                         scale: prevArea.pressed ? 0.9 : 1
                         Text {
                             anchors.centerIn: parent
@@ -109,7 +116,7 @@ Item {
 
                     Rectangle {
                         width: 45; height: width; radius: width / 2
-                        color: '#941db954'
+                        color: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.8)//'#941db954'
                         scale: playArea.pressed ? 0.9 : 1
                         Text {
                             anchors.centerIn: parent
@@ -128,7 +135,7 @@ Item {
 
                     Rectangle {
                         width: 35; height: width; radius: width / 2
-                        color: "#26262e"
+                        color: Colors.tMain//"#26262e"
                         scale: nextArea.pressed ? 0.9 : 1
                         Text {
                             anchors.centerIn: parent

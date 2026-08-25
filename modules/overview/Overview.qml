@@ -24,7 +24,7 @@ Item {
         Rectangle {
             id: dasgArea
 
-            implicitWidth: 1200
+            implicitWidth: 1100
             implicitHeight: 400
             color: "Transparent"
             clip: true
@@ -63,7 +63,7 @@ Item {
                         Text {
                             text: Time.hour + "\n" + Time.minute
 
-                            color: Colors.tMain
+                            color: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.7)//Colors.tMain
 
                             font.family: "Nunito"
                             font.weight: Font.ExtraBold
@@ -96,6 +96,8 @@ Item {
                     }
                 }
 
+
+                // user
                 Rectangle {
                     Layout.column: 1
                     Layout.row: 0
@@ -108,6 +110,7 @@ Item {
 
                     Row{
                         anchors.centerIn:parent
+                        anchors.verticalCenterOffset:-5
                         spacing:20
                         Rectangle{
                             anchors.verticalCenter:parent.verticalCenter
@@ -151,6 +154,7 @@ Item {
                     Layout.fillHeight: true
                     radius: ov.rad
                     color: Colors.sFG
+                    opacity:0
                     
                 }
 
@@ -161,9 +165,12 @@ Item {
                     Layout.fillHeight: true
                     radius: ov.rad
                     color: Colors.sFG
+                    opacity:0
                     
                 }
 
+
+                // info 
                 Rectangle {
                     Layout.column: 2
                     Layout.row: 1
@@ -173,8 +180,142 @@ Item {
                     radius: ov.rad
                     color: Colors.sFG
 
+                    Column {
+                        id: col
+
+                        anchors.verticalCenter:parent.verticalCenter
+                        anchors.left:parent.left
+                        anchors.leftMargin:65
+                        spacing: 2
+
+                        property real barWidth: 180
+                        property real barHeight: 6
+                        property real rowSpace: 20
+                        property real fSize: 18
+                        property real iSize: 20
+                        property real iVCO: 3
+
+
+                        
+
+                        Row {
+                            spacing: col.rowSpace
+                            anchors.left:parent.left
+                            anchors.leftMargin:30
+                            Rou_Indicator {
+                                height: 40
+                                hi_off: -3.8
+                                vi_off: 0.2
+                                scale:1
+                                width: height 
+                                value: SystemMonitor.ramUsage
+                                ic: ""
+                                igColor: Colors.iActive
+                                icColor: Colors.iMain
+                                // trackColor:"gray"
+                            }
+                        }
+
+                        Item{height:5;width:1}
+
+                        Row {
+                            spacing: col.rowSpace
+
+                            Item {
+                                width: col.iSize
+                                height: col.iSize
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    anchors.verticalCenterOffset:col.iVCO
+                                    color: Colors.tMain
+                                    text: ""
+                                    font.pixelSize: col.iSize
+                                }
+                            }
+
+                            LevelBar {
+                                anchors.verticalCenter: parent.verticalCenter
+                                value: SystemMonitor.cpuUsage
+                                barWidth: col.barWidth
+                                barHeight: col.barHeight
+                            }
+
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                color: Colors.tMain
+                                text: SystemMonitor.cpuTemp.toFixed(1) + " 󰔄"
+                                font.pixelSize: col.fSize
+                                font.family: "Nunito"
+                                font.weight: Font.Bold                                
+                            }
+                        }
+
+                        Row {
+                            spacing: col.rowSpace
+
+                            Item {
+                                width: col.iSize
+                                height: col.iSize
+
+                                Text {
+                                    anchors.verticalCenterOffset:col.iVCO
+                                    anchors.centerIn: parent
+                                    color: Colors.tMain
+                                    text: "󰊹"
+                                    font.pixelSize: col.iSize
+                                }
+                            }
+
+                            LevelBar {
+                                anchors.verticalCenter: parent.verticalCenter
+                                value: SystemMonitor.gpuUsage
+                                barWidth: col.barWidth
+                                barHeight: col.barHeight
+                            }
+
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                color: Colors.tMain
+                                text: SystemMonitor.gpuTemp.toFixed(1) + " 󰔄"
+                                font.pixelSize: col.fSize
+                                font.family: "Nunito"
+                                font.weight: Font.Bold
+                            }
+                        }
+
+                        Item{height:5;width:1}
+
+
+                        Row {
+                            spacing: col.rowSpace
+                            anchors.left:parent.left
+                            anchors.leftMargin:30
+                            // anchors.horizontalCenter:parent.horizontalCenter
+                            
+                            Rou_Indicator {
+                                
+                                height: 40
+                                hi_off: -1.9
+                                vi_off: -0.1
+                                scale:1
+                                i_scl:1.2
+                                width: height 
+                                value: SystemMonitor.storageUsage
+                                ic: ""
+                                igColor: Colors.iActive
+                                icColor: Colors.iMain
+                                // trackColor:"gray"
+                            }
+                        }
+
+                        
+                    }
+
                 }
 
+
+                // spotify
                 Rectangle {
                     Layout.column: 4
                     Layout.row: 0

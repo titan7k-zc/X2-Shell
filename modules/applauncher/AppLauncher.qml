@@ -53,7 +53,7 @@ FocusScope {
     // Colors
     // ─────────────────────────────────────────────────────────────
 
-    readonly property color colorPanelBg: "black"
+    readonly property color colorPanelBg: "Transparent"
     readonly property color colorBorder: "transparent"
     readonly property color colorTextPrimary: "#F3E7BF"
     readonly property color colorTextDim: Colors.tMain
@@ -61,9 +61,9 @@ FocusScope {
     readonly property color colorAccentFill: Colors.iFocusLow
     readonly property color colorAccentIcon: "transparent"
     readonly property color colorSearchBg: Qt.rgba(1, 1, 1, 0.07)
-    readonly property color colorSearchBorderFocus: "gray"
+    readonly property color colorSearchBorderFocus: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,1)
     readonly property color colorIconBubbleBg: Qt.rgba(1, 1, 1, 0.08)
-    readonly property color colorDragHandle: Qt.rgba(1, 1, 1, 0.22)
+    readonly property color colorDragHandle: "Transparent"
 
     // ─────────────────────────────────────────────────────────────
     // Typography

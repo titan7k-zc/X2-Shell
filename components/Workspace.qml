@@ -94,7 +94,8 @@ Item {
                     text: ""
                     color: Colors.iActive
                     opacity: wbutton.isActive ? 1 : 0
-                    scale: wbutton.isActive ? 1.25 : 0
+                    // scale: wbutton.isActive ? 1.25 : 0
+                    scale: 1.25 
                     font {
                         pixelSize: 14
                         weight: 500
@@ -102,9 +103,9 @@ Item {
                     Behavior on opacity {
                         NumberAnimation { duration: 150 }
                     }
-                    Behavior on scale {
-                        NumberAnimation { duration: 150 }
-                    }
+                    // Behavior on scale {
+                    //     NumberAnimation { duration: 150 }
+                    // }
                 }
 
                 Text {
