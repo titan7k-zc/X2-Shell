@@ -236,8 +236,8 @@ FocusScope {
                 id: tabRepeater
 
                 model: [
-                    "Overview",
                     "Wallpapers",
+                    "Overview",
                     "Apps"
                 ]
                 
@@ -255,13 +255,19 @@ FocusScope {
 
                         text: modelData
 
-                        color: Colors.tMain
+                        color: midB.activeTab === modelData? Colors.iActive :Colors.iMain
                         font.bold: true
 
                         opacity: midB.activeTab === modelData ? 1.0 : 0.55
 
                         Behavior on opacity {
                             NumberAnimation {
+                                duration: 200
+                                easing.type: Easing.OutQuad
+                            }
+                        }
+                        Behavior on color {
+                            ColorAnimation {
                                 duration: 200
                                 easing.type: Easing.OutQuad
                             }

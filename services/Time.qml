@@ -1,4 +1,3 @@
-import "../config"
 import QtQuick
 import Quickshell
 pragma Singleton

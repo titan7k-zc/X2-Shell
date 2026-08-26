@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell.Services.UPower
 import "../config"
 
@@ -26,7 +25,7 @@ Row {
 
     Text{
         text:root.icon
-        color:Colors.iMain
+        color:Colors.iActive
                          
         font {
             family: "JetBrainsMono Nerd Font Propo"

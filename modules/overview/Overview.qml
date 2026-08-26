@@ -242,12 +242,20 @@ Item {
                             }
 
                             Text {
+                                property real tempVal:SystemMonitor.cpuTemp.toFixed(1)
                                 anchors.verticalCenter: parent.verticalCenter
-                                color: Colors.tMain
-                                text: SystemMonitor.cpuTemp.toFixed(1) + " 󰔄"
+                                text: tempVal + " 󰔄"
+                                color: {
+                                    if (tempVal>70){
+                                        return Colors.mWarning
+                                    }else {
+                                        return Colors.mNormal
+                                    }
+                                }
+                            
                                 font.pixelSize: col.fSize
                                 font.family: "Nunito"
-                                font.weight: Font.Bold                                
+                                font.weight: Font.Bold
                             }
                         }
 
@@ -275,9 +283,17 @@ Item {
                             }
 
                             Text {
+                                property real tempVal:SystemMonitor.gpuTemp.toFixed(1)
                                 anchors.verticalCenter: parent.verticalCenter
-                                color: Colors.tMain
-                                text: SystemMonitor.gpuTemp.toFixed(1) + " 󰔄"
+                                text: tempVal + " 󰔄"
+                                color: {
+                                    if (tempVal>70){
+                                        return Colors.mWarning
+                                    }else {
+                                        return Colors.mNormal
+                                    }
+                                }
+                            
                                 font.pixelSize: col.fSize
                                 font.family: "Nunito"
                                 font.weight: Font.Bold

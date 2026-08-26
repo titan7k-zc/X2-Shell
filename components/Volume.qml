@@ -129,11 +129,11 @@ Item {
         id: row
 
         anchors.fill: parent
-        spacing: 6
+        // spacing: 6
 
         Text {
             text: root.icon
-            color: Colors.iMain
+            color: Colors.iActive
 
             font {
                 family: "JetBrainsMono Nerd Font Mono"

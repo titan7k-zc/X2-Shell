@@ -29,7 +29,7 @@ Item {
 
     Row {
         id: rowLayout
-        spacing: 5
+        spacing: 8
 
         // 1. Visibility Logic Rule Engine
         function isWorkspaceVisible(id) {

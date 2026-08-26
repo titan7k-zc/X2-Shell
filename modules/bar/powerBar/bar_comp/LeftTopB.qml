@@ -16,7 +16,7 @@ Item {
         id: leftB
 
         property int hei: 40
-        property int wid: 200
+        property int wid: 240
         property int rad: root.rad
         preferredRendererType: Shape.CurveRenderer
 
@@ -90,7 +90,7 @@ Item {
         anchors.left: parent.left
         anchors.top:parent.top
         anchors.fill:parent
-        anchors.leftMargin: 7
+        anchors.leftMargin: 10
         anchors.topMargin: 7
     }
 }

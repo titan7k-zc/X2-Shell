@@ -14,7 +14,7 @@ Item {
     Shape {
         id: rightB
         property int hei: 40
-        property int wid: 200
+        property int wid: 240
         property int rad: root.rad
         preferredRendererType: Shape.CurveRenderer
 
@@ -89,8 +89,15 @@ Item {
         anchors.rightMargin: 7
         anchors.topMargin: 1
 
-        spacing: 10
+        spacing: 5
 
+        Rectangle{
+            width: bat.implicitWidth+20
+            height: 35
+            radius: 6
+            color:"Transparent"
+            Brightness{id:brig;anchors.centerIn: parent}
+        }
 
         Rectangle{
             width: sou.implicitWidth+20
