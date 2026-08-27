@@ -74,37 +74,6 @@ Scope{
 
 
             // ============================================================
-            // fakeBrightness overlay
-            // ============================================================
-
-            PanelWindow{
-                id:fakeBrightness
-
-                WlrLayershell.layer:WlrLayer.Overlay
-                screen: screenRoot.modelData
-
-                implicitWidth: screenRoot.modelData.width
-                implicitHeight: screenRoot.modelData.height
-
-                exclusiveZone:0
-                color:'Transparent'
-                property real value:80
-                
-                property var midMask: Region {
-                    item: null
-                }
-                mask:midMask
-
-                Rectangle{
-                    anchors.fill:parent
-                    color:'#000000'
-                    opacity: Math.min(Math.max((100 - fakeBrightness.value) / 100, 0), 0.9)
-
-                }
-            }
-
-
-            // ============================================================
             // Left Bar
             // ============================================================
             PanelWindow{

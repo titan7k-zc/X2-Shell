@@ -16,6 +16,7 @@ Item {
     width: 180
     height: width * 1.8
 
+
     Rectangle {
         anchors.fill: parent
         radius: 20
