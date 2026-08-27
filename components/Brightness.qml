@@ -11,8 +11,8 @@ Item {
     implicitWidth: row.implicitWidth
     implicitHeight: row.implicitHeight
 
-    readonly property bool ready: Services.Brightness.ready
-    readonly property int val: Services.Brightness.pct
+    readonly property bool ready: Services.BrightnessServices.ready
+    readonly property int val: Services.BrightnessServices.pct
 
     // --- interaction ---
 
@@ -26,7 +26,7 @@ Item {
             if (!root.ready)
                 return
 
-            Services.Brightness.toggle()
+            Services.BrightnessServices.toggle()
         }
 
         onWheel: (wheel) => {
@@ -34,9 +34,9 @@ Item {
                 return
 
             if (wheel.angleDelta.y > 0) {
-                Services.Brightness.increase()
+                Services.BrightnessServices.increase()
             } else if (wheel.angleDelta.y < 0) {
-                Services.Brightness.decrease()
+                Services.BrightnessServices.decrease()
             }
 
             wheel.accepted = true

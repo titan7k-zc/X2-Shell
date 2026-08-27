@@ -60,7 +60,11 @@ ListView {
 
         readonly property bool isActive: modelData.activated
 
-        readonly property var desktopEntry: DesktopEntries.heuristicLookup(modelData.appId)
+        readonly property var desktopEntry: {
+            // re-run whenever DesktopEntries' list changes, not just once
+            void DesktopEntries.applications.values.length;
+            return DesktopEntries.heuristicLookup(modelData.appId);
+        }
 
         IconImage {
             id: icon

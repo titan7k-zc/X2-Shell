@@ -44,15 +44,15 @@ Item {
                 Image {
                     id: artImage
                     anchors.fill: parent
-                    source: Spotify.displayArtSource
+                    source: SpotifyServices.displayArtSource
                     fillMode: Image.PreserveAspectCrop
                     asynchronous: true
                     cache: false
                     antialiasing: true
                     onStatusChanged: {
                         if (status === Image.Error &&
-                            source.toString() !== ("file://" + Spotify.artCachePath)) {
-                            source = "file://" + Spotify.artCachePath;
+                            source.toString() !== ("file://" + SpotifyServices.artCachePath)) {
+                            source = "file://" + SpotifyServices.artCachePath;
                         }
                     }
                 }
@@ -62,7 +62,7 @@ Item {
             //     Text {
             //         anchors.centerIn: parent
             //         visible: artImage.status !== Image.Ready
-            //         text: Spotify.running ? "" : "\u266B"
+            //         text: SpotifyServices.running ? "" : "\u266B"
             //         color: "#55555f"
             //         font.pixelSize: 96
             //     }
@@ -76,7 +76,7 @@ Item {
                 Text {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.maximumWidth: Math.min(root.height,root.width)-20
-                    text: Spotify.displayTitle
+                    text: SpotifyServices.displayTitle
                     color: Colors.tMain
                     font.pixelSize: 18
                     font.bold: true
@@ -86,7 +86,7 @@ Item {
                 Text {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.maximumWidth: Math.min(root.height,root.width)-20
-                    text: Spotify.displayArtist
+                    text: SpotifyServices.displayArtist
                     color: Colors.tLow
                     font.pixelSize: 13
                     elide: Text.ElideRight
@@ -111,7 +111,7 @@ Item {
                         MouseArea {
                             id: prevArea
                             anchors.fill: parent
-                            onClicked: Spotify.previous()
+                            onClicked: SpotifyServices.previous()
                         }
                     }
 
@@ -121,7 +121,7 @@ Item {
                         scale: playArea.pressed ? 0.9 : 1
                         Text {
                             anchors.centerIn: parent
-                            text: Spotify.player && Spotify.player.isPlaying ? "\u23F8" : "\u25B6"
+                            text: SpotifyServices.player && SpotifyServices.player.isPlaying ? "\u23F8" : "\u25B6"
                             anchors.horizontalCenterOffset: text === "\u25B6" ? 2.5 : 0
                             anchors.verticalCenterOffset: text === "\u25B6" ? 0.8 : 0
                             color: Colors.sBG
@@ -130,7 +130,7 @@ Item {
                         MouseArea {
                             id: playArea
                             anchors.fill: parent
-                            onClicked: Spotify.playPause()
+                            onClicked: SpotifyServices.playPause()
                         }
                     }
 
@@ -147,7 +147,7 @@ Item {
                         MouseArea {
                             id: nextArea
                             anchors.fill: parent
-                            onClicked: Spotify.next()
+                            onClicked: SpotifyServices.next()
                         }
                     }
                 }

@@ -61,7 +61,7 @@ Item {
 
 
                         Text {
-                            text: Time.hour + "\n" + Time.minute
+                            text: TimeServices.hour + "\n" + TimeServices.minute
 
                             color: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.7)//Colors.tMain
 
@@ -83,7 +83,7 @@ Item {
                         Text {
                             opacity: 0.7
 
-                            text: Time.date
+                            text: TimeServices.date
                             color: Colors.tLow
 
                             font.family: "Nunito"

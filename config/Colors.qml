@@ -19,7 +19,7 @@ Singleton{
     // ===> Item
     property color iMain: tMain         // normal 
     property color iAlive: '#ffffff'        // any data or blink 
-    property color iActive:'#ef2a68'//'#ef2a68'       // active color
+    property color iActive:'#2ac4ef'//'#ef2a68'       // active color
 
     
     property color iFocus: tMain              // bar bottom 

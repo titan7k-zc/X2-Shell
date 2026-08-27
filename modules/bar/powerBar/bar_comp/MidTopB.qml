@@ -178,7 +178,7 @@ FocusScope {
         Text {
             id:txt
             anchors.centerIn: parent
-            text:Time.hour+":"+Time.minute
+            text:TimeServices.hour+":"+TimeServices.minute
             font {
                 family: "Quicksand"
                 letterSpacing: 0
