@@ -13,7 +13,7 @@
 
 ---
 
-## 🖼️ Preview
+##  Preview
 
 <div align="center">
 
@@ -30,7 +30,7 @@
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Custom layer‑shell bar** — rounded, borderless left/right bars rendered per‑monitor via `Quickshell.screens`
 - **App launcher** — keyboard‑driven, fuzzy search with focus/selection state
@@ -49,7 +49,7 @@
 
 ---
 
-## 📦 Requirements
+##  Requirements
 
 | Dependency | Notes |
 |---|---|
@@ -63,7 +63,7 @@
 
 ---
 
-## 🚀 Installation
+##  Installation
 
 1. **Install Quickshell** for your distro — see the [Quickshell docs](https://quickshell.org/docs/) for instructions.
 
@@ -94,7 +94,7 @@
 
 ---
 
-## ⚙️ Configuration
+##  Configuration
 
 - **Colors / theme** → `config/Colors.qml` (single source of truth for every color used across the shell)
 - **Wallpaper folder** → set `folderpath` in `modules/wall/WallpaperSwitcher.qml` to your own wallpaper directory
@@ -103,31 +103,11 @@
 
 ---
 
-## 🗂️ Project structure
-
-```
-X2-Shell/
-├── shell.qml              # entry point
-├── config/                # theme / colors singleton
-├── components/             # reusable UI pieces (battery, volume, level bars, spotify card, etc.)
-├── modules/
-│   ├── bar/                # main panel/bar
-│   ├── applauncher/         # app launcher
-│   ├── overview/            # workspace overview
-│   ├── powerMenu/           # power menu
-│   ├── taskbar/             # running windows list
-│   └── wall/                # wallpaper switcher
-├── services/                # singletons: system monitor, spotify/mpris, brightness, taskbar, time
-└── others/x2-bright/        # standalone C daemon + systemd service for NVIDIA OLED brightness
-```
-
----
-
-## 🙌 Credits
+##  Credits
 
 Built on top of [Quickshell](https://quickshell.org/) by [outfoxxed](https://github.com/outfoxxed).
 
-## 📄 License
+##  License
 
 No license has been added yet — all rights reserved by default until one is added.
 Consider adding a `LICENSE` file (e.g. MIT) if you want others to reuse this config.
