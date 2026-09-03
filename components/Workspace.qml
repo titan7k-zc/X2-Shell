@@ -21,6 +21,7 @@ Item {
             }
             wheel.accepted = true;
         }
+        
     }
     // Text{
     //     text:Hyprland.focusedWorkspace?.id
@@ -127,6 +128,7 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: Hyprland.dispatch("hl.dsp.focus({ workspace = " + (wbutton.wsId) + " })") 
+                    cursorShape: Qt.PointingHandCursor
                 }
             }
         }

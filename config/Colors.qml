@@ -9,7 +9,7 @@ Singleton{
 
 
     // ===> Shape
-    property color sBG:"#000000"            // bar bg
+    property color sBG:'#000000'            // bar bg
     property color sFG:'#00b3b3b3'        // overview rectangles - #2d393939
 
     // ===> Text
@@ -19,7 +19,7 @@ Singleton{
     // ===> Item
     property color iMain: tMain         // normal 
     property color iAlive: '#ffffff'        // any data or blink 
-    property color iActive:'#b15454'//'#ef2a68'       // active color
+    property color iActive:'#ef2a68'//'#ef2a68'       // active color
 
     
     property color iFocus: tMain              // bar bottom 

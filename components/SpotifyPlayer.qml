@@ -112,6 +112,7 @@ Item {
                             id: prevArea
                             anchors.fill: parent
                             onClicked: SpotifyServices.previous()
+                            cursorShape: Qt.PointingHandCursor
                         }
                     }
 
@@ -131,6 +132,7 @@ Item {
                             id: playArea
                             anchors.fill: parent
                             onClicked: SpotifyServices.playPause()
+                            cursorShape: Qt.PointingHandCursor
                         }
                     }
 
@@ -148,6 +150,7 @@ Item {
                             id: nextArea
                             anchors.fill: parent
                             onClicked: SpotifyServices.next()
+                            cursorShape: Qt.PointingHandCursor
                         }
                     }
                 }

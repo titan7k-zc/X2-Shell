@@ -11,6 +11,8 @@ Item {
     implicitHeight: tab.implicitHeight
     property real rad:10
 
+    
+
     Rectangle {
         id: tab // for frame
 

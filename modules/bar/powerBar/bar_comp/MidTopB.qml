@@ -290,6 +290,8 @@ FocusScope {
                             }
                             wheel.accepted = true;
                         }
+
+                        cursorShape: Qt.PointingHandCursor
                         
                     }
                 }
