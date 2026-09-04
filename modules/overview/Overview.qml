@@ -19,8 +19,8 @@ Item {
         implicitHeight: dasgArea.implicitHeight + 20
         implicitWidth: dasgArea.implicitWidth + 20
         radius: 10
-        color: Colors.transparentColor
-        border.color: Colors.transparentColor
+        color: Colors.overviewSurfaceFillColor
+        border.color: Colors.overviewSurfaceFillColor
         border.width: 2
 
         Rectangle {
@@ -28,7 +28,7 @@ Item {
 
             implicitWidth: 1100
             implicitHeight: 400
-            color: Colors.transparentColor
+            color: Colors.overviewSurfaceFillColor
             clip: true
             anchors.centerIn: parent
             radius: 10
@@ -118,7 +118,7 @@ Item {
                             anchors.verticalCenter:parent.verticalCenter
                             width:150
                             height:150
-                            color: Colors.transparentColor
+                            color: Colors.overviewSurfaceFillColor
                             radius:20
 
 

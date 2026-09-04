@@ -6,15 +6,16 @@ Singleton{
     id:root
 
     // === Global ===
-    property color shellBackgroundColor: "#000000"
-    property color overviewSurfaceColor: "#00b3b3b3"
-    property color mainTextColor: "#959595"
-    property color secondaryTextColor: "#c8959595"
+    property color shellBackgroundColor: "#1E1E2E"
+    property color overviewSurfaceColor: "#00585B70"
+    property color mainTextColor: "#A6ADC8"
+    property color secondaryTextColor: "#c8CDD6F4"
     property color mainIconColor: mainTextColor
-    property color aliveIconColor: "#ffffff"
-    property color activeColor: "#ef2a68"
+    property color aliveIconColor: "#CDD6F4"
+    property color activeColor: "#F5C2E7"
     property color focusColor: mainTextColor
-    property color lowFocusColor: "#21949494"
+    property color lowFocusColor: "#21585B70"
+
 
     // === Battery ===
     property color batteryIconColor: activeColor
@@ -48,7 +49,7 @@ Singleton{
 
     // === Spotify ===
     property color spotifyPanelColor: "Transparent"
-    property color spotifyAlbumPlaceholderColor: "#2a2a35"
+    property color spotifyAlbumPlaceholderColor: "#313244"
     property color spotifyTitleColor: mainTextColor
     property color spotifyArtistColor: secondaryTextColor
     property color spotifyControlColor: mainTextColor
@@ -56,11 +57,11 @@ Singleton{
     property color spotifyPlayColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.8)
 
     // === Progress indicators ===
-    property color levelRingBackgroundColor: "#303030"
-    property color levelRingFillColor: "red"
+    property color levelRingBackgroundColor: "#313244"
+    property color levelRingFillColor: "#F38BA8"
     property color levelRingTrackColor: "Transparent"
     property color levelRingValueTextColor: "white"
-    property color indicatorColor: "#00c896"
+    property color indicatorColor: "#A6E3A1"
     property color indicatorIconColor: aliveIconColor
     property color indicatorTrackColor: Qt.rgba(1, 1, 1, 0.12)
 
@@ -77,7 +78,7 @@ Singleton{
     // === Launcher ===
     property color launcherPanelColor: "Transparent"
     property color launcherBorderColor: "Transparent"
-    property color launcherPrimaryTextColor: "#F3E7BF"
+    property color launcherPrimaryTextColor: "#F9E2AF"
     property color launcherDimTextColor: mainTextColor
     property color launcherAccentColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.3)  // dont change
     property color launcherAccentIconColor: "Transparent"
@@ -119,6 +120,5 @@ Singleton{
     property color powerBarIconColor: mainIconColor
     property color powerBarActiveColor: activeColor
     property color powerBarTransparentColor: "Transparent"
-
 
 }

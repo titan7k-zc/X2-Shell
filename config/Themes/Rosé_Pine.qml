@@ -2,19 +2,19 @@ import QtQuick
 import Quickshell
 pragma Singleton
 
-Singleton{
-    id:root
+Singleton {
+    id: root
 
     // === Global ===
-    property color shellBackgroundColor: "#000000"
-    property color overviewSurfaceColor: "#00b3b3b3"
-    property color mainTextColor: "#959595"
-    property color secondaryTextColor: "#c8959595"
+    property color shellBackgroundColor: "#191724"
+    property color overviewSurfaceColor: "#26233a"
+    property color mainTextColor: "#e0def4"
+    property color secondaryTextColor: "#908caa"
     property color mainIconColor: mainTextColor
-    property color aliveIconColor: "#ffffff"
-    property color activeColor: "#ef2a68"
-    property color focusColor: mainTextColor
-    property color lowFocusColor: "#21949494"
+    property color aliveIconColor: '#95ff93'
+    property color activeColor: "#eb6f92"
+    property color focusColor: "#c4a7e7"
+    property color lowFocusColor: "#6e6a86"
 
     // === Battery ===
     property color batteryIconColor: activeColor
@@ -24,22 +24,22 @@ Singleton{
     property color curvesTransparentColor: "Transparent"
 
     // === Level bar ===
-    property color levelBarBackgroundColor: mainTextColor
+    property color levelBarBackgroundColor: secondaryTextColor
     property color levelBarFillColor: overviewIndicatorColor
 
     // === Level ring ===
 
     // === Brightness ===
-    property color brightnessIconColor: activeColor
+    property color brightnessIconColor: aliveIconColor
     property color brightnessTextColor: mainTextColor
 
     // === Volume ===
-    property color volumeIconColor: activeColor
+    property color volumeIconColor: focusColor
     property color volumeTextColor: mainTextColor
 
     // === Workspace ===
     property color workspaceActiveColor: activeColor
-    property color workspaceAliveColor: aliveIconColor
+    property color workspaceAliveColor: activeColor
     property color workspaceInactiveColor: mainIconColor
     property color workspaceTransparentColor: "Transparent"
 
@@ -48,7 +48,7 @@ Singleton{
 
     // === Spotify ===
     property color spotifyPanelColor: "Transparent"
-    property color spotifyAlbumPlaceholderColor: "#2a2a35"
+    property color spotifyAlbumPlaceholderColor: "#26233a"
     property color spotifyTitleColor: mainTextColor
     property color spotifyArtistColor: secondaryTextColor
     property color spotifyControlColor: mainTextColor
@@ -56,11 +56,11 @@ Singleton{
     property color spotifyPlayColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.8)
 
     // === Progress indicators ===
-    property color levelRingBackgroundColor: "#303030"
-    property color levelRingFillColor: "red"
+    property color levelRingBackgroundColor: "#26233a"
+    property color levelRingFillColor: "#eb6f92"
     property color levelRingTrackColor: "Transparent"
-    property color levelRingValueTextColor: "white"
-    property color indicatorColor: "#00c896"
+    property color levelRingValueTextColor: "#f6c177"
+    property color indicatorColor: "#9ccfd8"
     property color indicatorIconColor: aliveIconColor
     property color indicatorTrackColor: Qt.rgba(1, 1, 1, 0.12)
 
@@ -77,9 +77,9 @@ Singleton{
     // === Launcher ===
     property color launcherPanelColor: "Transparent"
     property color launcherBorderColor: "Transparent"
-    property color launcherPrimaryTextColor: "#F3E7BF"
-    property color launcherDimTextColor: mainTextColor
-    property color launcherAccentColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.3)  // dont change
+    property color launcherPrimaryTextColor: "#f6c177"
+    property color launcherDimTextColor: secondaryTextColor
+    property color launcherAccentColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.3)
     property color launcherAccentIconColor: "Transparent"
     property color launcherSearchBackgroundColor: Qt.rgba(1, 1, 1, 0.07)
     property color launcherSearchFocusColor: activeColor
@@ -107,11 +107,11 @@ Singleton{
     // === Overview ===
     property color overviewTextColor: mainTextColor
     property color overviewSecondaryTextColor: secondaryTextColor
-    property color overviewSurfaceFillColor: "Transparent"    // dont chnage
+    property color overviewSurfaceFillColor: "Transparent"
     property color overviewIndicatorColor: activeColor
     property color overviewIndicatorIconColor: mainIconColor
-    property color overviewWarningColor: activeColor // for temperature value
-    property color overviewNormalColor: mainTextColor // for temperature value
+    property color overviewWarningColor: activeColor
+    property color overviewNormalColor: mainTextColor
 
     // === Power bar ===
     property color powerBarBackgroundColor: shellBackgroundColor
@@ -119,6 +119,4 @@ Singleton{
     property color powerBarIconColor: mainIconColor
     property color powerBarActiveColor: activeColor
     property color powerBarTransparentColor: "Transparent"
-
-
 }
