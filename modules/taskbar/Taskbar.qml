@@ -28,7 +28,7 @@ ListView {
         id: desktopText
 
         visible: opacity !== 0
-        color: Colors.clockTextColor
+        color: Colors.taskbarTextColor
         text: "[ Desktop ]"
         anchors.centerIn: parent
 
@@ -82,7 +82,7 @@ ListView {
             height: 4
             width: height * 4
             radius: 2
-            color: Colors.activeColor
+            color: Colors.taskbarActiveColor
 
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom

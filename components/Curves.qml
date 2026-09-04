@@ -24,7 +24,7 @@ Shape {
 
     ShapePath{
         fillColor: root.color
-        strokeColor: Colors.transparentColor
+        strokeColor: Colors.curvesTransparentColor
         startX: root.isTop?root.radius:0
         startY: root.isTop?0:0
 

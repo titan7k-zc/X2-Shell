@@ -6,8 +6,8 @@ Item {
 
     property real value: 100
 
-    property color backgroundColor: Colors.mainTextColor
-    property color fillColor: Colors.overviewIndicatorColor
+    property color backgroundColor: Colors.levelBarBackgroundColor
+    property color fillColor: Colors.levelBarFillColor
 
     property real barWidth: 100
     property real barHeight: 10

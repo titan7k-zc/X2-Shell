@@ -31,15 +31,15 @@ FocusScope {
         implicitWidth: imgArea.implicitWidth
 
         radius: 10
-        color: Colors.transparentColor
-        border.color: Colors.transparentColor
+        color: Colors.wallpaperTransparentColor
+        border.color: Colors.wallpaperTransparentColor
         border.width: 2
 
         Rectangle {
             id: imgArea
             implicitWidth: 930  //1100
             implicitHeight: 370
-            color: Colors.transparentColor
+            color: Colors.wallpaperTransparentColor
             clip: true
             anchors.centerIn: parent
             GridView {
@@ -71,7 +71,7 @@ FocusScope {
                         anchors.fill: parent
                         anchors.margins: 7
                         radius: 6
-                        color: Colors.transparentColor
+                        color: Colors.wallpaperTransparentColor
 
                         Text {
                             id: loadingIcon
@@ -80,7 +80,7 @@ FocusScope {
                             anchors.centerIn: parent
                             opacity:0.2
 
-                            color: Colors.mainTextColor
+                            color: Colors.wallpaperLoadingTextColor
 
                             visible: img.status !== Image.Ready
 

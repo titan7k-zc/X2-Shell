@@ -21,6 +21,15 @@ Singleton{
     property color batteryIconColor: activeColor
     property color batteryTextColor: mainTextColor
 
+    // === Curves ===
+    property color curvesTransparentColor: transparentColor
+
+    // === Level bar ===
+    property color levelBarBackgroundColor: mainTextColor
+    property color levelBarFillColor: overviewIndicatorColor
+
+    // === Level ring ===
+
     // === Brightness ===
     property color brightnessIconColor: activeColor
     property color brightnessTextColor: mainTextColor
@@ -56,6 +65,16 @@ Singleton{
     property color indicatorIconColor: aliveIconColor
     property color indicatorTrackColor: Qt.rgba(1, 1, 1, 0.12)
 
+    // === Rou indicator ===
+    property color rouIndicatorColor: indicatorColor
+    property color rouIndicatorIconColor: indicatorIconColor
+    property color rouIndicatorTrackColor: indicatorTrackColor
+
+    // === Popups ===
+    property color pop8MenuColor: shellBackgroundColor
+    property color pop8TransparentColor: transparentColor
+    property color pop8ShadowColor: shellBackgroundColor
+
     // === Launcher ===
     property color launcherPanelColor: transparentColor
     property color launcherBorderColor: transparentColor
@@ -72,10 +91,19 @@ Singleton{
     property color powerButtonColor: shellBackgroundColor
     property color powerIconColor: mainIconColor
     property color powerFocusedIconColor: activeColor
+    property color powerMenuTransparentColor: transparentColor
 
     // === Bar ===
     property color barBorderColor: shellBackgroundColor
     property color barTransparentColor: transparentColor
+
+    // === Taskbar ===
+    property color taskbarTextColor: mainTextColor
+    property color taskbarActiveColor: activeColor
+
+    // === Wallpaper ===
+    property color wallpaperTransparentColor: transparentColor
+    property color wallpaperLoadingTextColor: mainTextColor
 
     // === Overview ===
     property color overviewTextColor: mainTextColor

@@ -15,7 +15,7 @@ FocusScope{
         id:menu
         implicitWidth:menuCol.implicitWidth
         implicitHeight:menuCol.implicitHeight+10
-        color: Colors.transparentColor
+        color: Colors.powerMenuTransparentColor
         radius:root.radius
 
         ColumnLayout{

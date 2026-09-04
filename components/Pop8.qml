@@ -31,7 +31,7 @@ Scope {
 
 
 
-    property color menuColor: Colors.shellBackgroundColor
+    property color menuColor: Colors.pop8MenuColor
     property int animDuration: 320
     property int animEasing: Easing.InOutQuad
 
@@ -76,7 +76,7 @@ Scope {
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.keyboardFocus: root.show ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None  // to get keybord input for menu
         exclusiveZone: 0
-        color: Colors.transparentColor
+        color: Colors.pop8TransparentColor
 
         anchors.top: root.anchorTop
         anchors.bottom: root.anchorBottom
@@ -107,7 +107,7 @@ Scope {
             layer.enabled: true
             layer.effect: MultiEffect{
                 shadowEnabled: true
-                shadowColor: Colors.shellBackgroundColor
+                shadowColor: Colors.pop8ShadowColor
                 shadowOpacity: 0.5
                 shadowBlur: 0.6
                 shadowHorizontalOffset: 0
@@ -151,7 +151,7 @@ Scope {
                     height: Math.max(0, menu.height - 20)
                     width: Math.max(0, menu.width - 20)
 
-                    color: Colors.transparentColor
+                    color: Colors.pop8TransparentColor
                     radius: menu.safeRad
                     clip: true
 

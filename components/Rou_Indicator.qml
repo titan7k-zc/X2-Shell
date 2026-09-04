@@ -10,11 +10,11 @@ Item {
     property real hi_off:0
     property real vi_off:0
     property real i_scl:1
-    property color igColor: Colors.indicatorColor
-    property color icColor: Colors.indicatorIconColor
+    property color igColor: Colors.rouIndicatorColor
+    property color icColor: Colors.rouIndicatorIconColor
 
     // Optional extras (sane defaults, override if you like)
-    property color trackColor: Colors.indicatorTrackColor
+    property color trackColor: Colors.rouIndicatorTrackColor
     property bool showTrack: true
     property real ringWidth: Math.max(2, Math.min(width, height) * 0.09)
     property string iconFontFamily: "" // set to your icon font name if needed
