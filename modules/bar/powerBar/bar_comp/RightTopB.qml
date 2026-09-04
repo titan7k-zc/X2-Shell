@@ -20,8 +20,8 @@ Item {
 
         ShapePath {
             id: shp
-            strokeColor: "transparent"
-            fillColor: Colors.sBG
+            strokeColor: Colors.powerBarTransparentColor
+            fillColor: Colors.powerBarBackgroundColor
 
             startX: 0
             startY: 0
@@ -77,7 +77,6 @@ Item {
         shadowEnabled: true
         shadowBlur: 0.6
         shadowScale: 1
-        // shadowColor:'#000000'
         shadowVerticalOffset:3
         shadowHorizontalOffset: -2
         opacity: 0.7
@@ -95,7 +94,7 @@ Item {
             width: bat.implicitWidth+20
             height: 35
             radius: 6
-            color:"Transparent"
+            color: Colors.powerBarTransparentColor
             Brightness{id:brig;anchors.centerIn: parent}
         }
 
@@ -103,7 +102,7 @@ Item {
             width: sou.implicitWidth+20
             height: 35
             radius: 6
-            color:"Transparent"
+            color: Colors.powerBarTransparentColor
             Volume{id:sou;anchors.centerIn: parent}
         }
 
@@ -111,7 +110,7 @@ Item {
             width: bat.implicitWidth+20
             height: 35
             radius: 6
-            color:"Transparent"
+            color: Colors.powerBarTransparentColor
             Battery{id:bat;anchors.centerIn: parent}
         }
     }

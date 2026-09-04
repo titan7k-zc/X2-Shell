@@ -53,7 +53,7 @@ Item {
 
         Text {
             text: "󰃟"   // fixed brightness glyph — replace with whichever you like
-            color: Colors.iActive
+            color: Colors.brightnessIconColor
 
             font {
                 family: "JetBrainsMono Nerd Font Mono"
@@ -65,7 +65,7 @@ Item {
 
         Text {
             text: root.val + "%  "
-            color: Colors.tMain
+            color: Colors.brightnessTextColor
 
             font {
                 family: "JetBrainsMono Nerd Font Mono"

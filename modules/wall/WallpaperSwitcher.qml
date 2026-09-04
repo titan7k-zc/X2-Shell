@@ -31,15 +31,15 @@ FocusScope {
         implicitWidth: imgArea.implicitWidth
 
         radius: 10
-        color: "Transparent"
-        border.color: "Transparent"
+        color: Colors.transparentColor
+        border.color: Colors.transparentColor
         border.width: 2
 
         Rectangle {
             id: imgArea
             implicitWidth: 930  //1100
             implicitHeight: 370
-            color: "transparent"
+            color: Colors.transparentColor
             clip: true
             anchors.centerIn: parent
             GridView {
@@ -71,7 +71,7 @@ FocusScope {
                         anchors.fill: parent
                         anchors.margins: 7
                         radius: 6
-                        color: "Transparent"
+                        color: Colors.transparentColor
 
                         Text {
                             id: loadingIcon
@@ -80,7 +80,7 @@ FocusScope {
                             anchors.centerIn: parent
                             opacity:0.2
 
-                            color: Colors.tMain
+                            color: Colors.mainTextColor
 
                             visible: img.status !== Image.Ready
 

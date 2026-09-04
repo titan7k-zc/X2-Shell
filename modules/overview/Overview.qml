@@ -19,8 +19,8 @@ Item {
         implicitHeight: dasgArea.implicitHeight + 20
         implicitWidth: dasgArea.implicitWidth + 20
         radius: 10
-        color: "Transparent"
-        border.color: "Transparent"
+        color: Colors.transparentColor
+        border.color: Colors.transparentColor
         border.width: 2
 
         Rectangle {
@@ -28,7 +28,7 @@ Item {
 
             implicitWidth: 1100
             implicitHeight: 400
-            color: "Transparent"
+            color: Colors.transparentColor
             clip: true
             anchors.centerIn: parent
             radius: 10
@@ -52,7 +52,7 @@ Item {
 
 
                     radius: ov.rad
-                    color: Colors.sFG
+                    color: Colors.overviewSurfaceFillColor
                     
 
                     ColumnLayout {
@@ -65,7 +65,7 @@ Item {
                         Text {
                             text: TimeServices.hour + "\n" + TimeServices.minute
 
-                            color: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.7)//Colors.tMain
+                            color: Colors.overviewIndicatorColor
 
                             font.family: "Nunito"
                             font.weight: Font.ExtraBold
@@ -86,7 +86,7 @@ Item {
                             opacity: 0.7
 
                             text: TimeServices.date
-                            color: Colors.tLow
+                            color: Colors.overviewSecondaryTextColor
 
                             font.family: "Nunito"
                             font.weight: Font.Bold
@@ -107,7 +107,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: ov.rad
-                    color: Colors.sFG
+                    color: Colors.overviewSurfaceFillColor
 
 
                     Row{
@@ -118,7 +118,7 @@ Item {
                             anchors.verticalCenter:parent.verticalCenter
                             width:150
                             height:150
-                            color:"Transparent"
+                            color: Colors.transparentColor
                             radius:20
 
 
@@ -135,7 +135,7 @@ Item {
                             anchors.verticalCenter:parent.verticalCenter
                             anchors.verticalCenterOffset:15
                             text:"󰌽  : X2 Shell\n  : Titan"
-                            color:Colors.tMain
+                            color: Colors.overviewTextColor
                             font.family: "Nunito"
                             font.weight: Font.Bold
                             font.pixelSize:20
@@ -155,7 +155,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: ov.rad
-                    color: Colors.sFG
+                    color: Colors.overviewSurfaceFillColor
                     opacity:0
                     
                 }
@@ -166,7 +166,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: ov.rad
-                    color: Colors.sFG
+                    color: Colors.overviewSurfaceFillColor
                     opacity:0
                     
                 }
@@ -180,7 +180,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: ov.rad
-                    color: Colors.sFG
+                    color: Colors.overviewSurfaceFillColor
 
                     Column {
                         id: col
@@ -212,8 +212,8 @@ Item {
                                 width: height 
                                 value: SystemMonitor.ramUsage
                                 ic: ""
-                                igColor: Colors.iActive
-                                icColor: Colors.iMain
+                                igColor: Colors.overviewIndicatorColor
+                                icColor: Colors.overviewIndicatorIconColor
                                 // trackColor:"gray"
                             }
                         }
@@ -230,7 +230,7 @@ Item {
                                 Text {
                                     anchors.centerIn: parent
                                     anchors.verticalCenterOffset:col.iVCO
-                                    color: Colors.tMain
+                                    color: Colors.overviewTextColor
                                     text: ""
                                     font.pixelSize: col.iSize
                                 }
@@ -249,9 +249,9 @@ Item {
                                 text: tempVal + " 󰔄"
                                 color: {
                                     if (tempVal>70){
-                                        return Colors.mWarning
+                                        return Colors.overviewWarningColor
                                     }else {
-                                        return Colors.mNormal
+                                        return Colors.overviewNormalColor
                                     }
                                 }
                             
@@ -271,7 +271,7 @@ Item {
                                 Text {
                                     anchors.verticalCenterOffset:col.iVCO
                                     anchors.centerIn: parent
-                                    color: Colors.tMain
+                                    color: Colors.overviewTextColor
                                     text: "󰊹"
                                     font.pixelSize: col.iSize
                                 }
@@ -290,9 +290,9 @@ Item {
                                 text: tempVal + " 󰔄"
                                 color: {
                                     if (tempVal>70){
-                                        return Colors.mWarning
+                                        return Colors.overviewWarningColor
                                     }else {
-                                        return Colors.mNormal
+                                        return Colors.overviewNormalColor
                                     }
                                 }
                             
@@ -321,8 +321,8 @@ Item {
                                 width: height 
                                 value: SystemMonitor.storageUsage
                                 ic: ""
-                                igColor: Colors.iActive
-                                icColor: Colors.iMain
+                                igColor: Colors.overviewIndicatorColor
+                                icColor: Colors.overviewIndicatorIconColor
                                 // trackColor:"gray"
                             }
                         }
@@ -341,7 +341,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: ov.rad
-                    color: Colors.sFG
+                    color: Colors.overviewSurfaceFillColor
                     
                     SpotifyPlayer{
                         anchors.centerIn:parent

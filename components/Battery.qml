@@ -25,7 +25,7 @@ Row {
 
     Text{
         text:root.icon
-        color:Colors.iActive
+        color: Colors.batteryIconColor
                          
         font {
             family: "JetBrainsMono Nerd Font Propo"
@@ -39,7 +39,7 @@ Row {
 
     Text {
         text: root.level+"%"
-        color:Colors.tMain
+        color: Colors.batteryTextColor
 
 
 

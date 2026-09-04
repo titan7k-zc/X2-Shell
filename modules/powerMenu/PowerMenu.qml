@@ -8,14 +8,14 @@ FocusScope{
     implicitHeight:menu.implicitHeight
     implicitWidth:menu.implicitWidth
     property int radius:8
-    property color buttonColor:"Black"
-    property color buttonIcoColor:Colors.iMain
-    property color buttonFocIcoColor:Colors.iFocusHeigh
+    property color buttonColor: Colors.powerButtonColor
+    property color buttonIcoColor: Colors.powerIconColor
+    property color buttonFocIcoColor: Colors.powerFocusedIconColor
     Rectangle{
         id:menu
         implicitWidth:menuCol.implicitWidth
         implicitHeight:menuCol.implicitHeight+10
-        color:"Transparent"
+        color: Colors.transparentColor
         radius:root.radius
 
         ColumnLayout{

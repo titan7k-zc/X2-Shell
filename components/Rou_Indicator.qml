@@ -1,4 +1,5 @@
 import QtQuick
+import "../config"
 
 Item {
     id: root
@@ -9,11 +10,11 @@ Item {
     property real hi_off:0
     property real vi_off:0
     property real i_scl:1
-    property color igColor: "#00c896"   // ring / progress indicator color
-    property color icColor: "#ffffff"   // icon color
+    property color igColor: Colors.indicatorColor
+    property color icColor: Colors.indicatorIconColor
 
     // Optional extras (sane defaults, override if you like)
-    property color trackColor: Qt.rgba(1, 1, 1, 0.12) // faint background track
+    property color trackColor: Colors.indicatorTrackColor
     property bool showTrack: true
     property real ringWidth: Math.max(2, Math.min(width, height) * 0.09)
     property string iconFontFamily: "" // set to your icon font name if needed

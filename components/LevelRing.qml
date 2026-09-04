@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
+import "../config"
 
 Item {
     id: root
@@ -15,8 +16,8 @@ Item {
     //  90 = bottom
     // 180 = left
 
-    property color backgroundColor: "#303030"
-    property color fillColor: "red"
+    property color backgroundColor: Colors.levelRingBackgroundColor
+    property color fillColor: Colors.levelRingFillColor
 
     property bool showValue: false
 
@@ -40,7 +41,7 @@ Item {
 
         // Background ring
         ShapePath {
-            fillColor: "transparent"
+            fillColor: Colors.levelRingTrackColor
             strokeColor: root.backgroundColor
             strokeWidth: root.ringWidth
             capStyle: ShapePath.RoundCap
@@ -59,7 +60,7 @@ Item {
 
         // Value ring
         ShapePath {
-            fillColor: "transparent"
+            fillColor: Colors.levelRingTrackColor
             strokeColor: root.fillColor
             strokeWidth: root.ringWidth
             capStyle: ShapePath.RoundCap
@@ -84,7 +85,7 @@ Item {
 
         text: Math.round(root.value) + "%"
 
-        color: "white"
+        color: Colors.levelRingValueTextColor
         font.pixelSize: root.ringSize / 5
     }
 }

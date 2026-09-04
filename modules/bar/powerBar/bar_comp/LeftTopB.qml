@@ -23,8 +23,8 @@ Item {
         ShapePath {
             id: shp
 
-            strokeColor: "transparent"
-            fillColor: Colors.sBG
+            strokeColor: Colors.powerBarTransparentColor
+            fillColor: Colors.powerBarBackgroundColor
 
             startX: 0
             startY: 0
@@ -80,7 +80,6 @@ Item {
         shadowEnabled: true
         shadowBlur: 0.6
         shadowScale: 1
-        // shadowColor:'#000000'
         shadowVerticalOffset:3
         shadowHorizontalOffset: 2
         opacity: 0.7

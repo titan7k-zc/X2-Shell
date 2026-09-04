@@ -66,8 +66,8 @@ FocusScope {
         ShapePath {
             id: shp
 
-            strokeColor: "transparent"
-            fillColor: Colors.sBG
+            strokeColor: Colors.powerBarTransparentColor
+            fillColor: Colors.powerBarBackgroundColor
 
             startX: 0
             startY: 0
@@ -159,7 +159,7 @@ FocusScope {
         anchors.horizontalCenter: parent.horizontalCenter
         width: 100
         height: 35
-        color: "Transparent"
+        color: Colors.powerBarTransparentColor
 
         opacity: midB.clic ? 0 : 1
         scale: midB.clic ? 0.85 : 1
@@ -186,7 +186,7 @@ FocusScope {
                 weight: Font.Bold
             }
 
-            color:Colors.tMain
+            color: Colors.powerBarTextColor
         }
         
     }
@@ -197,7 +197,7 @@ FocusScope {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
 
-        color: "transparent"
+        color: Colors.powerBarTransparentColor
 
         implicitWidth: 600
         implicitHeight: 40
@@ -248,14 +248,14 @@ FocusScope {
                     width: 150
                     height: 35
 
-                    color: "transparent"
+                    color: Colors.powerBarTransparentColor
 
                     Text {
                         anchors.centerIn: parent
 
                         text: modelData
 
-                        color: midB.activeTab === modelData? Colors.iActive :Colors.iMain
+                        color: midB.activeTab === modelData ? Colors.powerBarActiveColor : Colors.powerBarIconColor
                         font.bold: true
 
                         opacity: midB.activeTab === modelData ? 1.0 : 0.55
@@ -310,7 +310,7 @@ FocusScope {
             height: 4
 
             radius: 20
-            color:  Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.7)
+            color: Colors.powerBarActiveColor
 
             y: tabRow.y + tabRow.height - height
 
@@ -340,7 +340,7 @@ FocusScope {
         anchors.margins: 45
         anchors.bottomMargin: 20
         anchors.fill: shape
-        color: "transparent"
+        color: Colors.powerBarTransparentColor
         radius: midB.rad
         clip: true                    
 

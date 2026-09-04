@@ -1,8 +1,8 @@
 import QtQuick 2.15
 import Quickshell
 import Quickshell.Wayland
-import "../../config"
-import "../../components"
+import "../config"
+import "."
 import QtQuick.Effects
 
 Scope {
@@ -31,7 +31,7 @@ Scope {
 
 
 
-    property color menuColor: Colors.sBG
+    property color menuColor: Colors.shellBackgroundColor
     property int animDuration: 320
     property int animEasing: Easing.InOutQuad
 
@@ -76,7 +76,7 @@ Scope {
         WlrLayershell.layer: WlrLayer.Overlay
         WlrLayershell.keyboardFocus: root.show ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None  // to get keybord input for menu
         exclusiveZone: 0
-        color: "transparent"
+        color: Colors.transparentColor
 
         anchors.top: root.anchorTop
         anchors.bottom: root.anchorBottom
@@ -107,7 +107,7 @@ Scope {
             layer.enabled: true
             layer.effect: MultiEffect{
                 shadowEnabled: true
-                shadowColor: "black"
+                shadowColor: Colors.shellBackgroundColor
                 shadowOpacity: 0.5
                 shadowBlur: 0.6
                 shadowHorizontalOffset: 0
@@ -151,7 +151,7 @@ Scope {
                     height: Math.max(0, menu.height - 20)
                     width: Math.max(0, menu.width - 20)
 
-                    color: 'Transparent'
+                    color: Colors.transparentColor
                     radius: menu.safeRad
                     clip: true
 

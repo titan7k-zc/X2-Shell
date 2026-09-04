@@ -23,8 +23,8 @@ Item {
         ShapePath {
             id: shp
 
-            strokeColor: "transparent"
-            fillColor: Colors.sBG
+            strokeColor: Colors.powerBarTransparentColor
+            fillColor: Colors.powerBarBackgroundColor
 
             startX: 0
             startY: leftB.hei + leftB.rad
@@ -80,7 +80,6 @@ Item {
         shadowEnabled: true
         shadowBlur: 0.6
         shadowScale: 1
-        // shadowColor:'#000000'
         shadowVerticalOffset:-3
         shadowHorizontalOffset: 2
         opacity: 0.7
@@ -103,7 +102,7 @@ Item {
         // bottomRightRadius: 8
         radius:8
 
-        color: Colors.sBG
+        color: Colors.powerBarBackgroundColor
 
         opacity: tb.hoveredTitle === "" ? 0 : 1
 
@@ -131,7 +130,7 @@ Item {
 
             text: tb.hoveredTitle
 
-            color: Colors.tMain
+            color: Colors.powerBarTextColor
 
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight

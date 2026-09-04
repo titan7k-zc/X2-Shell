@@ -23,8 +23,8 @@ Item {
 
         ShapePath {
             id: shp
-            strokeColor: "transparent"
-            fillColor: Colors.sBG
+            strokeColor: Colors.powerBarTransparentColor
+            fillColor: Colors.powerBarBackgroundColor
 
             startX: 0
             startY: rightB.hei + rightB.rad
@@ -80,7 +80,6 @@ Item {
         shadowEnabled: true
         shadowBlur: 0.6
         shadowScale: 1
-        // shadowColor:'#000000'
         shadowVerticalOffset:-3
         shadowHorizontalOffset: -2
         opacity: 0.7
@@ -98,7 +97,7 @@ Item {
             implicitHeight:row_net.implicitHeight+(row_net.implicitHeight/5)
             implicitWidth:row_net.implicitWidth+(row_net.implicitWidth/5)
             anchors.verticalCenter:parent.verticalCenter
-            color:'Transparent'
+            color: Colors.powerBarTransparentColor
             radius:8
             Row{
                 id:row_net
@@ -115,7 +114,7 @@ Item {
                         else
                             return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
                     }
-                    color: Colors.iMain
+                    color: Colors.powerBarIconColor
                     font.pixelSize:15
                 }
 
@@ -128,7 +127,7 @@ Item {
                         else
                             return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
                     }
-                    color: Colors.iMain
+                    color: Colors.powerBarIconColor
                     font.pixelSize:15
                 }
             }
@@ -157,7 +156,7 @@ Item {
             implicitHeight:row_up.implicitHeight+(row_up.implicitHeight/5)
             implicitWidth:row_up.implicitWidth+(row_up.implicitWidth/5)
             anchors.verticalCenter:parent.verticalCenter
-            color:'Transparent'
+            color: Colors.powerBarTransparentColor
             radius:8
             Row {
                 id: row_up
@@ -169,7 +168,7 @@ Item {
                     id: uptimeIcon
                     property var ico:["","󱤌","","󰹻",]
                     text: ico[1]
-                    color: Colors.iActive
+                    color: Colors.powerBarActiveColor
                     font.pixelSize:20
 
                     RotationAnimation {
@@ -186,7 +185,7 @@ Item {
                     anchors.verticalCenter: uptimeIcon.verticalCenter
                     anchors.verticalCenterOffset:1
                     text: SystemMonitor.uptimeString
-                    color: Colors.iMain
+                    color: Colors.powerBarIconColor
                 }
 
             }

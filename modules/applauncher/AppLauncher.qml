@@ -50,21 +50,6 @@ FocusScope {
     readonly property int panelHeight: panelHeaderHeight + Math.min(filteredApps.length, maxVisibleItems) * rowHeight
 
     // ─────────────────────────────────────────────────────────────
-    // Colors
-    // ─────────────────────────────────────────────────────────────
-
-    readonly property color colorPanelBg: "Transparent"
-    readonly property color colorBorder: "transparent"
-    readonly property color colorTextPrimary: "#F3E7BF"
-    readonly property color colorTextDim: Colors.tMain
-    readonly property color colorBlue: "#9F7355"
-    readonly property color colorAccentFill: Colors.iFocusLow
-    readonly property color colorAccentIcon: "transparent"
-    readonly property color colorSearchBg: Qt.rgba(1, 1, 1, 0.07)
-    readonly property color colorSearchBorderFocus: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,1)
-    readonly property color colorIconBubbleBg: Qt.rgba(1, 1, 1, 0.08)
-    readonly property color colorDragHandle: "Transparent"
-
     // ─────────────────────────────────────────────────────────────
     // Typography
     // ─────────────────────────────────────────────────────────────
@@ -187,8 +172,8 @@ FocusScope {
         clip: true
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        color: root.colorPanelBg
-        border.color: root.colorBorder
+        color: Colors.launcherPanelColor
+        border.color: Colors.launcherBorderColor
         border.width: 1
 
         // ─────────────────────────────────────────────────────────
@@ -218,7 +203,7 @@ FocusScope {
                 height: 4
                 radius: 2
                 anchors.horizontalCenter: parent.horizontalCenter
-                color: root.colorDragHandle
+                color: Colors.launcherDragHandleColor
             }
 
             Item {
@@ -234,14 +219,14 @@ FocusScope {
                 width: parent.width
                 height: root.searchBarHeight
                 radius: 10
-                color: root.colorSearchBg
+                color: Colors.launcherSearchBackgroundColor
 
                 // ONLY animation in the launcher
                 Rectangle {
                     anchors.fill: parent
                     radius: 10
-                    color: "transparent"
-                    border.color: root.colorSearchBorderFocus
+                    color: Colors.transparentColor
+                    border.color: Colors.launcherSearchFocusColor
                     border.width: 1
                     opacity: searchInput.activeFocus ? 0.55 : 0
 
@@ -269,7 +254,7 @@ FocusScope {
                         Text {
                             anchors.fill: parent
                             text: root.isSearching ? "" : "Search apps…"
-                            color: root.colorTextPrimary
+                            color: Colors.launcherPrimaryTextColor
                             opacity: 0.28
 
                             font {
@@ -288,8 +273,8 @@ FocusScope {
 
                             anchors.fill: parent
 
-                            color: root.colorTextPrimary
-                            selectionColor: root.colorAccentFill
+                            color: Colors.launcherPrimaryTextColor
+                            selectionColor: Colors.launcherAccentColor
 
                             font {
                                 pixelSize: root.fontSizeSearch
@@ -350,7 +335,7 @@ FocusScope {
                     anchors.centerIn: parent
                     visible: root.filteredApps.length === 0
                     text: "No apps found"
-                    color: root.colorTextPrimary
+                    color: Colors.launcherPrimaryTextColor
                     opacity: 0.28
 
                     font {
@@ -384,7 +369,7 @@ FocusScope {
                         }
 
                         radius: 10
-                        color: delegateRoot.isSelected ? root.colorAccentFill : "transparent"
+                        color: delegateRoot.isSelected ? Colors.launcherAccentColor : Colors.transparentColor
                     }
 
                     // ─────────────────────────────────────────
@@ -410,7 +395,7 @@ FocusScope {
                             radius: 9
                             anchors.verticalCenter: parent.verticalCenter
 
-                            color: delegateRoot.isSelected ? root.colorAccentIcon : root.colorIconBubbleBg
+                            color: delegateRoot.isSelected ? Colors.launcherAccentIconColor : Colors.launcherIconBubbleColor
 
                             Image {
                                 id: appIcon
@@ -437,7 +422,7 @@ FocusScope {
                                     family: root.fontFamily
                                     weight: Font.Bold
                                 }
-                                color: delegateRoot.isSelected ? root.colorBlue : root.colorTextPrimary
+                                color: delegateRoot.isSelected ? Colors.launcherAccentColor : Colors.launcherPrimaryTextColor
                             }
                         }
 
@@ -455,7 +440,7 @@ FocusScope {
                                     family: root.fontFamily
                                     weight: delegateRoot.isSelected ? Font.Medium : Font.Normal
                                 }
-                                color: delegateRoot.isSelected ? root.colorTextPrimary : root.colorTextDim
+                                color: delegateRoot.isSelected ? Colors.launcherPrimaryTextColor : Colors.launcherDimTextColor
                             }
 
                             Text {
@@ -465,7 +450,7 @@ FocusScope {
                                     pixelSize: root.fontSizeSubtitle
                                     family: root.fontFamily
                                 }
-                                color: root.colorTextPrimary
+                                color: Colors.launcherPrimaryTextColor
                                 opacity: 0.35
                             }
                         }

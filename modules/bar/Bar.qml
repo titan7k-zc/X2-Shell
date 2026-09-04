@@ -13,7 +13,7 @@ import "./powerBar/bar_comp"
 
 Scope{
     id:root
-    property color borderColor:Colors.sBG
+    property color borderColor: Colors.barBorderColor
     property int shadowSpace: 12   // extra room so the shadow isn't clipped
     property int rootRadius: 20
     property int lrBarWid: 15
@@ -36,7 +36,7 @@ Scope{
                 property int barWidth: root.lrBarWid
                 property int radius: root.rootRadius
                 property int borderThickness: 0
-                color: "transparent"
+                color: Colors.barTransparentColor
                 anchors.top: true
                 anchors.bottom: true
                 anchors.right: true
@@ -65,7 +65,6 @@ Scope{
                     shadowEnabled: true
                     shadowBlur: 0.6
                     shadowScale: 1
-                    // shadowColor:'#000000'
                     shadowVerticalOffset:0
                     shadowHorizontalOffset: -3
                     opacity: 0.7
@@ -80,7 +79,7 @@ Scope{
                 id:leftBarWindow
                 property int barWidth: root.lrBarWid
                 property int radius: root.rootRadius
-                color: "transparent"
+                color: Colors.barTransparentColor
                 anchors.top: true
                 anchors.bottom: true
                 anchors.left: true
@@ -110,7 +109,6 @@ Scope{
                     shadowEnabled: true
                     shadowBlur: 0.6
                     shadowScale: 1
-                    // shadowColor:'#000000'
                     shadowVerticalOffset:0
                     shadowHorizontalOffset: 3
                     opacity: 0.7
@@ -135,7 +133,7 @@ Scope{
                 
                 exclusiveZone: root.toph   // handles reserved space
 
-                color: "transparent"
+                color: Colors.barTransparentColor
                 
                 // margins.top: -root.toph
 
@@ -180,7 +178,7 @@ Scope{
                 
                 exclusiveZone: root.toph   // handles reserved space
 
-                color: "Transparent"
+                color: Colors.barTransparentColor
                 
                 // margins.top: -root.toph
 
@@ -215,7 +213,7 @@ Scope{
             PanelWindow {
                 id: midpop
 
-                color: "transparent"
+                color: Colors.barTransparentColor
 
                 anchors {
                     top: true
@@ -268,8 +266,6 @@ Scope{
             //     implicitWidth: screenRoot.modelData.width
             //     implicitHeight: screenRoot.modelData.height
 
-            //     color:'Transparent'
-            //     // color:'#26ff0000'  // for debug
 
 
             //     property bool popEnabled: mb.clic || ipch.powerPop  // activator

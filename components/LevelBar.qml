@@ -6,8 +6,8 @@ Item {
 
     property real value: 100
 
-    property color backgroundColor: Colors.tMain
-    property color fillColor: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.7)
+    property color backgroundColor: Colors.mainTextColor
+    property color fillColor: Colors.overviewIndicatorColor
 
     property real barWidth: 100
     property real barHeight: 10

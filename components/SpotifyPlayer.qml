@@ -20,7 +20,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: 20
-        color: "Transparent"
+        color: Colors.spotifyPanelColor
 
         ColumnLayout {
             anchors.fill: parent
@@ -34,7 +34,7 @@ Item {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                 radius: Layout.preferredWidth / 2
                 opacity: 0.7
-                color: "#2a2a35"
+                color: Colors.spotifyAlbumPlaceholderColor
 
                 antialiasing: true
                 layer.enabled: true
@@ -63,7 +63,6 @@ Item {
             //         anchors.centerIn: parent
             //         visible: artImage.status !== Image.Ready
             //         text: SpotifyServices.running ? "" : "\u266B"
-            //         color: "#55555f"
             //         font.pixelSize: 96
             //     }
             // }
@@ -77,7 +76,7 @@ Item {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.maximumWidth: Math.min(root.height,root.width)-20
                     text: SpotifyServices.displayTitle
-                    color: Colors.tMain
+                    color: Colors.spotifyTitleColor
                     font.pixelSize: 18
                     font.bold: true
                     elide: Text.ElideRight
@@ -87,7 +86,7 @@ Item {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.maximumWidth: Math.min(root.height,root.width)-20
                     text: SpotifyServices.displayArtist
-                    color: Colors.tLow
+                    color: Colors.spotifyArtistColor
                     font.pixelSize: 13
                     elide: Text.ElideRight
                     horizontalAlignment: Text.AlignHCenter
@@ -100,12 +99,12 @@ Item {
 
                     Rectangle {
                         width: 35; height: width; radius: width / 2
-                        color: Colors.tMain//"#26262e"
+                        color: Colors.spotifyControlColor
                         scale: prevArea.pressed ? 0.9 : 1
                         Text {
                             anchors.centerIn: parent
                             text: "\u23EE"
-                            color: Colors.sBG
+                            color: Colors.spotifyControlIconColor
                             font.pixelSize: 22
                         }
                         MouseArea {
@@ -118,14 +117,14 @@ Item {
 
                     Rectangle {
                         width: 45; height: width; radius: width / 2
-                        color: Qt.rgba(Colors.iActive.r,Colors.iActive.g,Colors.iActive.b,0.8)//'#941db954'
+                        color: Colors.spotifyPlayColor
                         scale: playArea.pressed ? 0.9 : 1
                         Text {
                             anchors.centerIn: parent
                             text: SpotifyServices.player && SpotifyServices.player.isPlaying ? "\u23F8" : "\u25B6"
                             anchors.horizontalCenterOffset: text === "\u25B6" ? 2.5 : 0
                             anchors.verticalCenterOffset: text === "\u25B6" ? 0.8 : 0
-                            color: Colors.sBG
+                            color: Colors.spotifyControlIconColor
                             font.pixelSize: 26
                         }
                         MouseArea {
@@ -138,12 +137,12 @@ Item {
 
                     Rectangle {
                         width: 35; height: width; radius: width / 2
-                        color: Colors.tMain//"#26262e"
+                        color: Colors.spotifyControlColor
                         scale: nextArea.pressed ? 0.9 : 1
                         Text {
                             anchors.centerIn: parent
                             text: "\u23ED"
-                            color: Colors.sBG
+                            color: Colors.spotifyControlIconColor
                             font.pixelSize: 22
                         }
                         MouseArea {

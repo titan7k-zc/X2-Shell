@@ -25,7 +25,6 @@ Item {
     }
     // Text{
     //     text:Hyprland.focusedWorkspace?.id
-    //     color:"red"
     // }
 
     Row {
@@ -80,7 +79,7 @@ Item {
                 implicitWidth: shouldShow ? (dummyLabel.implicitWidth) : 0  //(dummyLabel.implicitWidth + 14)  spacing 
                 implicitHeight: 22
                 radius: 6
-                color: "transparent"
+                color: Colors.workspaceTransparentColor
 
                 Text {
                     id: dummyLabel
@@ -93,7 +92,7 @@ Item {
                     id: activeLabel
                     anchors.centerIn: parent
                     text: ""
-                    color: Colors.iActive
+                    color: Colors.workspaceActiveColor
                     opacity: wbutton.isActive ? 1 : 0
                     // scale: wbutton.isActive ? 1.25 : 0
                     scale: 1.25 
@@ -113,7 +112,7 @@ Item {
                     id: inactiveLabel
                     anchors.centerIn: parent
                     text: ""
-                    color: wbutton.ws ? Colors.iAlive : Colors.iMain
+                    color: wbutton.ws ? Colors.workspaceAliveColor : Colors.workspaceInactiveColor
                     opacity: wbutton.isActive ? 0 : 1
                     font {
                         pixelSize: 14

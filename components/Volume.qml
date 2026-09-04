@@ -133,7 +133,7 @@ Item {
 
         Text {
             text: root.icon
-            color: Colors.iActive
+            color: Colors.volumeIconColor
 
             font {
                 family: "JetBrainsMono Nerd Font Mono"
@@ -145,7 +145,7 @@ Item {
 
         Text {
             text: root.vol + "%"
-            color: Colors.tMain
+            color: Colors.volumeTextColor
 
             font {
                 family: "JetBrainsMono Nerd Font Mono"
