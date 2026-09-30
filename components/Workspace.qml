@@ -79,7 +79,7 @@ Item {
                 implicitWidth: shouldShow ? (dummyLabel.implicitWidth) : 0  //(dummyLabel.implicitWidth + 14)  spacing 
                 implicitHeight: 22
                 radius: 6
-                color: Colors.workspaceTransparentColor
+                color: "Transparent"
 
                 Text {
                     id: dummyLabel
@@ -91,11 +91,13 @@ Item {
                 Text {
                     id: activeLabel
                     anchors.centerIn: parent
-                    text: ""
+                    anchors.horizontalCenterOffset:2.5
+                    property var ico:["","󱤌","","󰹻",]
+                    text: ico[1]
                     color: Colors.workspaceActiveColor
                     opacity: wbutton.isActive ? 1 : 0
-                    // scale: wbutton.isActive ? 1.25 : 0
-                    scale: 1.25 
+                    scale: wbutton.isActive ? 1.25 : 0
+                    // scale: 1.25 
                     font {
                         pixelSize: 14
                         weight: 500
@@ -103,9 +105,19 @@ Item {
                     Behavior on opacity {
                         NumberAnimation { duration: 150 }
                     }
-                    // Behavior on scale {
-                    //     NumberAnimation { duration: 150 }
-                    // }
+                    Behavior on scale {
+                        NumberAnimation { duration: 150 }
+                    }
+
+
+                    RotationAnimation {
+                        target: activeLabel
+                        from: 0
+                        to: 360
+                        duration: 5000
+                        loops: Animation.Infinite
+                        running: true
+                    }
                 }
 
                 Text {
@@ -114,11 +126,15 @@ Item {
                     text: ""
                     color: wbutton.ws ? Colors.workspaceAliveColor : Colors.workspaceInactiveColor
                     opacity: wbutton.isActive ? 0 : 1
+                    scale:wbutton.ws ? 1.6 : 1
                     font {
                         pixelSize: 14
                         weight: 500
                     }
                     Behavior on opacity {
+                        NumberAnimation { duration: 150 }
+                    }
+                    Behavior on scale {
                         NumberAnimation { duration: 150 }
                     }
                 }

@@ -8,8 +8,17 @@ import "../../config"
 ListView {
     id: root
 
-    width: 320
+    property var maxWidth: 320
+
+    width: root.count? Math.min(root.maxWidth, (height+2) * root.count) : desktopText.implicitWidth+30
     height: 40
+    
+    Behavior on width {
+        NumberAnimation {
+            duration: 250
+            easing.type: Easing.OutCubic
+        }
+    }
 
     orientation: ListView.Horizontal
 
@@ -17,34 +26,50 @@ ListView {
 
     clip: true
 
-    boundsBehavior: Flickable.StopAtBounds
+    // boundsBehavior: Flickable.StopAtBounds
 
     model: TaskbarService.windows
 
     // Currently hovered window title
     property string hoveredTitle: ""
 
+    // Currently active window title
+    readonly property string activeTitle: {
+        for (let i = 0; i < model.length; i++) {
+            if (model[i].activated)
+                return model[i].title;
+        }
+        return "";
+    }
+
+    // both hovered and active title
+    readonly property string displayTitle: hoveredTitle !== "" ? hoveredTitle : activeTitle
+
     Text {
         id: desktopText
 
         visible: opacity !== 0
         color: Colors.taskbarTextColor
-        text: "[ Desktop ]"
+        text: " Desktop "
         anchors.centerIn: parent
+
+        font.family:"Quicksand"
+        font.pixelSize: 18
+        font.weight: Font.Bold
 
         opacity: root.count === 0 ? 1 : 0
         scale: root.count === 0 ? 1 : 0.85
 
         Behavior on opacity {
             NumberAnimation {
-                duration: 220
+                duration: 320
                 easing.type: Easing.OutCubic
             }
         }
 
         Behavior on scale {
             NumberAnimation {
-                duration: 300
+                duration: 320
                 easing.type: Easing.OutBack
             }
         }
@@ -55,8 +80,8 @@ ListView {
 
         required property var modelData
 
-        width: 36 + 6
-        height: 36
+        width: (root.height-4) + 6
+        height: root.height-4
 
         readonly property bool isActive: modelData.activated
 

@@ -1,0 +1,174 @@
+=kitty-------------------------------------------------------------------------------------------------------------------
+/home/$user
+    .bashrc
+    .zshrc
+
+
+=themes-------------------------------------------------------------------------------------------------------------------
+/usr/share/sddm/themes/maldives
+    maldives
+
+=installed tools-------------------------------------------------------------------------------------------------------------------
+monitoring tools ->
+    btop                -> CPU, RAM, disks, basic network
+    nvtop               -> GPU monitoring
+    iftop               -> Real-time per-connection network usage
+    nethogs             -> Which process uses network
+
+    jq                  -> JSON processor for hyprctl clients script 
+
+    -- iftop sudo bypass -> * sudo setcap cap_net_raw,cap_net_admin=eip $(which iftop) , verify -> * getcap $(which iftop) , output -> /usr/bin/iftop cap_net_admin,cap_net_raw=eip
+
+unzip               -> for unzip
+yay                 -> AUR
+yazi                -> cli file manager
+waybar              -> topbar
+nwg-clipman         -> clipboard manager app "for clear clipboard"
+notify-tools        -> for config auto reload
+zsh , powerlevel10k -> kitty customization
+sddm                -> login scree
+hyprlock hypridle   -> hyprlock-> lockscreen | hypridle-> automate actions (lock, turn off display, suspend, etc.).
+brightnessctl       -> brightness controll  <- nvidia-only not works
+nwg-look            -> gtk themes controll
+qt5ct qt6ct kvantum -> qt theme controll
+bluez,bluez-utils   -> for waybar bluethooth
+cava                -> audio visualizer , waybar
+swaync              -> notification
+pamac-manager       -> gui package manager
+satty , hyprshot    -> screenshots
+7zip,ark            -> for yazi(7zi) and ark is for gui
+
+
+nvidia-open-dkms, nvidia-utils, nvidia-settings, supergfxctl          -> nvidia
+
+linux-zen, linux-headers, linux-headers          -> kernal
+
+
+[titan@zclinux waybar]$ sudo pacman -S inotify-tools
+[titan@zclinux waybar]$ ls
+auto-reload.sh  config.jsonc
+[titan@zclinux waybar]$ chmod -x auto-reload.sh
+[titan@zclinux waybar]$ ./auto-reload.sh
+Setting up watches.
+Watches established.
+
+auto-reload.sh code -> while inotifywait -e close_write ~/.config/waybar; do killall -SIGUSR2 waybar; done
+
+=fonts-------------------------------------------------------------------------------------------------------------------
+ttf-jetbrains-mono-nerd-3.4.0-2
+
+install fonts -> 
+
+    just paste .ttf file inside  
+        .local/share/fonts/
+
+    verify using -> ex -> fc-list | grep "Meslo"
+
+    MesloLGF NF
+
+zsh powerlevel10k setup  -------------------------------------------------------------------------------------------------
+powerlevel10k -> * "p10k configure"
+
+
+// sddm ------------------------------------------------------------------------------------------------------------------
+
+sddm available themes 
+    1. yay -Ss sddm
+    2. https://github.com/topics/sddm-theme
+
+sddm theme path (installed themes)
+    ls /usr/share/sddm/themes/
+
+sddm theme control file
+    sudo nano /etc/sddm.conf
+
+    // if /etc/sddm.conf not found or empty then 
+    1.copy all codes -> sddm --example-config
+    2.then create & paste -> sudo nano /etc/sddm.conf
+
+
+set theme - sudo nano /etc/sddm.conf
+    [Theme]
+    # Current theme name
+    Current=maya  <- enter theme name here (ex:maya)
+
+
+// best themes 
+glyph-sddm-git
+ii-material-sddm
+sddm-theme-noctalia-git
+sddm-silent-theme-git
+sddm-theme-sugar-candy-git
+sddm-theme-corners-git
+sddm-astronaut-theme 
+sddm-sugar-candy-git
+
+
+did --
+    
+    sudo pacman -S sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
+
+    sudo git clone -b master --depth 1 https://github.com/keyitdev/sddm-astronaut-theme.git /usr/share/sddm/themes/sddm-astronaut-theme
+
+    sudo cp -r /usr/share/sddm/themes/sddm-astronaut-theme/Fonts/* /usr/share/fonts/
+
+    Current=sddm-astronaut-theme , InputMethod=qtvirtualkeyboard <- sudo nano /etc/sddm.conf
+
+    Selecting a theme -> 
+        sudo nano /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+            edit -> ConfigFile=Themes/astronaut.conf
+
+    Previewing a theme 
+        sddm-greeter-qt6 --test-mode --theme /usr/share/sddm/themes/sddm-astronaut-theme/
+
+
+
+// gtk themes ------------------------------------------------------------------------------------------------------------------
+install nwg-look 
+
+download  (gtk3/4 themes , full icon themes ,cursors) in gnome-look.org 
+extract all then create folders in home path (~/) .themes , .icons
+paste extracted icon , cursor folders in .icons
+paste theme folder in .theme 
+
+then open nwglook -> set 
+
+&&& candy-icons is for waybar.tb cuctom icons ->            gnome-look.org > full icon themes >  candy-icons
+
+
+// qt themes ------------------------------------------------------------------------------------------------------------------
+
+install kvantum
+
+open kvantum -> Go to “Change/Delete Theme” -> Select a theme (e.g. Juno, KvArc, KvGnome, etc.) -> Click “Use this theme”
+
+run qt5ct -> Style → kvantum
+run qt6ct -> Style → kvantum
+
+
+
+❯ pacman -Qtdq -> shows "packages installed as dependencies that are no longer required by anything"
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------
+// add apps to rofi ------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+
+* mkdir -p ~/.local/share/applications
+
+* nano ~/.local/share/applications/netbeans18.desktop
+    [Desktop Entry]
+    Name=Apache NetBeans 18
+    Comment=Java IDE
+    Exec=/home/titan/Applications/netbeans/bin/netbeans
+    Icon=/home/titan/Applications/netbeans/nb/netbeans.png
+    Type=Application
+    Categories=Development;IDE;
+    Terminal=false
+    StartupNotify=true
+
+* update-desktop-database ~/.local/share/applications/

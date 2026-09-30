@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Shapes
-import "../config"
 
 
 Shape {
@@ -8,7 +7,7 @@ Shape {
     property int radius: 14
     required property color color
     property bool isTop: true
-    property bool mirrorred: false
+    property bool mirrored: false
 
     implicitHeight: radius
     implicitWidth:radius
@@ -16,7 +15,7 @@ Shape {
     preferredRendererType: Shape.CurveRenderer
 
     transform: Scale{
-        xScale: root.mirrorred?-1:1
+        xScale: root.mirrored?-1:1
         origin.x:root.radius/2
         origin.y:0
     }
@@ -24,7 +23,7 @@ Shape {
 
     ShapePath{
         fillColor: root.color
-        strokeColor: Colors.curvesTransparentColor
+        strokeColor: "Transparent"
         startX: root.isTop?root.radius:0
         startY: root.isTop?0:0
 

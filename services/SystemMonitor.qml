@@ -272,7 +272,7 @@ Singleton {
 
     // Storage barely changes moment to moment, poll infrequently.
     Timer {
-        interval: 5000
+        interval: 100000
         running: true
         repeat: true
         triggeredOnStart: true

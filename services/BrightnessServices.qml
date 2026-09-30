@@ -1,4 +1,5 @@
 pragma Singleton
+
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -13,33 +14,32 @@ Singleton {
     readonly property int pct: Math.round(brightness * 100)
 
     function setBrightness(value) {
-        value = Math.max(0, Math.min(1, value))
-        brightness = value
-        setProc.command = ["brightnessctl", "set", Math.round(value * 100) + "%"]
-        setProc.running = true
+        value = Math.max(0, Math.min(1, value));
+        setProc.command = ["brightnessctl", "set", Math.round(value * 100) + "%"];
+        setProc.running = true;
     }
 
-    function increase() { setBrightness(brightness + step) }
-    function decrease() { setBrightness(brightness - step) }
-    function toggle() { setBrightness(brightness <= 0.01 ? 1.0 : 0.0) }
+    function increase() {setBrightness(brightness + step);}
+    function decrease() {setBrightness(brightness - step);}
+    function toggle() {setBrightness(brightness <= 0.01 ? 1.0 : 0.0);}
 
-    function refresh() { getProc.running = true }
+    Process {id: setProc}
 
-    Process {
-        id: getProc
-        command: ["brightnessctl", "-m", "info"]
-        stdout: SplitParser {
-            onRead: data => {
-                const parts = data.trim().split(",")
-                if (parts.length >= 4) {
-                    root.brightness = parseInt(parts[3].replace("%", "")) / 100
-                    root.ready = true
-                }
+    FileView {
+        id: myFile
+        path: "/sys/class/backlight/nvidia_0/brightness"
+        watchChanges: true
+        onFileChanged: {
+            reload();
+        }
+
+        onLoaded: {
+            const value = parseInt(text());
+            if (!isNaN(value)) {
+                root.brightness = value / 100;
+                root.ready = true;
+                // console.log("Brightness:", root.pct + "%");
             }
         }
     }
-
-    Process { id: setProc }
-
-    Component.onCompleted: refresh()
 }

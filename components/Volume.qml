@@ -45,7 +45,7 @@ Item {
 
         switch (deviceKind) {
         case "bluetooth":
-            return "\uf025"          // bluetooth headset glyph
+            return ""          // bluetooth headset glyph
         case "headphone":
             return "\uf025"          // headphones glyph
         case "speaker":
@@ -125,11 +125,10 @@ Item {
         cursorShape: Qt.PointingHandCursor
     }
 
-    RowLayout {
+    Row {
         id: row
-
-        anchors.fill: parent
-        // spacing: 6
+        anchors.centerIn: parent
+        spacing: 6
 
         Text {
             text: root.icon
@@ -137,10 +136,12 @@ Item {
 
             font {
                 family: "JetBrainsMono Nerd Font Mono"
-                pixelSize: 20
+                pixelSize: root.deviceKind === "bluetooth" ? 17 : 20
                 weight: 600
-                letterSpacing: 0
             }
+
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: root.deviceKind === "bluetooth" ? 0 : 1
         }
 
         Text {
@@ -148,14 +149,14 @@ Item {
             color: Colors.volumeTextColor
 
             font {
-                family: "JetBrainsMono Nerd Font Mono"
+                family: "Quicksand"
                 pixelSize: 14
                 weight: 600
-                letterSpacing: 0
             }
+
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
-
     PwObjectTracker {
         objects: [root.sink]
     }

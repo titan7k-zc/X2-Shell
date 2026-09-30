@@ -1,28 +1,52 @@
-import QtQuick 2.15
+import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import "../config"
 import "."
 import QtQuick.Effects
 
+
 Scope {
     id: root
 
     property bool show: false
+    property bool unloadOnClose: false
 
+    property bool activeMouse: false
 
-    // for enable ActiveFocus in menue 
+    // true immediately on open, stays true until the close animation finishes
+    property bool loaderActive: false
+
     onShowChanged: {
+        if (show) {
+            closeTimer.stop()
+            loaderActive = true
+        } else if (root.unloadOnClose) {
+            closeTimer.start()   // keep item alive until close anim finishes, then unload
+        }
+
         if (show && load.item) {
             load.item.forceActiveFocus()
         }
+
+        if (load.item && load.item.hasOwnProperty("showing"))
+            load.item.showing = root.show
+    }
+
+    Timer {
+        id: closeTimer
+        // cover the longest leg of your close transition (pause + shrink)
+        interval: root.animDuration + 5000
+        onTriggered: root.loaderActive = false
     }
     
 
-    property bool anchorTop: false
-    property bool anchorBottom: false
-    property bool anchorLeft: false
-    property bool anchorRight: false
+
+
+    property var anchorTop: false
+    property var anchorBottom: false
+    property var anchorLeft: false
+    property var anchorRight: false
 
 
     property int menuHeight: maxArea.itemHei+20
@@ -32,7 +56,14 @@ Scope {
 
 
     property color menuColor: Colors.pop8MenuColor
-    property int animDuration: 320
+    //property int animDuration: 400//Math.max(Math.min(load.width,load.height), 350)
+
+    property int animDuration:{
+        if (Math.min(load.width,load.height)<350){
+            return 300
+        }
+        return 400
+    }
     property int animEasing: Easing.InOutQuad
 
 
@@ -73,10 +104,10 @@ Scope {
     PanelWindow {
         id: menuWindow
 
-        WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.keyboardFocus: root.show ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None  // to get keybord input for menu
+        WlrLayershell.layer: WlrLayer.Top//WlrLayer.Overlay
+        WlrLayershell.keyboardFocus: root.show ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
         exclusiveZone: 0
-        color: Colors.pop8TransparentColor
+        color: "Transparent"
 
         anchors.top: root.anchorTop
         anchors.bottom: root.anchorBottom
@@ -92,11 +123,16 @@ Scope {
 
         
 
-        property var midMask: Region {
-            item: menu
-        }
+        property var midMask: Region {item: menu}
 
-        mask: root.show ? null : midMask
+        mask: midMask
+
+
+        HoverHandler {
+            onHoveredChanged: {
+                root.activeMouse = hovered
+            }
+        }
 
 
         Item {
@@ -116,8 +152,9 @@ Scope {
 
             Rectangle {
                 id: menu
-                width: root.show ? root.menuWidth : 0   
-                height: root.show ? root.menuHeight : 0
+
+                width: 0
+                height: 0
 
                 anchors.top: root.anchorTop ? parent.top : undefined
                 anchors.bottom: root.anchorBottom ? parent.bottom : undefined
@@ -135,12 +172,89 @@ Scope {
                 bottomLeftRadius:  (root.menueLoc===2 || root.menueLoc===3 || root.menueLoc===4 ) ? safeRad : 0
                 bottomRightRadius: (root.menueLoc===8 || root.menueLoc===1 || root.menueLoc===2 ) ? safeRad : 0
 
-                Behavior on height {NumberAnimation {id: sizeAnimH; duration: root.animDuration/root.h_ani; easing.type: root.animEasing }}
-                Behavior on width {NumberAnimation { id: sizeAnimW;duration: root.animDuration/root.w_ani; easing.type: root.animEasing }}
-
-
-
                 clip:true
+
+                state: root.show ? "open" : "closed"
+
+                states: [
+                    State {
+                        name: "open"
+                        PropertyChanges { target: menu; width: root.menuWidth; height: root.menuHeight }
+                        PropertyChanges { target: maxArea; opacity: 1 }
+                        PropertyChanges { target: load; scale: 1 }
+                    },
+                    State {
+                        name: "closed"
+                        PropertyChanges { target: menu; width: 0; height: 0 }
+                        PropertyChanges { target: maxArea; opacity: 0.2 }
+                        PropertyChanges { target: load; scale: 0 }
+                    }
+                ]
+
+                transitions: [
+                    Transition {
+                        from: "closed"; to: "open"
+                        SequentialAnimation {
+                            ParallelAnimation {
+                                // container morph (bounce open)
+                                NumberAnimation {
+                                    target: menu
+                                    properties: "width,height"
+                                    duration: root.animDuration
+                                    easing.type: Easing.OutCubic//OutBack
+                                    easing.overshoot: 1.2
+                                }
+                                // content reveal, staggered slightly behind the container
+                                SequentialAnimation {
+                                    PauseAnimation { duration: root.animDuration * 0.35 }
+                                    ParallelAnimation {
+                                        NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
+                                        NumberAnimation {
+                                            target: load; property: "scale"
+                                            duration: root.animDuration
+                                            easing.type: Easing.OutBack
+                                            easing.overshoot: 1.2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Transition {
+                        from: "open"; to: "closed"
+                        SequentialAnimation {
+                            ParallelAnimation {
+                                // content collapses first
+                                NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
+                                NumberAnimation {
+                                    target: load; property: "scale"
+                                    duration: root.animDuration/1.3
+                                    easing.type: Easing.InBack
+                                    easing.overshoot: 1.0
+                                }
+                                // container starts shrinking slightly after content begins fading
+                                SequentialAnimation {
+                                    PauseAnimation { duration: root.animDuration * 0.25 }
+                                    ParallelAnimation {
+                                        NumberAnimation {
+                                            target: menu
+                                            properties: "height"
+                                            duration: root.animDuration
+                                            easing.type: Easing.InOutQuad
+                                        }
+                                        NumberAnimation {
+                                            target: menu
+                                            properties: "width"
+                                            duration: root.animDuration*(root.menuHeight < root.menuWidth ? 1.02 : 0.908)
+                                            easing.type: Easing.InOutQuad
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+
 
 
                 // -------------------------------------------------------------   Real menu   ---------------------------------------------------------------------------------------------------------------------menu itms
@@ -151,7 +265,7 @@ Scope {
                     height: Math.max(0, menu.height - 20)
                     width: Math.max(0, menu.width - 20)
 
-                    color: Colors.pop8TransparentColor
+                    color: "Transparent"
                     radius: menu.safeRad
                     clip: true
 
@@ -159,39 +273,60 @@ Scope {
                     property real itemWid:load.width
 
 
-
                     Loader {
                         id: load
-                        width: load.item ? load.item.implicitWidth : 0
-                        height: load.item ? load.item.implicitHeight : 0
+
+                        property real cw: 0
+                        property real ch: 0
+                        width: cw
+                        height: ch
+
                         anchors.centerIn: parent
-                        scale: root.show ? 1 : 0
-                        source: root.file
 
+                        source: root.unloadOnClose
+                            ? (root.loaderActive ? root.file : "")
+                            : root.file
 
-                        // for menu focus
                         active: true
+
                         onLoaded: {
-                            if (root.show) item.forceActiveFocus()
+                            if (item) {
+                                cw = item.implicitWidth
+                                ch = item.implicitHeight
+                            }
                         }
 
                         Keys.onEscapePressed: {
                             root.show = false
                         }
 
-                        Behavior on scale {
-                            NumberAnimation { duration: root.animDuration; easing.type: root.animEasing }
+                        onItemChanged: {
+                            if (!item)
+                                return
+
+                            if (item.hasOwnProperty("showing"))
+                                item.showing = root.show
+
+                            if (root.show)
+                                item.forceActiveFocus()
+
+                            if (typeof item.closed === "function") {
+                                item.closed.connect(function() {
+                                    root.show = false
+                                })
+                            }
+                        }
+
+                        Connections {
+                            target: load.item
+                            enabled: load.item !== null
+                            function onImplicitWidthChanged() { load.cw = load.item.implicitWidth }
+                            function onImplicitHeightChanged() { load.ch = load.item.implicitHeight }
                         }
                     }
 
 
 
-
-
-                    opacity: root.show ? 1 : 0.2
-                    Behavior on opacity {
-                        NumberAnimation { duration: root.animDuration; easing.type: root.animEasing }
-                    }
                 }
             }
 
@@ -250,7 +385,7 @@ Scope {
                 }
 
                 isTop: root.menueLoc===1 ||root.menueLoc===2 ||root.menueLoc===3 ||root.menueLoc===8 
-                mirrorred: root.menueLoc===2 ||root.menueLoc===3 ||root.menueLoc===4 ||root.menueLoc===5 
+                mirrored: root.menueLoc===2 ||root.menueLoc===3 ||root.menueLoc===4 ||root.menueLoc===5 
 
                 radius: menu.safeRad
                 color: root.menuColor
@@ -304,7 +439,7 @@ Scope {
                     root.menueLoc === 3 ||
                     root.menueLoc === 4
 
-                mirrorred: root.menueLoc === 3 ||
+                mirrored: root.menueLoc === 3 ||
                         root.menueLoc === 4 ||
                         root.menueLoc === 5 ||
                         root.menueLoc === 6
@@ -313,12 +448,38 @@ Scope {
                 color: root.menuColor
             }
 
-
-
-
-
-
         }
+
+        // shadow
+        MultiEffect {
+            anchors.fill: clipper
+            source: clipper
+            opacity: Colors.shadowOpacity
+            shadowEnabled: true
+            shadowColor: Colors.shadowColor
+            shadowBlur: 0.6
+            shadowScale: 1.002
+            shadowVerticalOffset: {
+                if (root.anchorTop) {
+                    return 3
+                } else if (root.anchorBottom) {
+                    return -3
+                } else {
+                    return 0
+                }
+            }
+            shadowHorizontalOffset: {
+                if (root.anchorLeft) {
+                    return 3
+                } else if (root.anchorRight) {
+                    return -3
+                } else {
+                    return 0
+                }
+            }
+        }
+
+
 
         
     }

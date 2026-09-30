@@ -1,7 +1,7 @@
 import "../../components"
 import "../../services"
 import "../../config"
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Layouts
 
 Item {
@@ -35,7 +35,7 @@ Item {
 
             GridLayout {
                 anchors.fill: parent
-                anchors.margins: 10
+                anchors.margins: 20
                 // columns: 4
                 // rows: 2
                 columnSpacing: 15
@@ -67,7 +67,7 @@ Item {
 
                             color: Colors.overviewIndicatorColor
 
-                            font.family: "Nunito"
+                            font.family: "Quicksand"
                             font.weight: Font.ExtraBold
                             font.letterSpacing:0
                             font.pixelSize: Math.min(
@@ -88,7 +88,7 @@ Item {
                             text: TimeServices.date
                             color: Colors.overviewSecondaryTextColor
 
-                            font.family: "Nunito"
+                            font.family: "Quicksand"
                             font.weight: Font.Bold
                             font.pixelSize: parent.parent.height * 0.04
 
@@ -136,7 +136,7 @@ Item {
                             anchors.verticalCenterOffset:15
                             text:"󰌽  : X2 Shell\n  : Titan"
                             color: Colors.overviewTextColor
-                            font.family: "Nunito"
+                            font.family: "Quicksand"
                             font.weight: Font.Bold
                             font.pixelSize:20
 
@@ -214,7 +214,7 @@ Item {
                                 ic: ""
                                 igColor: Colors.overviewIndicatorColor
                                 icColor: Colors.overviewIndicatorIconColor
-                                // trackColor:"gray"
+                                trackColor:Colors.overviewIndicatorTrackColor
                             }
                         }
 
@@ -256,7 +256,7 @@ Item {
                                 }
                             
                                 font.pixelSize: col.fSize
-                                font.family: "Nunito"
+                                font.family: "Quicksand"
                                 font.weight: Font.Bold
                             }
                         }
@@ -297,7 +297,7 @@ Item {
                                 }
                             
                                 font.pixelSize: col.fSize
-                                font.family: "Nunito"
+                                font.family: "Quicksand"
                                 font.weight: Font.Bold
                             }
                         }
@@ -323,7 +323,7 @@ Item {
                                 ic: ""
                                 igColor: Colors.overviewIndicatorColor
                                 icColor: Colors.overviewIndicatorIconColor
-                                // trackColor:"gray"
+                                trackColor:Colors.overviewIndicatorTrackColor
                             }
                         }
 
@@ -348,6 +348,16 @@ Item {
                         // anchors.verticalCenterOffset:-2
                         // anchors.horizontalCenterOffset:-2
                     }
+                }
+
+
+                // empty space
+                Item {
+                    Layout.column: 5
+                    Layout.row: 0
+                    Layout.rowSpan:2
+                    Layout.preferredWidth: 30
+                    Layout.fillHeight: true
                 }
             }
 
