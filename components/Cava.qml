@@ -20,6 +20,8 @@ Item{
         radius: root.radius
         color: root.bgColor
 
+        scale:cavaMouseArea.pressed? 0.9:1.0
+
 
         Row{
             anchors.fill: parent
@@ -74,5 +76,17 @@ Item{
                 }
             }
         }
+
+        MouseArea{
+            id:cavaMouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: {
+                CavaServices.restart()
+            }
+        }
     }
+    
 }

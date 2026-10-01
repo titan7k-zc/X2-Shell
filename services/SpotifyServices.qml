@@ -3,7 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
-
+import "."
 
 Singleton {
     id: root
@@ -69,6 +69,7 @@ Singleton {
                 Math.min(length, progress * length)
             )
         }
+        // CavaServices.restart()
     }
 
     FrameAnimation {

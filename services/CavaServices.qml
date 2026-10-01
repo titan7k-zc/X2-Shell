@@ -50,12 +50,17 @@ Singleton {
                     newLevels.push(normalizedLevel);
                 }
                 root.barLevels = newLevels;
-
+ 
             }
         }
     }
+
+    function restart() {
+        cavaProcess.running = false
+        cavaProcess.running = true
+        // console.log("cava restarted")
+    }
     Component.onCompleted: {
-        cavaProcess.running = true 
-        // console.log("cava started")
+        root.restart()
     }
 }
