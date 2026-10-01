@@ -33,6 +33,22 @@ Item {
                 bottomRightRadius: root.se
                 topLeftRadius: root.rad
                 color: Colors.barBorderColor
+
+                Row{
+                    anchors.verticalCenter:parent.verticalCenter
+                    anchors.right:parent.right
+                    anchors.rightMargin:20
+                    anchors.leftMargin:20
+                    spacing: 10
+                    Text{
+                        text: ""
+                        font.pixelSize: 20
+                        color: "red"
+                    
+                        
+                    
+                    }
+                }
                 
             }
 

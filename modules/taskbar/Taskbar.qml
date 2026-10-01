@@ -115,6 +115,7 @@ ListView {
         }
 
         HoverHandler {
+            cursorShape: Qt.PointingHandCursor
             onHoveredChanged: {
                 // console.log("root count : " + root.count)
                 if (hovered) {

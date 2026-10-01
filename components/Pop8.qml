@@ -1,6 +1,8 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Hyprland
+
 import "../config"
 import "."
 import QtQuick.Effects
@@ -11,6 +13,9 @@ Scope {
 
     property bool show: false
     property bool unloadOnClose: false
+    
+    property bool outsideClickToClose: true
+    property bool isCloseHandler: outsideClickToClose && show
 
     property bool activeMouse: false
 
@@ -35,7 +40,7 @@ Scope {
 
     Timer {
         id: closeTimer
-        // cover the longest leg of your close transition (pause + shrink)
+        // cover the longest leg of close transition (pause + shrink)
         interval: root.animDuration + 5000
         onTriggered: root.loaderActive = false
     }
@@ -126,6 +131,8 @@ Scope {
         property var midMask: Region {item: menu}
 
         mask: midMask
+
+
 
 
         HoverHandler {
@@ -325,7 +332,7 @@ Scope {
                         }
                     }
 
-
+                        
 
                 }
             }
@@ -448,6 +455,24 @@ Scope {
                 color: root.menuColor
             }
 
+        }
+
+
+        // outside click close
+        HyprlandFocusGrab {
+            id: closeHandler
+
+            // click alowed windows
+            windows: [
+                menuWindow
+            ]
+
+            active: root.show && root.isCloseHandler
+
+            // clicked outside both windows
+            onCleared: {
+                root.show = false
+            }
         }
 
         // shadow

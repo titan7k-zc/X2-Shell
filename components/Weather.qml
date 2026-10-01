@@ -120,6 +120,7 @@ Item {
         MouseArea {
             id:weatherButtonMouseArea
             anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
 
             onClicked:{
                 // console.log("Weather button clicked")
