@@ -40,14 +40,6 @@ Item {
                     anchors.rightMargin:20
                     anchors.leftMargin:20
                     spacing: 10
-                    Text{
-                        text: ""
-                        font.pixelSize: 20
-                        color: "red"
-                    
-                        
-                    
-                    }
                 }
                 
             }

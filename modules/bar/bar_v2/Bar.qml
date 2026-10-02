@@ -294,16 +294,33 @@ Scope{
             
 
 
+            // Pop8{
+            //     id:right_bottom_power_pop
+            //     show:false
+            //     anchorRight:true
+            //     anchorBottom:true
+
+            //     rad:root.rootRadius
+                
+            //     file:"../modules/bluetooth/BluetoothPanel.qml"
+                
+            //     IpcHandler {
+            //         target: "bluetooth"
+            //         function toggle() {
+            //             right_bottom_power_pop.show=!right_bottom_power_pop.show;
+            //         }
+
+            //     }
+            // }
             Pop8{
                 id:right_power_pop
                 show:false
                 anchorRight:true
-                anchorBottom:true
+                // anchorBottom:true
 
                 rad:root.rootRadius
                 
                 file:"../modules/powerMenu/PowerMenu.qml"
-
                 
                 IpcHandler {
                     target: "power"

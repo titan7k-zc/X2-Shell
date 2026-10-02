@@ -18,14 +18,13 @@
 <div align="center">
 
 <!-- Main screenshot -->
-<img src="assets/screenshot.png" alt="X2-Shell main screen" width="90%">
+<img src="assets/screenshot2.png" alt="X2-Shell main screen" width="75%">
+<img src="assets/screenshot4.png" alt="X2-Shell main screen" width="30%">
+<img src="assets/screenshot.png" alt="X2-Shell main screen" width="30%">
+<img src="assets/screenshot3.png" alt="X2-Shell main screen" width="30%">
 
 <br><br>
 
-<!-- Demo video: GitHub renders mp4 files that are uploaded through the README/issue editor drag-and-drop.
-     If you paste the mp4 into the GitHub web editor when creating this file, GitHub will replace the
-     line below with a working https://github.com/user-attachments/... link — keep that link if so.
-     Otherwise this links straight to the file in the repo. -->
 <a href="assets/demo.mp4">▶ Watch the full demo </a>
 
 ---
