@@ -14,7 +14,7 @@ Scope {
     property bool show: false
     property bool unloadOnClose: false
     
-    property bool outsideClickToClose: false
+    property bool outsideClickToClose: true
     property bool isCloseHandler: outsideClickToClose && show
 
     property bool activeMouse: false
