@@ -17,6 +17,8 @@ monitoring tools ->
 
     jq                  -> JSON processor for hyprctl clients script 
 
+    libinput debug-events -> input source finders (eg: keyboard keys, mouse)
+
     -- iftop sudo bypass -> * sudo setcap cap_net_raw,cap_net_admin=eip $(which iftop) , verify -> * getcap $(which iftop) , output -> /usr/bin/iftop cap_net_admin,cap_net_raw=eip
 
 unzip               -> for unzip

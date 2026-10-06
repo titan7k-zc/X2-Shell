@@ -19,6 +19,11 @@ Scope{
     property int tbHei: 40 // main height
     property int hei: 60 // 
 
+
+
+    property int conHei: 5 //  connectors height  (max 5)
+    property real conHeiMar: 0//-(conHei-0.8) //  hei Margin..
+
     Variants{
         model:Quickshell.screens
 
@@ -53,6 +58,7 @@ Scope{
 
                 TopB{
                     id: topB
+                    z:1
                     
                     rad:root.rootRadius
                     wid:root.bottomCBarWid*2-(rootRadius*2)
@@ -64,10 +70,9 @@ Scope{
                     }
                 }
 
-
                 LeftTopB {
                     id: leftB
-
+                    z:1
                     rad:root.rootRadius
                     se:root.screenCorners
                     wid:root.topCBarWid
@@ -81,7 +86,7 @@ Scope{
 
                 RightTopB {
                     id: rightB
-
+                    z:1
                     rad:root.rootRadius
                     se:root.screenCorners
                     wid:root.topCBarWid
@@ -92,6 +97,121 @@ Scope{
                         top: parent.top
                     }
                 }
+
+
+
+                // ===top bar connector===
+                Rectangle{
+                    id: topConnectorBar1
+                    z:2
+                    anchors {
+                        top: parent.top
+                        left:leftB.right
+                        right:topB.left
+                        topMargin:root.conHeiMar
+                    }
+                    
+                    height: root.conHei
+                    color:root.borderColor
+
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.left: parent.left
+                        width: root.rootRadius
+                        height: root.rootRadius
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        z: 10
+                    }
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.right: parent.right
+                        width: root.rootRadius
+                        height: root.rootRadius
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        mirrored: true
+                        z: 10
+                    }
+
+
+
+
+                }
+                // Shadow
+                MultiEffect {
+                    anchors.fill: topConnectorBar1
+
+                    opacity: Colors.shadowOpacity
+                    shadowColor: Colors.shadowColor
+
+                    source: topConnectorBar1
+
+                    shadowEnabled: true
+                    shadowBlur: 0.5
+                    shadowScale: 0.998
+
+                    shadowVerticalOffset: 3
+                    shadowHorizontalOffset: 0
+                }
+                Rectangle{
+                    id: topConnectorBar2
+                    z:2
+                    anchors {
+                        top: parent.top
+                        left:topB.right
+                        right:rightB.left
+                        topMargin:root.conHeiMar
+                    }
+                    
+                    height: root.conHei
+                    color:root.borderColor
+
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.left: parent.left
+                        width: root.rootRadius
+                        height: root.rootRadius
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        z: 10
+                    }
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.right: parent.right
+                        width: root.rootRadius
+                        height: root.rootRadius
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        mirrored: true
+                        z: 10
+                    }
+
+                    
+
+                }
+                // Shadow
+                MultiEffect {
+                    anchors.fill: topConnectorBar2
+
+                    opacity: Colors.shadowOpacity
+                    shadowColor: Colors.shadowColor
+
+                    source: topConnectorBar2
+
+                    shadowEnabled: true
+                    shadowBlur: 0.5
+                    shadowScale: 0.998
+
+                    shadowVerticalOffset: 3
+                    shadowHorizontalOffset: 0
+                }
+
+
             }
             // ============================================================
             // Bottom bars
@@ -119,7 +239,7 @@ Scope{
 
                 LeftBottomB {
                     id: leftBot
-
+                    z:1
                     rad:root.rootRadius
                     se:root.screenCorners
                     wid:root.bottomCBarWid
@@ -132,7 +252,7 @@ Scope{
  
                 RightBottomB {
                     id: rightBot
-
+                    z:1
                     rad:root.rootRadius
                     se:root.screenCorners
                     wid:root.bottomCBarWid
@@ -142,9 +262,68 @@ Scope{
                         bottom: parent.bottom
                     }
                 }
+
+
+                //===bottom bar connector===
+                Rectangle{
+                    id: bottomConnectorBar
+                    z:2
+                    height: root.conHei
+                    color:root.borderColor
+                    anchors {
+                        bottom: parent.bottom
+                        left:leftBot.right
+                        right:rightBot.left
+                        bottomMargin:root.conHeiMar
+                    }
+
+                    Curves{
+                        anchors.bottom: parent.top
+                        anchors.left: parent.left
+                        width: root.rootRadius
+                        height: root.rootRadius
+                        radius: root.rootRadius
+                        isTop: false
+                        color: root.borderColor
+                        z: 10
+                    }
+                    Curves{
+                        anchors.bottom: parent.top
+                        anchors.right: parent.right
+                        width: root.rootRadius
+                        height: root.rootRadius
+                        radius: root.rootRadius
+                        isTop: false
+                        color: root.borderColor
+                        mirrored: true
+                        z: 10
+                    }
+                    
+
+                }
+                // Shadow
+                MultiEffect {
+                    anchors.fill: bottomConnectorBar
+
+                    opacity: Colors.shadowOpacity
+                    shadowColor: Colors.shadowColor
+
+                    source: bottomConnectorBar
+
+                    shadowEnabled: true
+                    shadowBlur: 0.5
+                    shadowScale: 0.998
+
+                    shadowVerticalOffset: -3
+                    shadowHorizontalOffset: 0
+                }
+
+                
+
+
+
+
             }
-
-
 
 
             // ============================================================
@@ -244,7 +423,7 @@ Scope{
                         color: root.borderColor
                         z:1
 
-                        Curves{
+                    Curves{
                         anchors.top: parent.top
                         anchors.left: parent.right
                         width: root.rootRadius

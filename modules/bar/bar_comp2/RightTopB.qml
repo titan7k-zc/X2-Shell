@@ -6,7 +6,8 @@ import "../../../components"
 
 Item {
     id:root
-
+    implicitWidth: wid
+    implicitHeight: hei 
     required property int rad
     required property int se
     property int hei: 40
@@ -66,20 +67,6 @@ Item {
                     }
                 }
                 
-            }
-
-
-            
-            Curves{
-                anchors.top: parent.top
-                anchors.right: parent.left
-                width: root.rad
-                height: root.rad
-                radius: root.rad
-                isTop: true
-                color: Colors.barBorderColor
-                mirrored: true
-                z: 10
             }
 
 

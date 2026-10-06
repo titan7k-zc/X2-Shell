@@ -10,7 +10,7 @@ import "../../../components"
 Item {
     id: root
 
-    implicitWidth: topMid.width
+    implicitWidth: root.wid
     implicitHeight: topMid.height
 
     required property int rad
@@ -92,37 +92,6 @@ Item {
                 }
             }
         }
-
-        // Left curve
-        Curves {
-            anchors.top: parent.top
-            anchors.right: parent.left
-
-            width: root.rad
-            height: root.rad
-
-            radius: root.rad
-            isTop: true
-            color: Colors.barBorderColor
-            mirrored: true
-
-            z: 10
-        }
-
-        // Right curve
-        Curves {
-            anchors.top: parent.top
-            anchors.left: parent.right
-
-            width: root.rad
-            height: root.rad
-
-            radius: root.rad
-            isTop: true
-            color: Colors.barBorderColor
-
-            z: 10
-        }
     }
 
     // Shadow
@@ -136,7 +105,7 @@ Item {
 
         shadowEnabled: true
         shadowBlur: 0.6
-        shadowScale: 1
+        shadowScale: 1.003
 
         shadowVerticalOffset: 3
         shadowHorizontalOffset: 0

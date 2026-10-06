@@ -10,6 +10,8 @@ import "../../taskbar"
 
 Item {
     id: root
+    implicitWidth: wid
+    implicitHeight: hei 
     required property int rad
     required property int se
     property int hei: 40
@@ -43,19 +45,7 @@ Item {
                     height:root.hei
                     anchors.centerIn: parent
                 }
-            }
-
-
-            Curves{
-                anchors.bottom: parent.bottom
-                anchors.left: parent.right
-                width: root.rad
-                height: root.rad
-                radius: root.rad
-                isTop: false
-                color: Colors.barBorderColor
-                z: 10
-            }    
+            }   
    
         }
     }
