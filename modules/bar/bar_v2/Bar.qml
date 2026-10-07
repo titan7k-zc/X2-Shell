@@ -11,8 +11,8 @@ import "../bar_comp2"
 Scope{
     id:root
     property color borderColor: Colors.barBorderColor
-    property int rootRadius: 20  // max 28 min 0
-    property int screenCorners: rootRadius/4 
+    property int rootRadius: 20  // max 'tbHei/2' min 0
+    property int screenCorners: rootRadius/3  
     property int lrBarWid: 15
     property int topCBarWid: 240
     property int bottomCBarWid: 640
@@ -528,6 +528,16 @@ Scope{
                     }
 
                 }
+            }
+
+
+            Component.onCompleted: {
+                AllowedWindows.windows = [
+                    topbar,
+                    bottomBar,
+                    leftBarWindow,
+                    rightBarWindow
+                ]
             }
 
 
