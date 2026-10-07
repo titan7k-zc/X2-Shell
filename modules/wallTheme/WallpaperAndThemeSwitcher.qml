@@ -51,7 +51,7 @@ FocusScope {
         { type: "wipe",   angle: 15,  duration: 1.5, fps: 60 },                      // 2: sharp diagonal wipe
         { type: "wipe",   angle: 200, duration: 1.5, fps: 60 },                     // 3: reverse diagonal wipe
         { type: "grow",   pos: "center",       duration: 2,   fps: 60 },           // 4: classic expanding circle
-        { type: "grow",   pos: "top",        duration: 1.5, fps: 60 },          // 5: grow from corner
+        { type: "grow",   pos: "top",        duration: 1.5, fps: 60 },            // 5: grow from corner
         { type: "outer",  pos: "bottom-right", duration: 2.2, fps: 60 },         // 6: shrinking circle
         { type: "any",    duration: 2,   fps: 60 },                             // 7: random-point grow
         { type: "fade",   duration: 1.5, fps: 60 },                            // 8: smooth bezier crossfade
@@ -161,7 +161,7 @@ FocusScope {
                 id: gridLayout
                 columns: 2
                 anchors.fill: parent
-                anchors.margins: 10
+                anchors.margins: 15 // left min must be 15, others 10
                 columnSpacing: 20
 
 

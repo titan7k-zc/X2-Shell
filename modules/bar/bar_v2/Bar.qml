@@ -98,7 +98,7 @@ Scope{
                     }
                 }
 
-
+  
 
                 // ===top bar connector===
                 Rectangle{
