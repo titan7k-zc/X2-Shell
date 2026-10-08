@@ -3,9 +3,23 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Bluetooth
+import Quickshell.Io
 
 Singleton {
     id: root
+
+    Process {
+        id: bluetoothAgent
+
+        running: true
+        command: [
+            "bluetoothctl",
+            "--timeout",
+            "86400",
+            "agent",
+            "NoInputNoOutput"
+        ]
+    }
 
     // Adapter
     readonly property var adapter: Bluetooth.defaultAdapter
