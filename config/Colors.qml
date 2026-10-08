@@ -28,7 +28,7 @@ Singleton {
         ["Ayu Dark", "#0D1017", "#D5D8DA", "#8A9199", "#B7BDC5", "#C7D1DB", "#E6B450", "#73B7FF",  "#E6B450", "#73B7FF", "#7FD962"],
         ["Coffee Dark", "#211B18", "#E8DDD5", "#A4948C", "#D1C0B7", "#D9A066", "#C78B5A", "#E0B084",  "#D9A066", "#D9A066", '#D9A066'], // AA
         ["Gruvbox", "#282828", "#EBDBB2", "#A89984", "#D5C4A1", "#FBF1C7", "#83A598", "#8EC07C",  "#83C07C", "#83A598", '#49bb26'],
-        ["Paper White", '#bab6b6', "#0A0A0A", "#6E6E6E", "#2A2A2A", "#000000", "#000000", "#3A3A3A", "#000000", "#000000", "#000000"],//AA
+        ["Paper White", '#bab6b6', "#0A0A0A", "#6E6E6E", '#af2a2a2a', "#000000", "#000000", "#3A3A3A", "#000000", "#000000", "#000000"],//AA
                         //FAFAFA
 
         ["Nord Frost", "#2E3440", "#ECEFF4", "#AEB8C7", "#D8DEE9", "#8FBCBB", "#81A1C1", "#88C0D0",  "#88C0D0", "#81A1C1", "#A3BE8C"],
@@ -194,6 +194,25 @@ Singleton {
     readonly property color launcherIconBubbleColor: Qt.rgba(1, 1, 1, 0.08)
     readonly property color launcherDragHandleColor: "Transparent"
 
-
+    // === Bluetooth ===
+    readonly property color bluetoothBackgroundColor: shellBackgroundColor
+    readonly property color bluetoothHeaderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
+    readonly property color bluetoothDeviceBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.08)
+    readonly property color bluetoothDeviceColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
+    readonly property color bluetoothDeviceConnectedColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.22)
+    readonly property color bluetoothPrimaryTextColor: mainTextColor
+    readonly property color bluetoothSecondaryTextColor: secondaryTextColor
+    readonly property color bluetoothMutedTextColor: mainIconColor
+    readonly property color bluetoothActiveColor: activeColor
+    readonly property color bluetoothInactiveColor: mainIconColor
+    readonly property color bluetoothToggleOnColor: activeColor
+    readonly property color bluetoothToggleOffColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
+    readonly property color bluetoothToggleKnobOnColor: shellBackgroundColor
+    readonly property color bluetoothToggleKnobOffColor: secondaryTextColor
+    readonly property color bluetoothScanColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.16)
+    readonly property color bluetoothScanActiveColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.28)
+    readonly property color bluetoothScanDisabledColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.12)
+    readonly property color bluetoothBatteryColor: mainTextColor
+    readonly property color bluetoothBatteryLowColor: focusColor
 
 }
