@@ -7,47 +7,47 @@ Item {
     id: root
 
 
-    // -----------------------------------
-    // Theme 
-    // -----------------------------------
+
     // Surfaces
-    property color backgroundColor: Colors.bluetoothBackgroundColor
-    property color headerColor: Colors.bluetoothHeaderColor
-    property color deviceBackgroundColor: Colors.bluetoothDeviceBackgroundColor
-    property color deviceColor: Colors.bluetoothDeviceColor
-    property color deviceConnectedColor: Colors.bluetoothDeviceConnectedColor
+    property color backgroundColor: Colors.wifiBackgroundColor
+    property color headerColor: Colors.wifiHeaderColor
+    property color deviceBackgroundColor: Colors.wifiDeviceBackgroundColor
+    property color deviceColor: Colors.wifiDeviceColor
+    property color deviceConnectedColor: Colors.wifiDeviceConnectedColor
 
     // Text
-    property color primaryTextColor: Colors.bluetoothPrimaryTextColor
-    property color secondaryTextColor: Colors.bluetoothSecondaryTextColor
-    property color mutedTextColor: Colors.bluetoothMutedTextColor
+    property color primaryTextColor: Colors.wifiPrimaryTextColor
+    property color secondaryTextColor: Colors.wifiSecondaryTextColor
+    property color mutedTextColor: Colors.wifiMutedTextColor
 
-    // Bluetooth
-    property color bluetoothActiveColor: Colors.bluetoothActiveColor
-    property color bluetoothInactiveColor: Colors.bluetoothInactiveColor
+    // Wi-Fi
+    property color wifiActiveColor: Colors.wifiActiveColor
+    property color wifiInactiveColor: Colors.wifiInactiveColor
 
     // Toggle
-    property color toggleOnColor: Colors.bluetoothToggleOnColor
-    property color toggleOffColor: Colors.bluetoothToggleOffColor
-    property color toggleKnobOnColor: Colors.bluetoothToggleKnobOnColor
-    property color toggleKnobOffColor: Colors.bluetoothToggleKnobOffColor
+    property color toggleOnColor: Colors.wifiToggleOnColor
+    property color toggleOffColor: Colors.wifiToggleOffColor
+    property color toggleKnobOnColor: Colors.wifiToggleKnobOnColor
+    property color toggleKnobOffColor: Colors.wifiToggleKnobOffColor
 
-    // Scan button (sits on the header, so it needs to be lighter than it)
-    property color scanColor: Colors.bluetoothScanColor
-    property color scanActiveColor: Colors.bluetoothScanActiveColor
-    property color scanDisabledColor: Colors.bluetoothScanDisabledColor
+    // Scanning
+    property color scanColor: Colors.wifiScanColor
+    property color scanActiveColor: Colors.wifiScanActiveColor
+    property color scanDisabledColor: Colors.wifiScanDisabledColor
 
-    // Battery
-    property color batteryColor: Colors.bluetoothBatteryColor
-    property color batteryLowColor: Colors.bluetoothBatteryLowColor
+    // Signal strength
+    property color signalTextColor: Colors.wifiSignalColor
+    property color signalLowColor: Colors.wifiSignalLowColor
 
-    // Fonts / glyphs - Nerd Font.
+
+    // Fonts / glyphs(Nerd Font)
     property string fontFamily: "Quicksand"
-    property string bluetoothGlyph: "\uf293"
+    property string wifiGlyph: "\uf1eb"
+    property string lockGlyph: "\uf023"
+    property string eyeGlyph: "\uf06e"
+    property string eyeOffGlyph: "\uf070"
 
-    // -----------------------------------
-    // Layout metrics
-    // -----------------------------------
+    // Layout 
     readonly property int panelPadding: 8
     readonly property int headerHeight: 64
     readonly property int sectionGap: 8
@@ -56,37 +56,43 @@ Item {
     readonly property int cardHeight: 64
     readonly property int maxListHeight: 330
     readonly property int emptyHeight: 176
+    readonly property int promptHeight: 220     // height of the password prompt
 
-    // -----------------------------------
     // State
-    // -----------------------------------
-    readonly property bool btAvailable: BluetoothService.available
-    readonly property bool btEnabled: BluetoothService.enabled
-    readonly property bool btScanning: BluetoothService.enabled && BluetoothService.discovering
+    readonly property bool wifiAvailable: WifiService.available
+    readonly property bool wifiEnabled: WifiService.enabled
+    readonly property bool wifiScanning: WifiService.enabled && WifiService.scanning
+    readonly property var connectedNetwork: WifiService.connectedNetwork
 
-    // Text shown under the title. 
+    // status text under title  -----------------------[need to update bluetoothpanel.qml like thsi]
     readonly property string statusText: {
-        if (!btAvailable)
+        if (!wifiAvailable)
             return "Unavailable"
-        if (!btEnabled)
+        if (!wifiEnabled)
             return "Off"
         if (scanArea.containsMouse)
-            return btScanning ? "Stop scanning" : "Scan for devices"
-        if (btScanning)
+            return wifiScanning ? "Stop scanning" : "Scan for networks"
+        if (wifiScanning)
             return "Scanning…"
+        // if (connectedNetwork)
+        //     return "Connected · " + connectedNetwork.name
         return "On"
     }
 
-    // Height of the device section (0 when Bluetooth is off), animated.
+    // Height of the network section (0 when Wi-Fi is off), animated.
     readonly property real listCardTarget: {
-        var n = deviceList.count
+        var n = networkList.count
         if (n === 0)
             return emptyHeight
+
         var content = n * cardHeight + (n - 1) * listSpacing + 2 * listPadding
-        return Math.min(maxListHeight, content) 
+        var h = Math.min(maxListHeight, content)
+
+        // the password prompt needs room even when only a few networks exist
+        return passwordPrompt.shown ? Math.max(h, promptHeight) : h
     }
 
-    readonly property real bodyTarget: btEnabled ? sectionGap + listCardTarget : 0
+    readonly property real bodyTarget: wifiEnabled ? sectionGap + listCardTarget : 0
     property real bodyHeight: bodyTarget
 
     Behavior on bodyHeight {
@@ -108,24 +114,33 @@ Item {
     }
 
     Component.onCompleted: openProgress = 1
-    onVisibleChanged: openProgress = visible ? 1 : 0
+
+    onVisibleChanged: {
+        openProgress = visible ? 1 : 0
+
+        if (!visible)
+            passwordPrompt.close()
+    }
+
+    onWifiEnabledChanged: {
+        if (!wifiEnabled)
+            passwordPrompt.close()
+    }
 
     function withAlpha(c, a) {
         return Qt.rgba(c.r, c.g, c.b, a)
     }
 
-    implicitWidth: panel.width 
-    implicitHeight: maxListHeight + (panelPadding*4) + headerHeight //panel.height
+    implicitWidth: panel.width
+    implicitHeight: maxListHeight + (panelPadding * 4) + headerHeight //panel.height
 
 
 
-    // -----------------------------------
-    // Radar icon — used in scan button and the empty state.
-    // -----------------------------------
+    // Radar icon
     component RadarIcon: Item {
         id: radar
 
-        property color color: "red"//Colors.bluetoothPrimaryTextColor
+        property color color: "white"
         property bool active: false
         property real size: 24
         readonly property real ringWidth: Math.max(1.5, size * 0.075)
@@ -137,7 +152,7 @@ Item {
             return Qt.rgba(color.r, color.g, color.b, a)
         }
 
-        // Outer ring
+        // outside ring
         Rectangle {
             anchors.fill: parent
             radius: width / 2
@@ -167,7 +182,7 @@ Item {
             }
         }
 
-        // Ping ring expanding from the center
+        // Ping ring
         Rectangle {
             id: ping
 
@@ -205,7 +220,7 @@ Item {
             }
         }
 
-        // Center dot
+        // dot iin center
         Rectangle {
             id: dot
 
@@ -239,9 +254,97 @@ Item {
         }
     }
 
-    // -----------------------------------
+    // Signal bars icon 
+    component SignalIcon: Item {
+        id: sig
+
+        property color color: "white"
+        property int level: 0          // 0..4 bars lit
+        property real size: 22
+
+        width: size
+        height: size
+
+        Repeater {
+            model: 4
+
+            Rectangle {
+                required property int index
+
+                width: sig.size * 0.17
+                height: sig.size * (0.3 + index * 0.23)
+                x: index * sig.size * 0.27 + sig.size * 0.01
+                y: sig.size - height
+                radius: width / 2
+                color: sig.color
+                opacity: index < sig.level ? 1 : 0.25
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 250 }
+                }
+            }
+        }
+    }
+
+    //  button - password prompt
+    component PromptButton: Rectangle {
+        id: btn
+
+        property string label: ""
+        property color textColor: "white"
+        property color hoverColor: "white"
+        property string fontFamily: ""
+
+        signal clicked()
+
+        height: 38
+        radius: 12
+        opacity: enabled ? 1 : 0.4
+        scale: btnArea.pressed ? 0.96 : 1
+
+        Behavior on opacity {
+            NumberAnimation { duration: 160 }
+        }
+
+        Behavior on scale {
+            NumberAnimation {
+                duration: 140
+                easing.type: Easing.OutCubic
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            radius: parent.radius
+            color: btn.hoverColor
+            opacity: btnArea.containsMouse && btn.enabled ? 0.08 : 0
+
+            Behavior on opacity {
+                NumberAnimation { duration: 140 }
+            }
+        }
+
+        Text {
+            anchors.centerIn: parent
+            text: btn.label
+            color: btn.textColor
+            font.family: btn.fontFamily
+            font.weight: Font.Bold
+            font.pixelSize: 13
+        }
+
+        MouseArea {
+            id: btnArea
+
+            anchors.fill: parent
+            enabled: btn.enabled
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: btn.clicked()
+        }
+    }
+
     // Panel
-    // -----------------------------------
 
     Rectangle {
         id: panel
@@ -261,9 +364,7 @@ Item {
         scale: 0.94 + 0.06 * root.openProgress
         transformOrigin: Item.Top
 
-        transform: Translate {
-            y: (1 - root.openProgress) * -12
-        }
+        transform: Translate {y: (1 - root.openProgress) * -12}
 
         // -----------------------------------------------------
         // Header
@@ -283,7 +384,7 @@ Item {
             radius: 14
             color: root.headerColor
 
-            // Bluetooth badge
+            // Wi-Fi badge
             Rectangle {
                 id: badge
 
@@ -295,7 +396,7 @@ Item {
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
 
-                color: root.btEnabled ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.mutedTextColor, 0.10)
+                color: root.wifiEnabled ? root.withAlpha(root.wifiActiveColor, 0.16) : root.withAlpha(root.mutedTextColor, 0.10)
 
                 Behavior on color {
                     ColorAnimation { duration: 260 }
@@ -303,9 +404,9 @@ Item {
 
                 Text {
                     anchors.centerIn: parent
-                    text: root.bluetoothGlyph
+                    text: root.wifiGlyph
                     font.pixelSize: 22
-                    color: root.btEnabled ? root.bluetoothActiveColor : root.bluetoothInactiveColor
+                    color: root.wifiEnabled ? root.wifiActiveColor : root.wifiInactiveColor
                     Behavior on color {
                         ColorAnimation { duration: 260 }
                     }
@@ -333,7 +434,7 @@ Item {
                 }
 
                 Connections {
-                    target: BluetoothService
+                    target: WifiService
 
                     function onEnabledChanged() {
                         badgeBounce.restart()
@@ -352,21 +453,22 @@ Item {
                 spacing: 1
 
                 Text {
-                    text: "Bluetooth"
+                    text: "Wi-Fi"
                     color: root.primaryTextColor
                     font.pixelSize: 16
                     font.family: root.fontFamily
                     font.weight: Font.ExtraBold
                 }
 
-                // Status text cross-fades with a small vertical slide
+                // Status
                 Item {
                     id: statusItem
 
                     property string value: root.statusText
                     property string shown: ""
 
-                    width: statusLabel.implicitWidth
+                    // long network names are elided so they never run into the buttons
+                    width: Math.min(statusLabel.implicitWidth, 220)
                     height: statusLabel.implicitHeight
 
                     Component.onCompleted: shown = value
@@ -378,15 +480,13 @@ Item {
 
                     Text {
                         id: statusLabel
-
+                        width: statusItem.width
+                        elide: Text.ElideRight
                         text: statusItem.shown
                         font.family: root.fontFamily
                         font.weight: Font.Bold
                         font.pixelSize: 11
-
-                        color: root.btScanning
-                               ? root.bluetoothActiveColor
-                               : root.secondaryTextColor
+                        color: (root.wifiScanning || root.connectedNetwork)? root.wifiActiveColor: root.secondaryTextColor
 
                         Behavior on color {
                             ColorAnimation { duration: 250 }
@@ -414,7 +514,7 @@ Item {
                             }
                         }
 
-                        ScriptAction {
+                        ScriptAction {   // ScriptAction for run js code
                             script: {
                                 statusItem.shown = statusItem.value
                                 statusLabel.y = 5
@@ -445,19 +545,15 @@ Item {
             // Toggle
             Rectangle {
                 id: toggle
-
-                property real progress: root.btEnabled ? 1 : 0
-
+                property real progress: root.wifiEnabled ? 1 : 0
                 width: 52
                 height: 30
                 radius: height / 2
-
                 anchors.right: parent.right
                 anchors.rightMargin: 14
                 anchors.verticalCenter: parent.verticalCenter
-
-                color: root.btEnabled ? root.toggleOnColor : root.toggleOffColor
-                opacity: root.btAvailable ? 1 : 0.4
+                color: root.wifiEnabled ? root.toggleOnColor : root.toggleOffColor
+                opacity: root.wifiAvailable ? 1 : 0.4
                 scale: toggleArea.pressed ? 0.94 : 1
 
                 Behavior on progress {
@@ -485,16 +581,12 @@ Item {
 
                 Rectangle {
                     id: knob
-
-                    // The knob stretches while pressed, like a physical switch
                     width: toggleArea.pressed ? 28 : 22
                     height: 22
                     y: 4
                     x: 4 + toggle.progress * (toggle.width - width - 8)
                     radius: height / 2
-
-                    color: root.btEnabled ? root.toggleKnobOnColor : root.toggleKnobOffColor
-
+                    color: root.wifiEnabled ? root.toggleKnobOnColor : root.toggleKnobOffColor
                     Behavior on width {
                         NumberAnimation {
                             duration: 140
@@ -510,52 +602,36 @@ Item {
                 MouseArea {
                     id: toggleArea
                     anchors.fill: parent
-                    enabled: root.btAvailable
+                    enabled: root.wifiAvailable
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: BluetoothService.toggle()
+                    onClicked: WifiService.toggle()
                 }
             }
 
-            // Scan button (icon only, left of the toggle)
+            // Scan button (right)
             Rectangle {
                 id: scanButton
 
-                readonly property bool canScan: root.btEnabled
-                property color iconColor: root.btScanning ? root.bluetoothActiveColor : (canScan ? root.primaryTextColor : root.mutedTextColor)
-
-                // 0 → 1 while scanning, drives the glow ring
-                property real glowAmount: root.btScanning ? 1 : 0
+                readonly property bool canScan: root.wifiEnabled
+                property color iconColor: root.wifiScanning ? root.wifiActiveColor : (canScan ? root.primaryTextColor : root.mutedTextColor)
+                property real glowAmount: root.wifiScanning ? 1 : 0
                 property real glowPulse: 0
 
                 width: 30
                 height: width
                 radius: width / 2
-
                 anchors.right: toggle.left
                 anchors.rightMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
-
-                color: "Transparent" //!canScan ? root.scanDisabledColor : (root.btScanning ? root.scanActiveColor : root.scanColor)
+                color: "transparent"
                 scale: scanArea.pressed ? 0.9 : (scanArea.containsMouse ? 1.06 : 1.0)
 
-                Behavior on iconColor {
-                    ColorAnimation { duration: 220 }
-                }
-
-                Behavior on glowAmount {
-                    NumberAnimation { duration: 350 }
-                }
-
-                Behavior on scale {
-                    NumberAnimation {
-                        duration: 200
-                        easing.type: Easing.OutBack
-                        easing.overshoot: 2
-                    }
-                }
+                Behavior on iconColor {ColorAnimation { duration: 220 }}
+                Behavior on glowAmount {NumberAnimation { duration: 350 }}
+                Behavior on scale {NumberAnimation {duration: 200;easing.type: Easing.OutBack;easing.overshoot: 2}}
 
                 SequentialAnimation {
-                    running: root.btScanning
+                    running: root.wifiScanning
                     loops: Animation.Infinite
                     alwaysRunToEnd: true
 
@@ -590,28 +666,24 @@ Item {
 
                 RadarIcon {
                     anchors.centerIn: parent
-                    size: parent.width // 24
+                    size: parent.width
                     color: scanButton.iconColor
-                    active: root.btScanning
+                    active: root.wifiScanning
                 }
 
                 MouseArea {
                     id: scanArea
-
                     anchors.fill: parent
-                    enabled: root.btEnabled
+                    enabled: root.wifiEnabled
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-
-                    onClicked: BluetoothService.toggleDiscovery()
+                    onClicked: WifiService.toggleScanning()
                 }
             }
         }
 
-        // -----------------------------------------------------
-        // Devices
-        // -----------------------------------------------------
 
+        // Networks -----------------------------------------------------------------------------------------------------------
         Item {
             id: body
 
@@ -626,7 +698,7 @@ Item {
             height: root.bodyHeight
             clip: true
 
-            opacity: root.btEnabled ? 1 : 0
+            opacity: root.wifiEnabled ? 1 : 0
 
             Behavior on opacity {
                 NumberAnimation {
@@ -635,6 +707,7 @@ Item {
                 }
             }
 
+            // List card (network)
             Rectangle {
                 id: listCard
 
@@ -661,22 +734,23 @@ Item {
                     }
 
                     height: root.emptyHeight
-                    opacity: deviceList.count === 0 ? 1 : 0
+                    opacity: networkList.count === 0 ? 1 : 0
                     visible: opacity > 0.01
 
                     Behavior on opacity {
                         NumberAnimation { duration: 220 }
                     }
 
+                    // no network - middle
                     Column {
                         anchors.centerIn: parent
                         spacing: 12
-
+                        
                         RadarIcon {
                             anchors.horizontalCenter: parent.horizontalCenter
                             size: 48
-                            active: root.btScanning
-                            color: root.btScanning ? root.bluetoothActiveColor: root.mutedTextColor
+                            active: root.wifiScanning
+                            color: root.wifiScanning ? root.wifiActiveColor : root.mutedTextColor
 
                             Behavior on color {
                                 ColorAnimation { duration: 250 }
@@ -689,7 +763,7 @@ Item {
 
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                text: root.btScanning ? "Looking for nearby devices" : "No devices found"
+                                text: root.wifiScanning ? "Looking for nearby networks" : "No networks found"
                                 color: root.primaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.Bold
@@ -698,7 +772,7 @@ Item {
 
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                text: root.btScanning ? "Put your device in pairing mode" : "Tap the scan button to search"
+                                text: root.wifiScanning ? "This can take a few seconds" : "Tap the scan button to search"
                                 color: root.secondaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.DemiBold
@@ -709,21 +783,19 @@ Item {
                 }
 
 
-                // list view ofr devices
+                // list view for networks
                 ListView {
-                    id: deviceList
+                    id: networkList
 
-                    anchors {
-                        fill: parent
-                        margins: root.listPadding
-                    }
+                    anchors.fill:parent
+                    anchors.margins: root.listPadding
 
                     clip: true
                     spacing: root.listSpacing
                     boundsBehavior: Flickable.StopAtBounds
-                    enabled: root.btEnabled
+                    enabled: root.wifiEnabled && !passwordPrompt.shown
 
-                    model: BluetoothService.devices
+                    model: WifiService.networks
 
                     // First appearance
                     populate: Transition {
@@ -751,7 +823,7 @@ Item {
                         }
                     }
 
-                    // A newly discovered device
+                    // new network (adding time)
                     add: Transition {
                         ParallelAnimation {
                             NumberAnimation {
@@ -772,7 +844,7 @@ Item {
                             }
                         }
                     }
-
+                    // removed
                     remove: Transition {
                         ParallelAnimation {
                             NumberAnimation {
@@ -790,7 +862,7 @@ Item {
                             }
                         }
                     }
-
+                    // location changed
                     displaced: Transition {
                         NumberAnimation {
                             properties: "x,y"
@@ -800,50 +872,53 @@ Item {
                     }
 
 
-                    // device card delegate
+                    // network card delegate
                     delegate: Item {
                         id: delegateRoot
 
                         required property var modelData
 
-                        readonly property bool connected: modelData.connected
-                        // Quickshell device state: 2 = disconnecting, 3 = connecting
-                        readonly property bool busy: modelData.state === 2 || modelData.state === 3
-                        readonly property real batteryValue: Number(BluetoothService.batteryPercent(modelData)) || 0
+                        readonly property bool connected: modelData ? modelData.connected : false
+                        readonly property bool busy: modelData ? modelData.stateChanging : false
+                        readonly property string ssid: modelData ? modelData.name : ""
+                        readonly property real signalValue: WifiService.signalPercent(modelData)
 
-                        width: deviceList.width
+                        // Last connection error, cleared when a new attempt starts
+                        property string errorText: ""
+
+                        width: networkList.width
                         height: root.cardHeight
 
+                        Connections {
+                            target: delegateRoot.modelData
+                            ignoreUnknownSignals: true  // only listen to the signals that we need (onConnectionFailed , onStateChanged)
+
+                            function onConnectionFailed(reason) {
+                                delegateRoot.errorText = WifiService.failureText(reason)
+                            }
+
+                            function onStateChanged() {
+                                // if (delegateRoot.busy || delegateRoot.connected)  // [fix] saved network connecteion faield status  
+                                if (delegateRoot.connected)  // only clear error msg after successful connection
+                                    delegateRoot.errorText = ""
+                            }
+                        }
 
 
-                        // Device card
+                        // Network card
                         Rectangle {
                             id: card
 
                             anchors.fill: parent
                             radius: 12
-
                             color: delegateRoot.connected ? root.deviceConnectedColor : root.deviceColor
-
                             border.width: 1
-                            border.color: root.withAlpha( root.bluetoothActiveColor, delegateRoot.connected ? 0.4 : 0)
-
+                            border.color: root.withAlpha(root.wifiActiveColor, delegateRoot.connected ? 0.4 : 0)
                             scale: cardArea.pressed ? 0.975 : 1
 
-                            Behavior on color {
-                                ColorAnimation { duration: 200 }
-                            }
-
-                            Behavior on border.color {
-                                ColorAnimation { duration: 260 }
-                            }
-
-                            Behavior on scale {
-                                NumberAnimation {
-                                    duration: 160
-                                    easing.type: Easing.OutCubic
-                                }
-                            }
+                            Behavior on color {ColorAnimation { duration: 200 }}
+                            Behavior on border.color {ColorAnimation { duration: 260 }}
+                            Behavior on scale {NumberAnimation {duration: 160;easing.type: Easing.OutCubic}}
 
                             // Hover highlight
                             Rectangle {
@@ -859,7 +934,7 @@ Item {
 
                             // Icon badge
                             Rectangle {
-                                id: deviceBadge
+                                id: networkBadge
 
                                 width: 40
                                 height: 40
@@ -869,23 +944,27 @@ Item {
                                 anchors.leftMargin: 12
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                color: delegateRoot.connected ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.primaryTextColor, 0.05)
+                                color: delegateRoot.connected ? root.withAlpha(root.wifiActiveColor, 0.16) : root.withAlpha(root.primaryTextColor, 0.05)
+
+                                // opacity: 0
 
                                 Behavior on color {
                                     ColorAnimation { duration: 240 }
                                 }
 
-                                Text {
-                                    id: deviceIcon
+                                SignalIcon {
+                                    id: networkIcon
+
                                     anchors.centerIn: parent
-                                    text: BluetoothService.icon(delegateRoot.modelData)
-                                    font.pixelSize: 20
-                                    color: delegateRoot.connected ? root.bluetoothActiveColor : root.mutedTextColor
+                                    size: 22
+                                    level: WifiService.signalLevel(delegateRoot.modelData)
+                                    color: delegateRoot.connected ? root.wifiActiveColor : root.mutedTextColor
+
                                     Behavior on color {
                                         ColorAnimation { duration: 240 }
                                     }
 
-                                    // Breathes while connecting / disconnecting
+                                    // Breatheing animation for icon - connecting / disconnecting
                                     SequentialAnimation on opacity {
                                         running: delegateRoot.busy
                                         loops: Animation.Infinite
@@ -908,19 +987,19 @@ Item {
 
                             // Name + status
                             Column {
-                                id: deviceInfo
+                                id: networkInfo
 
-                                anchors.left: deviceBadge.right
+                                anchors.left: networkBadge.right
                                 anchors.leftMargin: 12
-                                anchors.right: batteryPill.visible ? batteryPill.left : parent.right
+                                anchors.right: signalPill.left
                                 anchors.rightMargin: 12
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 spacing: 2
 
                                 Text {
-                                    width: deviceInfo.width
-                                    text: delegateRoot.modelData.name || delegateRoot.modelData.deviceName  || delegateRoot.modelData.address
+                                    width: networkInfo.width
+                                    text: delegateRoot.ssid
                                     color: root.primaryTextColor
                                     font.family: root.fontFamily
                                     font.weight: Font.Bold
@@ -929,12 +1008,10 @@ Item {
                                 }
 
                                 Text {
-                                    width: deviceInfo.width
-
-                                    text: BluetoothService.status(delegateRoot.modelData)
-
-                                    color: delegateRoot.connected ? root.bluetoothActiveColor : root.secondaryTextColor
-
+                                    id:networkStatus
+                                    width: networkInfo.width
+                                    text: WifiService.networkStatus(delegateRoot.modelData, delegateRoot.errorText)
+                                    color: (delegateRoot.errorText !== "" && !delegateRoot.connected) ? root.signalLowColor : (delegateRoot.connected ? root.wifiActiveColor : root.secondaryTextColor)
                                     font.family: root.fontFamily
                                     font.weight: Font.DemiBold
                                     font.pixelSize: 11
@@ -946,11 +1023,9 @@ Item {
                                 }
                             }
 
-                            // Battery pill — fills with the charge level
+                            // Signal pill
                             Rectangle {
-                                id: batteryPill
-
-                                visible: delegateRoot.modelData.batteryAvailable
+                                id: signalPill
 
                                 width: 54
                                 height: 24
@@ -967,9 +1042,9 @@ Item {
                                     height: parent.height
                                     radius: height / 2
 
-                                    width: Math.max(height, parent.width * Math.min(100, delegateRoot.batteryValue) / 100)
+                                    width: Math.max(height, parent.width * Math.min(100, delegateRoot.signalValue) / 100)
 
-                                    color: root.withAlpha( delegateRoot.batteryValue <= 20 ? root.batteryLowColor : root.bluetoothActiveColor, 0.3)
+                                    color: root.withAlpha(delegateRoot.signalValue <= 25 ? root.signalLowColor : root.wifiActiveColor, 0.3)
 
                                     Behavior on width {
                                         NumberAnimation {
@@ -983,19 +1058,18 @@ Item {
                                     }
                                 }
 
-
-                                // Battery percentage text
+                                // Signal percentage 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: Math.round(delegateRoot.batteryValue) + "%"
-                                    color: root.batteryColor
+                                    text: Math.round(delegateRoot.signalValue) + " %"
+                                    color: root.signalTextColor
                                     font.pixelSize: 12
                                     font.family: root.fontFamily
                                     font.weight: Font.DemiBold
                                 }
                             }
 
-                            // Indeterminate progress line while (dis)connecting
+                            // line (dis)connecting
                             Item {
                                 id: busyBar
 
@@ -1022,7 +1096,7 @@ Item {
                                     width: parent.width * 0.35
                                     height: parent.height
                                     radius: 1
-                                    color: root.bluetoothActiveColor
+                                    color: root.wifiActiveColor
 
                                     NumberAnimation on x {
                                         running: delegateRoot.busy
@@ -1043,33 +1117,268 @@ Item {
                                 cursorShape: Qt.PointingHandCursor
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-                                // Left click: connect / disconnect. Right click: forget.
+                                // Left click: connect / disconnect
+                                // Right click: forget.
                                 onClicked: mouse => {
-                                    if (mouse.button === Qt.LeftButton)
-                                        BluetoothService.toggleDevice(delegateRoot.modelData)
-                                    else if (mouse.button === Qt.RightButton)
-                                        BluetoothService.forgetDevice(delegateRoot.modelData)
+                                    var net = delegateRoot.modelData
+                                    if (!net)
+                                        return
+
+                                    if (mouse.button === Qt.RightButton)
+                                        WifiService.forgetNetwork(net)
+                                    else if (WifiService.isPasswordRequired(net))
+                                        passwordPrompt.open(net)
+                                    else
+                                        WifiService.toggleConnection(net)
                                 }
                             }
                         }
                     }
                 }
 
-                // Slim scroll indicator, only visible while scrolling
+                // scroll indicator, visible while scrolling
                 Rectangle {
-                    visible: deviceList.visibleArea.heightRatio < 1
+                    visible: networkList.visibleArea.heightRatio < 1
 
                     x: parent.width - width - 3
-                    y: deviceList.y + deviceList.visibleArea.yPosition * deviceList.height
+                    y: networkList.y + networkList.visibleArea.yPosition * networkList.height
                     width: 3
-                    height: Math.max(24, deviceList.visibleArea.heightRatio * deviceList.height)
+                    height: Math.max(24, networkList.visibleArea.heightRatio * networkList.height)
                     radius: 1.5
 
                     color: root.withAlpha(root.secondaryTextColor, 0.6)
-                    opacity: deviceList.moving ? 1 : 0
+                    opacity: networkList.moving ? 1 : 0
 
                     Behavior on opacity {
                         NumberAnimation { duration: 300 }
+                    }
+                }
+
+                // Password prompt (covers the list ehn it is open)
+                Item {
+                    id: passwordPrompt
+
+                    property var network: null
+                    property string shownName: ""
+                    property bool reveal: false
+                    readonly property bool shown: network !== null
+
+                    function open(net) {
+                        if (!net)
+                            return
+
+                        passwordInput.text = ""
+                        reveal = false
+                        shownName = net.name
+                        network = net
+                    }
+
+
+                    // close function for clear inputs
+                    function close() {
+                        network = null
+                        passwordInput.text = ""
+                        passwordInput.focus = false
+                    }
+
+                    function submit() {
+                        if (!network || passwordInput.text.length === 0)
+                            return
+
+                        WifiService.connectNetwork(network, passwordInput.text)
+                        close()
+                    }
+
+                    onShownChanged: {
+                        if (shown){
+                            passwordInput.forceActiveFocus()
+                        }
+                            
+                    }
+
+                    anchors.fill: parent
+                    z: 10
+
+                    opacity: shown ? 1 : 0
+                    visible: shown || opacity > 0.01
+
+                    Behavior on opacity {
+                        NumberAnimation {
+                            duration: 200
+                            easing.type: Easing.OutCubic
+                        }
+                    }
+
+                    // Backdrop (also swallows clicks / scrolling meant for the list)
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 14
+                        color: root.deviceBackgroundColor
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            acceptedButtons: Qt.AllButtons
+                            onWheel: wheel => wheel.accepted = true
+                        }
+                    }
+
+                    Column {
+                        anchors.centerIn: parent
+                        width: parent.width - 48
+                        spacing: 12
+
+                        // Lock badge
+                        Rectangle {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            width: 40
+                            height: 40
+                            radius: 12
+                            color: root.withAlpha(root.wifiActiveColor, 0.16)
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: root.lockGlyph
+                                font.pixelSize: 18
+                                color: root.wifiActiveColor
+                            }
+                        }
+
+                        // Title , name
+                        Column {
+                            width: parent.width
+                            spacing: 3
+
+                            Text {
+                                width: parent.width
+                                horizontalAlignment: Text.AlignHCenter
+                                text: "Enter password"
+                                color: root.primaryTextColor
+                                font.family: root.fontFamily
+                                font.weight: Font.Bold
+                                font.pixelSize: 14
+                            }
+
+                            Text {
+                                width: parent.width
+                                horizontalAlignment: Text.AlignHCenter
+                                text: passwordPrompt.shownName
+                                color: root.secondaryTextColor
+                                font.family: root.fontFamily
+                                font.weight: Font.DemiBold
+                                font.pixelSize: 12
+                                elide: Text.ElideRight
+                            }
+                        }
+
+                        // Password field
+                        Rectangle {
+                            width: parent.width
+                            height: 42
+                            radius: 12
+                            color: root.deviceColor
+
+                            border.width: 1
+                            border.color: passwordInput.activeFocus ? root.withAlpha(root.wifiActiveColor, 0.5) : root.withAlpha(root.primaryTextColor, 0.06)
+
+                            Behavior on border.color {
+                                ColorAnimation { duration: 200 }
+                            }
+
+                            TextInput {
+                                id: passwordInput
+
+                                anchors {
+                                    left: parent.left
+                                    right: revealArea.left
+                                    verticalCenter: parent.verticalCenter
+                                    leftMargin: 14
+                                    rightMargin: 8
+                                }
+
+                                echoMode: passwordPrompt.reveal ? TextInput.Normal : TextInput.Password
+                                passwordCharacter: "•"
+                                selectByMouse: true
+                                clip: true
+
+                                color: root.primaryTextColor
+                                selectionColor: root.withAlpha(root.wifiActiveColor, 0.4)
+                                selectedTextColor: root.primaryTextColor
+                                font.family: root.fontFamily
+                                font.weight: Font.DemiBold
+                                font.pixelSize: 14
+
+
+                                // heyboard shortcuts for submit / cancel
+                                Keys.onReturnPressed: passwordPrompt.submit()
+                                Keys.onEnterPressed: passwordPrompt.submit()
+                                Keys.onEscapePressed: passwordPrompt.close()
+
+                                Text {
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    visible: passwordInput.text.length === 0
+                                    text: "Password"
+                                    color: root.mutedTextColor
+                                    font: passwordInput.font
+                                }
+                            }
+
+                            // Show, hide password
+                            Item {
+                                id: revealArea
+
+                                width: 38
+                                height: parent.height
+                                anchors.right: parent.right
+
+                                Text {
+                                    anchors.centerIn: parent
+                                    text: passwordPrompt.reveal ? root.eyeOffGlyph : root.eyeGlyph
+                                    font.pixelSize: 14
+                                    color: revealMouse.containsMouse ? root.primaryTextColor : root.mutedTextColor
+
+                                    Behavior on color {
+                                        ColorAnimation { duration: 140 }
+                                    }
+                                }
+
+                                MouseArea {
+                                    id: revealMouse
+
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    cursorShape: Qt.PointingHandCursor
+                                    onClicked: passwordPrompt.reveal = !passwordPrompt.reveal
+                                }
+                            }
+                        }
+
+                        // Buttons
+                        Row {
+                            width: parent.width
+                            spacing: 8
+                            // canel button
+                            PromptButton {
+                                width: (parent.width - parent.spacing) / 2
+                                label: "Cancel"
+                                color: root.deviceColor
+                                textColor: root.primaryTextColor
+                                hoverColor: root.primaryTextColor
+                                fontFamily: root.fontFamily
+                                onClicked: passwordPrompt.close()
+                            }
+                            // connect button
+                            PromptButton {
+                                width: (parent.width - parent.spacing) / 2
+                                label: "Connect"
+                                enabled: passwordInput.text.length > 0
+                                color: root.toggleOnColor
+                                textColor: root.toggleKnobOnColor
+                                hoverColor: root.toggleKnobOnColor
+                                fontFamily: root.fontFamily
+                                onClicked: passwordPrompt.submit()
+                            }
+                        }
                     }
                 }
             }

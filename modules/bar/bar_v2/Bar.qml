@@ -479,7 +479,8 @@ Scope{
 
                 rad:root.rootRadius
                 
-                file:"../modules/bluetooth/BluetoothPanel.qml" 
+                file:"../modules/wifi/WifiPanel.qml"//"../modules/bluetooth/BluetoothPanel.qml" 
+                
                 
                 IpcHandler {
                     target: "bluetooth"

@@ -215,4 +215,24 @@ Singleton {
     readonly property color bluetoothBatteryColor: mainTextColor
     readonly property color bluetoothBatteryLowColor: focusColor
 
+    // === Wi-Fi ===
+    readonly property color wifiBackgroundColor: shellBackgroundColor
+    readonly property color wifiHeaderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
+    readonly property color wifiDeviceBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.08)
+    readonly property color wifiDeviceColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
+    readonly property color wifiDeviceConnectedColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.22)
+    readonly property color wifiPrimaryTextColor: mainTextColor
+    readonly property color wifiSecondaryTextColor: secondaryTextColor
+    readonly property color wifiMutedTextColor: mainIconColor
+    readonly property color wifiActiveColor: activeColor
+    readonly property color wifiInactiveColor: mainIconColor
+    readonly property color wifiToggleOnColor: activeColor
+    readonly property color wifiToggleOffColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
+    readonly property color wifiToggleKnobOnColor: shellBackgroundColor
+    readonly property color wifiToggleKnobOffColor: secondaryTextColor
+    readonly property color wifiScanColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.16)
+    readonly property color wifiScanActiveColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.28)
+    readonly property color wifiScanDisabledColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.12)
+    readonly property color wifiSignalColor: mainTextColor
+    readonly property color wifiSignalLowColor: focusColor
 }
