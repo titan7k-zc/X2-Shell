@@ -29,8 +29,7 @@ Singleton {
 
     // Devices
     readonly property var devices: Bluetooth.devices
-
-
+  
 
     // Adapter controls ==========================
     function toggle() {
@@ -124,8 +123,43 @@ Singleton {
 
     // Forget
     function forgetDevice(device) {
+        console.log("forgoting")
         device.forget()
     }
+
+
+
+    // Forget all Bluetooth unknown devices.
+    function clearUnknown() {
+        // console.log("Bluetooth: starting cleanup")
+
+        const deviceList = devices.values
+
+        // console.log("Device list:", deviceList)
+        // console.log("Device count:", deviceList.length)
+
+        deviceList.forEach(function(device) {
+            if (!device)
+                return
+
+            console.log(
+                "Checking:", device.name,
+                "Connected:", device.connected,
+                "Paired:", device.paired,
+                "Bonded:", device.bonded
+            )
+
+            if (device.connected || device.paired || device.bonded)
+                return
+
+            console.log("Forgetting:", device.name)
+            root.forgetDevice(device)
+        })
+    }
+
+
+
+
 
 
 

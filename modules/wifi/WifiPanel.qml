@@ -48,15 +48,15 @@ Item {
     property string eyeOffGlyph: "\uf070"
 
     // Layout 
-    readonly property int panelPadding: 8
-    readonly property int headerHeight: 64
-    readonly property int sectionGap: 8
-    readonly property int listPadding: 8
-    readonly property int listSpacing: 6
-    readonly property int cardHeight: 64
-    readonly property int maxListHeight: 330
-    readonly property int emptyHeight: 176
-    readonly property int promptHeight: 220     // height of the password prompt
+    readonly property int panelPadding: 7
+    readonly property int headerHeight: 58
+    readonly property int sectionGap: 7
+    readonly property int listPadding: 7
+    readonly property int listSpacing: 5
+    readonly property int cardHeight: 58
+    readonly property int maxListHeight: 297
+    readonly property int emptyHeight: 158
+    readonly property int promptHeight: 198     // height of the password prompt
 
     // State
     readonly property bool wifiAvailable: WifiService.available
@@ -132,7 +132,7 @@ Item {
     }
 
     implicitWidth: panel.width
-    implicitHeight: maxListHeight + (panelPadding * 4) + headerHeight //panel.height
+    implicitHeight: panel.height//maxListHeight + (panelPadding * 4) + headerHeight //panel.height
 
 
 
@@ -142,7 +142,7 @@ Item {
 
         property color color: "white"
         property bool active: false
-        property real size: 24
+        property real size: 22
         readonly property real ringWidth: Math.max(1.5, size * 0.075)
 
         width: size
@@ -155,11 +155,13 @@ Item {
         // outside ring
         Rectangle {
             anchors.fill: parent
+            anchors.rightMargin:-1
+            anchors.bottomMargin:-1
             radius: width / 2
             color: "transparent"
             border.width: radar.ringWidth
             border.color: radar.color
-            opacity: radar.active ? 0.9 : 0.55
+            opacity: root.wifiEnabled? (radar.active ? 0.9 : 0.55) : 0.4
 
             Behavior on opacity {
                 NumberAnimation { duration: 300 }
@@ -175,7 +177,7 @@ Item {
             color: "transparent"
             border.width: radar.ringWidth * 0.8
             border.color: radar.color
-            opacity: radar.active ? 0 : 0.4
+            opacity: root.wifiEnabled? (radar.active ? 0 : 0.4) : 0.2
 
             Behavior on opacity {
                 NumberAnimation { duration: 300 }
@@ -229,6 +231,11 @@ Item {
             height: width
             radius: width / 2
             color: radar.color
+            opacity: root.wifiEnabled? 1.0 : 0.4
+
+            Behavior on opacity {
+                NumberAnimation { duration: 300 }
+            }
 
             SequentialAnimation {
                 running: radar.active
@@ -254,38 +261,6 @@ Item {
         }
     }
 
-    // Signal bars icon 
-    component SignalIcon: Item {
-        id: sig
-
-        property color color: "white"
-        property int level: 0          // 0..4 bars lit
-        property real size: 22
-
-        width: size
-        height: size
-
-        Repeater {
-            model: 4
-
-            Rectangle {
-                required property int index
-
-                width: sig.size * 0.17
-                height: sig.size * (0.3 + index * 0.23)
-                x: index * sig.size * 0.27 + sig.size * 0.01
-                y: sig.size - height
-                radius: width / 2
-                color: sig.color
-                opacity: index < sig.level ? 1 : 0.25
-
-                Behavior on opacity {
-                    NumberAnimation { duration: 250 }
-                }
-            }
-        }
-    }
-
     //  button - password prompt
     component PromptButton: Rectangle {
         id: btn
@@ -297,8 +272,8 @@ Item {
 
         signal clicked()
 
-        height: 38
-        radius: 12
+        height: 34
+        radius: 11
         opacity: enabled ? 1 : 0.4
         scale: btnArea.pressed ? 0.96 : 1
 
@@ -330,7 +305,7 @@ Item {
             color: btn.textColor
             font.family: btn.fontFamily
             font.weight: Font.Bold
-            font.pixelSize: 13
+            font.pixelSize: 12
         }
 
         MouseArea {
@@ -351,10 +326,10 @@ Item {
 
         x: 0
         y: 0
-        width: 450
+        width: 405
         height: root.panelPadding * 2 + root.headerHeight + root.bodyHeight
 
-        radius: 20
+        radius: 18
         color: root.backgroundColor
 
         border.width: 1
@@ -381,19 +356,19 @@ Item {
             }
 
             height: root.headerHeight
-            radius: 14
+            radius: 13
             color: root.headerColor
 
             // Wi-Fi badge
             Rectangle {
                 id: badge
 
-                width: 44
-                height: 44
-                radius: 14
+                width: 40
+                height: 40
+                radius: 13
 
                 anchors.left: parent.left
-                anchors.leftMargin: 10
+                anchors.leftMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: root.wifiEnabled ? root.withAlpha(root.wifiActiveColor, 0.16) : root.withAlpha(root.mutedTextColor, 0.10)
@@ -405,7 +380,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     text: root.wifiGlyph
-                    font.pixelSize: 22
+                    font.pixelSize: 20
                     color: root.wifiEnabled ? root.wifiActiveColor : root.wifiInactiveColor
                     Behavior on color {
                         ColorAnimation { duration: 260 }
@@ -447,7 +422,7 @@ Item {
                 id: titleColumn
 
                 anchors.left: badge.right
-                anchors.leftMargin: 12
+                anchors.leftMargin: 11
                 anchors.verticalCenter: parent.verticalCenter
 
                 spacing: 1
@@ -455,7 +430,7 @@ Item {
                 Text {
                     text: "Wi-Fi"
                     color: root.primaryTextColor
-                    font.pixelSize: 16
+                    font.pixelSize: 14
                     font.family: root.fontFamily
                     font.weight: Font.ExtraBold
                 }
@@ -485,7 +460,7 @@ Item {
                         text: statusItem.shown
                         font.family: root.fontFamily
                         font.weight: Font.Bold
-                        font.pixelSize: 11
+                        font.pixelSize: 10
                         color: (root.wifiScanning || root.connectedNetwork)? root.wifiActiveColor: root.secondaryTextColor
 
                         Behavior on color {
@@ -542,15 +517,17 @@ Item {
                 }
             }
 
+            
+
             // Toggle
             Rectangle {
                 id: toggle
                 property real progress: root.wifiEnabled ? 1 : 0
-                width: 52
-                height: 30
+                width: 47
+                height: 27
                 radius: height / 2
                 anchors.right: parent.right
-                anchors.rightMargin: 14
+                anchors.rightMargin: 13
                 anchors.verticalCenter: parent.verticalCenter
                 color: root.wifiEnabled ? root.toggleOnColor : root.toggleOffColor
                 opacity: root.wifiAvailable ? 1 : 0.4
@@ -581,8 +558,8 @@ Item {
 
                 Rectangle {
                     id: knob
-                    width: toggleArea.pressed ? 28 : 22
-                    height: 22
+                    width: toggleArea.pressed ? 25 : 20
+                    height: 20
                     y: 4
                     x: 4 + toggle.progress * (toggle.width - width - 8)
                     radius: height / 2
@@ -617,11 +594,11 @@ Item {
                 property real glowAmount: root.wifiScanning ? 1 : 0
                 property real glowPulse: 0
 
-                width: 30
+                width: 27
                 height: width
                 radius: width / 2
                 anchors.right: toggle.left
-                anchors.rightMargin: 10
+                anchors.rightMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
                 color: "transparent"
                 scale: scanArea.pressed ? 0.9 : (scanArea.containsMouse ? 1.06 : 1.0)
@@ -680,6 +657,7 @@ Item {
                     onClicked: WifiService.toggleScanning()
                 }
             }
+
         }
 
 
@@ -714,13 +692,14 @@ Item {
                 anchors {
                     top: parent.top
                     topMargin: root.sectionGap
+                    // horizontalCenter:parent.horizontalCenter
                     left: parent.left
                     right: parent.right
                 }
-
+                // width:380
                 height: Math.max(0, body.height - root.sectionGap)
-                radius: 14
-                color: root.deviceBackgroundColor
+                radius: 13
+                color: "Transparent"//root.deviceBackgroundColor
                 clip: true
 
                 // Empty state
@@ -748,7 +727,7 @@ Item {
                         
                         RadarIcon {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            size: 48
+                            size: 43
                             active: root.wifiScanning
                             color: root.wifiScanning ? root.wifiActiveColor : root.mutedTextColor
 
@@ -767,7 +746,7 @@ Item {
                                 color: root.primaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.Bold
-                                font.pixelSize: 14
+                                font.pixelSize: 13
                             }
 
                             Text {
@@ -776,7 +755,7 @@ Item {
                                 color: root.secondaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.DemiBold
-                                font.pixelSize: 12
+                                font.pixelSize: 11
                             }
                         }
                     }
@@ -910,8 +889,8 @@ Item {
                             id: card
 
                             anchors.fill: parent
-                            radius: 12
-                            color: delegateRoot.connected ? root.deviceConnectedColor : root.deviceColor
+                            radius: 11
+                            color: "Transparent" //delegateRoot.connected ? root.deviceConnectedColor : root.deviceColor
                             border.width: 1
                             border.color: root.withAlpha(root.wifiActiveColor, delegateRoot.connected ? 0.4 : 0)
                             scale: cardArea.pressed ? 0.975 : 1
@@ -936,12 +915,12 @@ Item {
                             Rectangle {
                                 id: networkBadge
 
-                                width: 40
-                                height: 40
-                                radius: 12
+                                width: 36
+                                height: 36
+                                radius: 11
 
                                 anchors.left: parent.left
-                                anchors.leftMargin: 12
+                                anchors.leftMargin: 11
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 color: delegateRoot.connected ? root.withAlpha(root.wifiActiveColor, 0.16) : root.withAlpha(root.primaryTextColor, 0.05)
@@ -952,37 +931,14 @@ Item {
                                     ColorAnimation { duration: 240 }
                                 }
 
-                                SignalIcon {
-                                    id: networkIcon
 
+                                Text{
                                     anchors.centerIn: parent
-                                    size: 22
-                                    level: WifiService.signalLevel(delegateRoot.modelData)
+                                    text:"󰵬"
                                     color: delegateRoot.connected ? root.wifiActiveColor : root.mutedTextColor
-
-                                    Behavior on color {
-                                        ColorAnimation { duration: 240 }
-                                    }
-
-                                    // Breatheing animation for icon - connecting / disconnecting
-                                    SequentialAnimation on opacity {
-                                        running: delegateRoot.busy
-                                        loops: Animation.Infinite
-                                        alwaysRunToEnd: true
-
-                                        NumberAnimation {
-                                            to: 0.3
-                                            duration: 550
-                                            easing.type: Easing.InOutSine
-                                        }
-
-                                        NumberAnimation {
-                                            to: 1
-                                            duration: 550
-                                            easing.type: Easing.InOutSine
-                                        }
-                                    }
+                                    
                                 }
+
                             }
 
                             // Name + status
@@ -990,9 +946,9 @@ Item {
                                 id: networkInfo
 
                                 anchors.left: networkBadge.right
-                                anchors.leftMargin: 12
+                                anchors.leftMargin: 11
                                 anchors.right: signalPill.left
-                                anchors.rightMargin: 12
+                                anchors.rightMargin: 11
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 spacing: 2
@@ -1003,7 +959,7 @@ Item {
                                     color: root.primaryTextColor
                                     font.family: root.fontFamily
                                     font.weight: Font.Bold
-                                    font.pixelSize: 14
+                                    font.pixelSize: 13
                                     elide: Text.ElideRight
                                 }
 
@@ -1014,7 +970,7 @@ Item {
                                     color: (delegateRoot.errorText !== "" && !delegateRoot.connected) ? root.signalLowColor : (delegateRoot.connected ? root.wifiActiveColor : root.secondaryTextColor)
                                     font.family: root.fontFamily
                                     font.weight: Font.DemiBold
-                                    font.pixelSize: 11
+                                    font.pixelSize: 10
                                     elide: Text.ElideRight
 
                                     Behavior on color {
@@ -1027,12 +983,12 @@ Item {
                             Rectangle {
                                 id: signalPill
 
-                                width: 54
-                                height: 24
+                                width: 49
+                                height: 22
                                 radius: height / 2
 
                                 anchors.right: parent.right
-                                anchors.rightMargin: 14
+                                anchors.rightMargin: 13
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 color: root.withAlpha(root.primaryTextColor, 0.06)
@@ -1061,9 +1017,9 @@ Item {
                                 // Signal percentage 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: Math.round(delegateRoot.signalValue) + " %"
+                                    text: Math.round(delegateRoot.signalValue) + "   "
                                     color: root.signalTextColor
-                                    font.pixelSize: 12
+                                    font.pixelSize: 11
                                     font.family: root.fontFamily
                                     font.weight: Font.DemiBold
                                 }
@@ -1077,8 +1033,8 @@ Item {
                                     left: parent.left
                                     right: parent.right
                                     bottom: parent.bottom
-                                    leftMargin: 14
-                                    rightMargin: 14
+                                    leftMargin: 13
+                                    rightMargin: 13
                                     bottomMargin: 3
                                 }
 
@@ -1143,7 +1099,7 @@ Item {
                     x: parent.width - width - 3
                     y: networkList.y + networkList.visibleArea.yPosition * networkList.height
                     width: 3
-                    height: Math.max(24, networkList.visibleArea.heightRatio * networkList.height)
+                    height: Math.max(22, networkList.visibleArea.heightRatio * networkList.height)
                     radius: 1.5
 
                     color: root.withAlpha(root.secondaryTextColor, 0.6)
@@ -1212,7 +1168,7 @@ Item {
                     // Backdrop (also swallows clicks / scrolling meant for the list)
                     Rectangle {
                         anchors.fill: parent
-                        radius: 14
+                        radius: 13
                         color: root.deviceBackgroundColor
 
                         MouseArea {
@@ -1225,21 +1181,21 @@ Item {
 
                     Column {
                         anchors.centerIn: parent
-                        width: parent.width - 48
+                        width: parent.width - 43
                         spacing: 12
 
                         // Lock badge
                         Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            width: 40
-                            height: 40
-                            radius: 12
+                            width: 36
+                            height: 36
+                            radius: 11
                             color: root.withAlpha(root.wifiActiveColor, 0.16)
 
                             Text {
                                 anchors.centerIn: parent
                                 text: root.lockGlyph
-                                font.pixelSize: 18
+                                font.pixelSize: 16
                                 color: root.wifiActiveColor
                             }
                         }
@@ -1256,7 +1212,7 @@ Item {
                                 color: root.primaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.Bold
-                                font.pixelSize: 14
+                                font.pixelSize: 13
                             }
 
                             Text {
@@ -1266,7 +1222,7 @@ Item {
                                 color: root.secondaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.DemiBold
-                                font.pixelSize: 12
+                                font.pixelSize: 11
                                 elide: Text.ElideRight
                             }
                         }
@@ -1274,8 +1230,8 @@ Item {
                         // Password field
                         Rectangle {
                             width: parent.width
-                            height: 42
-                            radius: 12
+                            height: 38
+                            radius: 11
                             color: root.deviceColor
 
                             border.width: 1
@@ -1292,8 +1248,8 @@ Item {
                                     left: parent.left
                                     right: revealArea.left
                                     verticalCenter: parent.verticalCenter
-                                    leftMargin: 14
-                                    rightMargin: 8
+                                    leftMargin: 13
+                                    rightMargin: 7
                                 }
 
                                 echoMode: passwordPrompt.reveal ? TextInput.Normal : TextInput.Password
@@ -1306,7 +1262,7 @@ Item {
                                 selectedTextColor: root.primaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.DemiBold
-                                font.pixelSize: 14
+                                font.pixelSize: 13
 
 
                                 // heyboard shortcuts for submit / cancel
@@ -1327,14 +1283,14 @@ Item {
                             Item {
                                 id: revealArea
 
-                                width: 38
+                                width: 34
                                 height: parent.height
                                 anchors.right: parent.right
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: passwordPrompt.reveal ? root.eyeOffGlyph : root.eyeGlyph
-                                    font.pixelSize: 14
+                                    font.pixelSize: 13
                                     color: revealMouse.containsMouse ? root.primaryTextColor : root.mutedTextColor
 
                                     Behavior on color {

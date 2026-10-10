@@ -463,7 +463,7 @@ Scope {
             id: closeHandler
 
             // click alowed windows
-            windows: [menuWindow].concat(AllowedWindows.windows)
+            // windows: [menuWindow].concat(AllowedWindows.windows)
 
 
             active: root.show && root.isCloseHandler

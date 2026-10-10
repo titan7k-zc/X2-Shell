@@ -475,11 +475,11 @@ Scope{
                 id:right_bottom_power_pop
                 show:false
                 anchorRight:true
-                anchorBottom:true
+                // anchorBottom:true
 
                 rad:root.rootRadius
                 
-                file:"../modules/wifi/WifiPanel.qml"//"../modules/bluetooth/BluetoothPanel.qml" 
+                file:"../modules/controlCenter/ControlCenter.qml"//"../modules/bluetooth/BluetoothPanel.qml" 
                 
                 
                 IpcHandler {
@@ -493,8 +493,10 @@ Scope{
             Pop8{
                 id:right_power_pop
                 show:false
-                anchorRight:true
+                // anchorRight:true
                 // anchorBottom:true
+                anchorLeft:true
+                anchorTop:true
 
                 rad:root.rootRadius
                 

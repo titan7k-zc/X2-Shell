@@ -48,14 +48,14 @@ Item {
     // -----------------------------------
     // Layout metrics
     // -----------------------------------
-    readonly property int panelPadding: 8
-    readonly property int headerHeight: 64
-    readonly property int sectionGap: 8
-    readonly property int listPadding: 8
-    readonly property int listSpacing: 6
-    readonly property int cardHeight: 64
-    readonly property int maxListHeight: 330
-    readonly property int emptyHeight: 176
+    readonly property int panelPadding: 7
+    readonly property int headerHeight: 58
+    readonly property int sectionGap: 7
+    readonly property int listPadding: 7
+    readonly property int listSpacing: 5
+    readonly property int cardHeight: 58
+    readonly property int maxListHeight: 297
+    readonly property int emptyHeight: 158
 
     // -----------------------------------
     // State
@@ -115,7 +115,7 @@ Item {
     }
 
     implicitWidth: panel.width 
-    implicitHeight: maxListHeight + (panelPadding*4) + headerHeight //panel.height
+    implicitHeight: panel.height//maxListHeight + (panelPadding*4) + headerHeight //panel.height
 
 
 
@@ -127,7 +127,7 @@ Item {
 
         property color color: "red"//Colors.bluetoothPrimaryTextColor
         property bool active: false
-        property real size: 24
+        property real size: 22
         readonly property real ringWidth: Math.max(1.5, size * 0.075)
 
         width: size
@@ -140,11 +140,13 @@ Item {
         // Outer ring
         Rectangle {
             anchors.fill: parent
+            anchors.rightMargin:-1
+            anchors.bottomMargin:-1
             radius: width / 2
             color: "transparent"
             border.width: radar.ringWidth
             border.color: radar.color
-            opacity: radar.active ? 0.9 : 0.55
+            opacity: root.btEnabled?(radar.active ? 0.9 : 0.55) : 0.4
 
             Behavior on opacity {
                 NumberAnimation { duration: 300 }
@@ -160,7 +162,7 @@ Item {
             color: "transparent"
             border.width: radar.ringWidth * 0.8
             border.color: radar.color
-            opacity: radar.active ? 0 : 0.4
+            opacity: root.btEnabled? (radar.active ? 0 : 0.4) : 0.2
 
             Behavior on opacity {
                 NumberAnimation { duration: 300 }
@@ -214,6 +216,7 @@ Item {
             height: width
             radius: width / 2
             color: radar.color
+            opacity: root.btEnabled? 1.0 : 0.4
 
             SequentialAnimation {
                 running: radar.active
@@ -248,10 +251,10 @@ Item {
 
         x: 0
         y: 0
-        width: 450
+        width: 405
         height: root.panelPadding * 2 + root.headerHeight + root.bodyHeight
 
-        radius: 20
+        radius: 18
         color: root.backgroundColor
 
         border.width: 1
@@ -280,19 +283,19 @@ Item {
             }
 
             height: root.headerHeight
-            radius: 14
+            radius: 13
             color: root.headerColor
 
             // Bluetooth badge
             Rectangle {
                 id: badge
 
-                width: 44
-                height: 44
-                radius: 14
+                width: 40
+                height: 40
+                radius: 13
 
                 anchors.left: parent.left
-                anchors.leftMargin: 10
+                anchors.leftMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: root.btEnabled ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.mutedTextColor, 0.10)
@@ -304,7 +307,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     text: root.bluetoothGlyph
-                    font.pixelSize: 22
+                    font.pixelSize: 20
                     color: root.btEnabled ? root.bluetoothActiveColor : root.bluetoothInactiveColor
                     Behavior on color {
                         ColorAnimation { duration: 260 }
@@ -346,7 +349,7 @@ Item {
                 id: titleColumn
 
                 anchors.left: badge.right
-                anchors.leftMargin: 12
+                anchors.leftMargin: 11
                 anchors.verticalCenter: parent.verticalCenter
 
                 spacing: 1
@@ -354,7 +357,7 @@ Item {
                 Text {
                     text: "Bluetooth"
                     color: root.primaryTextColor
-                    font.pixelSize: 16
+                    font.pixelSize: 14
                     font.family: root.fontFamily
                     font.weight: Font.ExtraBold
                 }
@@ -382,7 +385,7 @@ Item {
                         text: statusItem.shown
                         font.family: root.fontFamily
                         font.weight: Font.Bold
-                        font.pixelSize: 11
+                        font.pixelSize: 10
 
                         color: root.btScanning
                                ? root.bluetoothActiveColor
@@ -448,12 +451,12 @@ Item {
 
                 property real progress: root.btEnabled ? 1 : 0
 
-                width: 52
-                height: 30
+                width: 47
+                height: 27
                 radius: height / 2
 
                 anchors.right: parent.right
-                anchors.rightMargin: 14
+                anchors.rightMargin: 13
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: root.btEnabled ? root.toggleOnColor : root.toggleOffColor
@@ -487,8 +490,8 @@ Item {
                     id: knob
 
                     // The knob stretches while pressed, like a physical switch
-                    width: toggleArea.pressed ? 28 : 22
-                    height: 22
+                    width: toggleArea.pressed ? 25 : 20
+                    height: 20
                     y: 4
                     x: 4 + toggle.progress * (toggle.width - width - 8)
                     radius: height / 2
@@ -527,12 +530,12 @@ Item {
                 property real glowAmount: root.btScanning ? 1 : 0
                 property real glowPulse: 0
 
-                width: 30
+                width: 27
                 height: width
                 radius: width / 2
 
                 anchors.right: toggle.left
-                anchors.rightMargin: 10
+                anchors.rightMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: "Transparent" //!canScan ? root.scanDisabledColor : (root.btScanning ? root.scanActiveColor : root.scanColor)
@@ -606,6 +609,49 @@ Item {
                     onClicked: BluetoothService.toggleDiscovery()
                 }
             }
+
+
+
+            Rectangle{
+                anchors.right: scanButton.left
+                anchors.rightMargin: 13
+                anchors.verticalCenter: parent.verticalCenter
+                width:clearUnknownicon.implicitWidth
+                height:clearUnknownicon.implicitHeight
+                color:"Transparent"
+
+                Text{
+                    id:clearUnknownicon
+                    anchors.centerIn: parent
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset:-1.2
+                    text:""
+                    font.pixelSize: 30
+                    color: root.mutedTextColor
+                    opacity: root.btEnabled? (clearArea.containsMouse? 1.0 : 0.9) : 0.4
+                    scale: clearArea.containsMouse? (clearArea.pressed? 0.8 : 1.0 ) : 0.9
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: 140 }
+                    }
+                    Behavior on scale {
+                        NumberAnimation { duration: 140 }
+                    }
+
+                    MouseArea {
+                        id: clearArea
+                        anchors.fill: parent
+                        enabled: root.btEnabled
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            BluetoothService.clearUnknown()
+                        }
+                    }
+                }
+
+
+            }
         }
 
         // -----------------------------------------------------
@@ -641,13 +687,14 @@ Item {
                 anchors {
                     top: parent.top
                     topMargin: root.sectionGap
+                    // horizontalCenter:parent.horizontalCenter
                     left: parent.left
                     right: parent.right
                 }
-
+                // width:380
                 height: Math.max(0, body.height - root.sectionGap)
-                radius: 14
-                color: root.deviceBackgroundColor
+                radius: 13
+                color:"Transparent"//root.deviceBackgroundColor//Qt.rgba(root.deviceBackgroundColor.r,root.deviceBackgroundColor.g,root.deviceBackgroundColor.b,0.7)
                 clip: true
 
                 // Empty state
@@ -670,11 +717,11 @@ Item {
 
                     Column {
                         anchors.centerIn: parent
-                        spacing: 12
+                        spacing: 11
 
                         RadarIcon {
                             anchors.horizontalCenter: parent.horizontalCenter
-                            size: 48
+                            size: 43
                             active: root.btScanning
                             color: root.btScanning ? root.bluetoothActiveColor: root.mutedTextColor
 
@@ -693,7 +740,7 @@ Item {
                                 color: root.primaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.Bold
-                                font.pixelSize: 14
+                                font.pixelSize: 13
                             }
 
                             Text {
@@ -702,7 +749,7 @@ Item {
                                 color: root.secondaryTextColor
                                 font.family: root.fontFamily
                                 font.weight: Font.DemiBold
-                                font.pixelSize: 12
+                                font.pixelSize: 11
                             }
                         }
                     }
@@ -821,9 +868,9 @@ Item {
                             id: card
 
                             anchors.fill: parent
-                            radius: 12
+                            radius: 11
 
-                            color: delegateRoot.connected ? root.deviceConnectedColor : root.deviceColor
+                            color:"Transparent" //delegateRoot.connected ? root.deviceConnectedColor : root.deviceColor
 
                             border.width: 1
                             border.color: root.withAlpha( root.bluetoothActiveColor, delegateRoot.connected ? 0.4 : 0)
@@ -861,12 +908,12 @@ Item {
                             Rectangle {
                                 id: deviceBadge
 
-                                width: 40
-                                height: 40
-                                radius: 12
+                                width: 36
+                                height: 36
+                                radius: 11
 
                                 anchors.left: parent.left
-                                anchors.leftMargin: 12
+                                anchors.leftMargin: 11
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 color: delegateRoot.connected ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.primaryTextColor, 0.05)
@@ -879,7 +926,7 @@ Item {
                                     id: deviceIcon
                                     anchors.centerIn: parent
                                     text: BluetoothService.icon(delegateRoot.modelData)
-                                    font.pixelSize: 20
+                                    font.pixelSize: 18
                                     color: delegateRoot.connected ? root.bluetoothActiveColor : root.mutedTextColor
                                     Behavior on color {
                                         ColorAnimation { duration: 240 }
@@ -911,9 +958,9 @@ Item {
                                 id: deviceInfo
 
                                 anchors.left: deviceBadge.right
-                                anchors.leftMargin: 12
+                                anchors.leftMargin: 11
                                 anchors.right: batteryPill.visible ? batteryPill.left : parent.right
-                                anchors.rightMargin: 12
+                                anchors.rightMargin: 11
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 spacing: 2
@@ -924,7 +971,7 @@ Item {
                                     color: root.primaryTextColor
                                     font.family: root.fontFamily
                                     font.weight: Font.Bold
-                                    font.pixelSize: 14
+                                    font.pixelSize: 13
                                     elide: Text.ElideRight
                                 }
 
@@ -937,7 +984,7 @@ Item {
 
                                     font.family: root.fontFamily
                                     font.weight: Font.DemiBold
-                                    font.pixelSize: 11
+                                    font.pixelSize: 10
                                     elide: Text.ElideRight
 
                                     Behavior on color {
@@ -952,12 +999,12 @@ Item {
 
                                 visible: delegateRoot.modelData.batteryAvailable
 
-                                width: 54
-                                height: 24
+                                width: 49
+                                height: 22
                                 radius: height / 2
 
                                 anchors.right: parent.right
-                                anchors.rightMargin: 14
+                                anchors.rightMargin: 13
                                 anchors.verticalCenter: parent.verticalCenter
 
                                 color: root.withAlpha(root.primaryTextColor, 0.06)
@@ -987,9 +1034,9 @@ Item {
                                 // Battery percentage text
                                 Text {
                                     anchors.centerIn: parent
-                                    text: Math.round(delegateRoot.batteryValue) + "%"
+                                    text: Math.round(delegateRoot.batteryValue) + "  %"
                                     color: root.batteryColor
-                                    font.pixelSize: 12
+                                    font.pixelSize: 11
                                     font.family: root.fontFamily
                                     font.weight: Font.DemiBold
                                 }
@@ -1003,8 +1050,8 @@ Item {
                                     left: parent.left
                                     right: parent.right
                                     bottom: parent.bottom
-                                    leftMargin: 14
-                                    rightMargin: 14
+                                    leftMargin: 13
+                                    rightMargin: 13
                                     bottomMargin: 3
                                 }
 
@@ -1062,7 +1109,7 @@ Item {
                     x: parent.width - width - 3
                     y: deviceList.y + deviceList.visibleArea.yPosition * deviceList.height
                     width: 3
-                    height: Math.max(24, deviceList.visibleArea.heightRatio * deviceList.height)
+                    height: Math.max(22, deviceList.visibleArea.heightRatio * deviceList.height)
                     radius: 1.5
 
                     color: root.withAlpha(root.secondaryTextColor, 0.6)

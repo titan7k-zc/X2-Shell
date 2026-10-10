@@ -196,7 +196,7 @@ Singleton {
         }
     }
 
-    // forget
+     // forget
     function forgetNetwork(network) {
         if (!network || network.stateChanging)
             return
@@ -248,13 +248,6 @@ Singleton {
         return Math.round(Math.max(0, Math.min(1, network.signalStrength)) * 100)
     }
 
-    // 0..4 (number of bars)
-    function signalLevel(network) {
-        if (!network || network.signalStrength <= 0)
-            return 0
-
-        return Math.min(4, Math.ceil(network.signalStrength * 4))
-    }
 
     // Text for a failed connection attempt
     function failureText(reason) {
