@@ -15,7 +15,7 @@ Scope {
     property bool unloadOnClose: false
     
     property bool outsideClickToClose: true
-    property bool isCloseHandler: outsideClickToClose && show
+    property bool isCloseHandler: outsideClickToClose && show 
 
     property bool activeMouse: false
 
@@ -463,14 +463,14 @@ Scope {
             id: closeHandler
 
             // click alowed windows
-            windows: [menuWindow].concat(AllowedWindows.windows)      
+            windows: [menuWindow].concat(Controls.allowedWindows)      
 
 
-            active: root.show && root.isCloseHandler
+            active: Controls.multiLayer? false : root.show && root.isCloseHandler
 
             // clicked outside both windows
             onCleared: {
-                root.show = false
+                root.show = false 
             }
         }
 

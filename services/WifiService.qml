@@ -65,28 +65,28 @@ Singleton {
 
     property alias networks: networkModel
 
-    function buildNetworkList() {
-        var dev = primaryDevice
-        if (!dev || !dev.networks)
-            return []
+    // function buildNetworkList() {
+    //     var dev = primaryDevice
+    //     if (!dev || !dev.networks)
+    //         return []
 
-        return dev.networks.values
-            .filter(function(n) {
-                return n.name && n.name.length > 0   // hide hidden SSIDs
-            })
-            .sort(function(a, b) {
-                if (a.connected !== b.connected)
-                    return a.connected ? -1 : 1
+    //     return dev.networks.values
+    //         .filter(function(n) {
+    //             return n.name && n.name.length > 0   // hide hidden SSIDs
+    //         })
+    //         .sort(function(a, b) {
+    //             if (a.connected !== b.connected)
+    //                 return a.connected ? -1 : 1
 
-                // bucketed so the list doesn't jitter on tiny signal changes
-                var sa = Math.round(a.signalStrength * 4)
-                var sb = Math.round(b.signalStrength * 4)
-                if (sa !== sb)
-                    return sb - sa
+    //             // bucketed so the list doesn't jitter on tiny signal changes
+    //             var sa = Math.round(a.signalStrength * 4)
+    //             var sb = Math.round(b.signalStrength * 4)
+    //             if (sa !== sb)
+    //                 return sb - sa
 
-                return a.name.localeCompare(b.name)
-            })
-    }
+    //             return a.name.localeCompare(b.name)
+    //         })
+    // }
 
 
     // Radio / scanning ----------------------------------------------------------------------
@@ -304,4 +304,87 @@ Singleton {
             )
         }
     }
+
+
+
+    readonly property bool mockMode: false
+
+    readonly property var mockNetworks: [
+        {
+            name: "AR_MESH",
+            connected: true,
+            known: true,
+            signalStrength: 0.92,
+            stateChanging: false
+        },
+        {
+            name: "Home_Network_With_A_Very_Long_Name",
+            connected: false,
+            known: false,
+            signalStrength: 0.56,
+            stateChanging: false
+        },
+        {
+            name: "Guest_WiFi",
+            connected: false,
+            known: false,
+            signalStrength: 0.34,
+            stateChanging: false
+        },
+        {
+            name: "Guest_WiFi2",
+            connected: false,
+            known: false,
+            signalStrength: 0.34,
+            stateChanging: false
+        },
+        {
+            name: "Guest_WiFi3",
+            connected: false,
+            known: false,
+            signalStrength: 0.34,
+            stateChanging: false
+        },
+        {
+            name: "Guest_WiFi4",
+            connected: false,
+            known: false,
+            signalStrength: 0.34,
+            stateChanging: false
+        }
+    ]
+
+    function buildNetworkList() {
+        if (mockMode) {
+            return mockNetworks.slice().sort(function(a, b) {
+                if (a.connected !== b.connected)
+                    return a.connected ? -1 : 1
+
+                return b.signalStrength - a.signalStrength
+            })
+        }
+
+        var dev = primaryDevice
+        if (!dev || !dev.networks)
+            return []
+
+        return dev.networks.values
+            .filter(function(n) {
+                return n.name && n.name.length > 0
+            })
+            .sort(function(a, b) {
+                if (a.connected !== b.connected)
+                    return a.connected ? -1 : 1
+
+                var sa = Math.round(a.signalStrength * 4)
+                var sb = Math.round(b.signalStrength * 4)
+
+                if (sa !== sb)
+                    return sb - sa
+
+                return a.name.localeCompare(b.name)
+            })
+    }
+
 }
+                       

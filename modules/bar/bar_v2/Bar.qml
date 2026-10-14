@@ -535,7 +535,7 @@ Scope{
 
 
             Component.onCompleted: {
-                AllowedWindows.windows = [
+                Controls.allowedWindows = [
                     topbar,
                     bottomBar,
                     leftBarWindow,

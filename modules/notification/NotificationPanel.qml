@@ -6,17 +6,25 @@ import "../../services"
 import "../../config"
 
 Item {
-    id: gui
+    id: root
 
     // total size for cp
-    implicitWidth: panel.implicitWidth
-    implicitHeight: panel.implicitHeight
+    // implicitWidth: panel.implicitWidth
+    // implicitHeight: panel.implicitHeight
+
+    function withAlpha(c, a) {
+        return Qt.rgba(c.r, c.g, c.b, a)
+    }
 
     Rectangle {
         id: panel
-        implicitWidth: 405
-        implicitHeight: 900
+        // implicitWidth: 405
+        // implicitHeight: 900
+        anchors.fill: parent
         color: Colors.notificationPanelColor
+        border.width: 1
+        border.color: root.withAlpha(Colors.notificationTitleColor, 0.06)
+        radius: 16
 
         Component.onCompleted: {
             // stop dunst so qs can receive notifications

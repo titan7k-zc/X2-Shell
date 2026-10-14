@@ -290,7 +290,7 @@ Item {
             Rectangle {
                 id: badge
 
-                width: 40
+                width: 25
                 height: 40
                 radius: 13
 
@@ -298,7 +298,7 @@ Item {
                 anchors.leftMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
 
-                color: root.btEnabled ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.mutedTextColor, 0.10)
+                color: "Transparent"//root.btEnabled ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.mutedTextColor, 0.10)
 
                 Behavior on color {
                     ColorAnimation { duration: 260 }
@@ -307,7 +307,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     text: root.bluetoothGlyph
-                    font.pixelSize: 20
+                    font.pixelSize: 28
                     color: root.btEnabled ? root.bluetoothActiveColor : root.bluetoothInactiveColor
                     Behavior on color {
                         ColorAnimation { duration: 260 }

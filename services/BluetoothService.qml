@@ -21,13 +21,13 @@ Singleton {
         ]
     }
 
-    // Adapter
+    // // Adapter
     readonly property var adapter: Bluetooth.defaultAdapter
     readonly property bool available: !!adapter
     readonly property bool enabled: adapter ? adapter.enabled : false
     readonly property bool discovering: adapter ? adapter.discovering : false
 
-    // Devices
+    // // Devices
     readonly property var devices: Bluetooth.devices
   
 
@@ -238,4 +238,78 @@ Singleton {
         }
         pairDevice(device)
     }
+
+
+
+
+
+//     // MOCK BLUETOOTH DATA — for UI testing
+//     readonly property var adapter: null
+//     readonly property bool available: true
+//     readonly property bool enabled: true
+//     readonly property bool discovering: false
+
+//     readonly property var devices: [
+//     {
+//         name: "UGREEN LightBuds Pro",
+//         address: "A1:B2:C3:D4:E5:F6",
+//         paired: true,
+//         connected: false,
+//         battery: 85
+//     },
+//     {
+//         name: "Sony WH-1000XM5 Wireless Noise Cancelling Headphones",
+//         address: "11:22:33:44:55:66",
+//         paired: true,
+//         connected: false,
+//         battery: 42
+//     },
+//     {
+//         name: "Logitech MX Master 3S",
+//         address: "AA:BB:CC:DD:EE:FF",
+//         paired: true,
+//         connected: true,
+//         battery: 100
+//     },
+//     {
+//         name: "Unknown Device",
+//         address: "12:34:56:78:9A:BC",
+//         paired: false,
+//         connected: false,
+//         battery: -1
+//     },
+//     {
+//         name: "Mechanical Keyboard",
+//         address: "FE:DC:BA:98:76:54",
+//         paired: true,
+//         connected: false,
+//         battery: 15
+//     },
+//     {
+//         name: "Mechanical Keyboard2",
+//         address: "FE:DC:BA:98:76:54",
+//         paired: true,
+//         connected: false,
+//         battery: 15
+//     },
+//     {
+//         name: "Mechanical Keyboard3",
+//         address: "FE:DC:BA:98:76:54",
+//         paired: true,
+//         connected: false,
+//         battery: 15
+//     }
+// ]
+
+
+
+
+
+
+
+
+
+
+
+
 }

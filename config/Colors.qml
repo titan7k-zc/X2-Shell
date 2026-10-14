@@ -32,7 +32,7 @@ Singleton {
                         //FAFAFA
 
         ["Nord Frost", "#2E3440", "#ECEFF4", "#AEB8C7", "#D8DEE9", "#8FBCBB", "#81A1C1", "#88C0D0",  "#88C0D0", "#81A1C1", "#A3BE8C"],
-        ["Polar Night", "#242933", "#E5E9F0", "#9AA4B2", "#C8D0DC", "#81A1C1", "#88C0D0", "#8FBCBB", "#88C0D0", "#81A1C1", "#A3BE8C"],
+        ["Polar Night", "#242933", "#E5E9F0", "#9AA4B2", "#C8D0DC", "#81A1C1", "#88C0D0", "#8FBCBB", "#88C0D0", "#81A1C1", '#8da9d8'],
         ["Blue Steel", "#202833", "#DCE6F2", "#8B9BAD", "#B8C7D9", "#8CB4D8", "#6FA8DC", "#91C4E8", "#8CB4D8", "#6FA8DC", "#9BCB8B"],
         ["Deep Ocean", "#0D1B24", "#D6E5EA", "#78909C", "#B0C4CC", "#5FB3B3", "#4FA3D1", "#72C7D9",  "#5FB3B3", "#4FA3D1", "#9CCC65"],
         ["Aurora", "#182027", "#DCE7E5", "#899B99", "#B9CCC7", "#A3BE8C", "#88C0D0", "#B48EAD", "#8FBCBB", "#88C0D0", "#A3BE8C"],
@@ -237,35 +237,19 @@ Singleton {
     readonly property color wifiSignalLowColor: focusColor
 
 
-
-
-
-
-
     // === Notifications ===
-    // panel + cards
     readonly property color notificationPanelColor: shellBackgroundColor
     readonly property color notificationCardColor: Qt.tint(shellBackgroundColor, Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.07))   // lifts on dark themes, sinks on light themes
     readonly property color notificationBorderColor: Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.08)
     readonly property color notificationBorderHoverColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.40)
-
-    // text
     readonly property color notificationTitleColor: mainTextColor
     readonly property color notificationBodyColor: secondaryTextColor
-
-    // urgency (stripe + app name)
     readonly property color notificationLowColor: secondaryTextColor
     readonly property color notificationNormalColor: activeColor
     readonly property color notificationCriticalColor: "#da6464"
-
-    // app icon
     readonly property color notificationIconBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
     readonly property color notificationIconTextColor: activeColor
-
-    // x button
     readonly property color notificationCloseIconColor: secondaryTextColor
-
-    // header
     readonly property color notificationHeaderTextColor: mainTextColor
     readonly property color notificationBadgeColor: activeColor
     readonly property color notificationBadgeTextColor: shellBackgroundColor
