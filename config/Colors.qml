@@ -109,6 +109,16 @@ Singleton {
     // === Clock ===
     readonly property color clockTextColor: mainTextColor
 
+    // === Control center ===
+    readonly property color controlCenterButtonColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.10)
+    readonly property color controlCenterButtonHoverColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.18)
+    readonly property color controlCenterButtonPressedColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.28)
+    readonly property color controlCenterButtonActiveColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.88)
+    readonly property color controlCenterButtonBorderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.30)
+    readonly property color controlCenterButtonActiveBorderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.95)
+    readonly property color controlCenterButtonIconColor: mainTextColor
+    readonly property color controlCenterButtonActiveIconColor: shellBackgroundColor
+
     // === Brightness ===
     property color brightnessIconColor: themeColors[theme][8]
     Behavior on brightnessIconColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }

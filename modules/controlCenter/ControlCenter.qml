@@ -51,29 +51,45 @@ Item{
                         Layout.fillWidth: true
                         Layout.fillHeight: true 
                         radius: 10
-                        scale:widgetMouseArea.pressed ? 0.93 : 1.0
-                        color:Controls.showWidgets ? "blue" : "white"
+                        property bool active: Controls.showWidgets
+                        scale: widgetMouseArea.pressed ? 0.94 : widgetMouseArea.containsMouse ? 1.03 : 1.0
+                        color: active ? Colors.controlCenterButtonActiveColor
+                            : widgetMouseArea.pressed ? Colors.controlCenterButtonPressedColor
+                            : widgetMouseArea.containsMouse ? Colors.controlCenterButtonHoverColor
+                            : Colors.controlCenterButtonColor
+                        border.width: 1
+                        border.color: active ? Colors.controlCenterButtonActiveBorderColor : Colors.controlCenterButtonBorderColor
                         Behavior on color {
                             ColorAnimation {
-                                duration: 150
-                                easing.type: Easing.InOutQuad
+                                duration: 180
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+                        Behavior on border.color {
+                            ColorAnimation {
+                                duration: 180
+                                easing.type: Easing.OutCubic
                             }
                         }
                         Behavior on scale {
                             NumberAnimation {
-                                duration: 100
-                                easing.type: Easing.InOutQuad
+                                duration: 180
+                                easing.type: Easing.OutBack
                             }
                         }
                         Text{
                             anchors.centerIn: parent
                             text:"󱍕"
                             font.pixelSize: 20
+                            color: parent.active ? Colors.controlCenterButtonActiveIconColor : Colors.controlCenterButtonIconColor
+                            Behavior on color { ColorAnimation { duration: 180; easing.type: Easing.OutCubic } }
                         }
 
                         MouseArea{
                             id: widgetMouseArea
                             anchors.fill:parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
                             onClicked:{
                                 Controls.showWidgets=!Controls.showWidgets
                                 console.log("showWidgets:-" + Controls.showWidgets)
@@ -85,28 +101,35 @@ Item{
                         Layout.fillWidth: true
                         Layout.fillHeight: true 
                         radius: 10
-                        scale:multiLayerMouseArea.pressed ? 0.93 : 1.0
-                        color:Controls.multiLayer ? "blue" : "white"
+                        property bool active: Controls.multiLayer
+                        scale: multiLayerMouseArea.pressed ? 0.94 : multiLayerMouseArea.containsMouse ? 1.03 : 1.0
+                        color: active ? Colors.controlCenterButtonActiveColor
+                            : multiLayerMouseArea.pressed ? Colors.controlCenterButtonPressedColor
+                            : multiLayerMouseArea.containsMouse ? Colors.controlCenterButtonHoverColor
+                            : Colors.controlCenterButtonColor
+                        border.width: 1
+                        border.color: active ? Colors.controlCenterButtonActiveBorderColor : Colors.controlCenterButtonBorderColor
                         Behavior on color {
-                            ColorAnimation {
-                                duration: 150
-                                easing.type: Easing.InOutQuad
-                            }
+                            ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
+                        }
+                        Behavior on border.color {
+                            ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
                         }
                         Behavior on scale {
-                            NumberAnimation {
-                                duration: 100
-                                easing.type: Easing.InOutQuad
-                            }
+                            NumberAnimation { duration: 180; easing.type: Easing.OutBack }
                         }
                         Text{
                             anchors.centerIn: parent
                             text:"󰧾"
                             font.pixelSize: 20
+                            color: parent.active ? Colors.controlCenterButtonActiveIconColor : Colors.controlCenterButtonIconColor
+                            Behavior on color { ColorAnimation { duration: 180; easing.type: Easing.OutCubic } }
                         }
                         MouseArea{
                             id: multiLayerMouseArea 
                             anchors.fill:parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
                             onClicked:{
                                 Controls.multiLayer=!Controls.multiLayer
                                 console.log("multiLayer:-" + Controls.multiLayer)
@@ -117,28 +140,35 @@ Item{
                         Layout.fillWidth: true
                         Layout.fillHeight: true 
                         radius: 10
-                        scale:dndMouseArea.pressed ? 0.93 : 1.0
-                        color:Controls.dnd ? "blue" : "white"
+                        property bool active: Controls.dnd
+                        scale: dndMouseArea.pressed ? 0.94 : dndMouseArea.containsMouse ? 1.03 : 1.0
+                        color: active ? Colors.controlCenterButtonActiveColor
+                            : dndMouseArea.pressed ? Colors.controlCenterButtonPressedColor
+                            : dndMouseArea.containsMouse ? Colors.controlCenterButtonHoverColor
+                            : Colors.controlCenterButtonColor
+                        border.width: 1
+                        border.color: active ? Colors.controlCenterButtonActiveBorderColor : Colors.controlCenterButtonBorderColor
                         Behavior on color {
-                            ColorAnimation {
-                                duration: 150
-                                easing.type: Easing.InOutQuad
-                            }
+                            ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
+                        }
+                        Behavior on border.color {
+                            ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
                         }
                         Behavior on scale {
-                            NumberAnimation {
-                                duration: 100
-                                easing.type: Easing.InOutQuad
-                            }
+                            NumberAnimation { duration: 180; easing.type: Easing.OutBack }
                         }
                         Text{
                             anchors.centerIn: parent
                             text:"󱙍"
                             font.pixelSize: 18
+                            color: parent.active ? Colors.controlCenterButtonActiveIconColor : Colors.controlCenterButtonIconColor
+                            Behavior on color { ColorAnimation { duration: 180; easing.type: Easing.OutCubic } }
                         }
                         MouseArea{
                             id: dndMouseArea
                             anchors.fill:parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
                             onClicked:{
                                 Controls.dnd=!Controls.dnd
                                 console.log("dnd:-" + Controls.dnd)
@@ -149,29 +179,33 @@ Item{
                         Layout.fillWidth: true
                         Layout.fillHeight: true 
                         radius: 10
-                        scale:refreshShelllMouseArea.pressed ? 0.93 : 1.0
-                        color:refreshShelllMouseArea.pressed ? "blue" : "white"
+                        scale: refreshShelllMouseArea.pressed ? 0.94 : refreshShelllMouseArea.containsMouse ? 1.03 : 1.0
+                        color: refreshShelllMouseArea.pressed ? Colors.controlCenterButtonPressedColor
+                            : refreshShelllMouseArea.containsMouse ? Colors.controlCenterButtonHoverColor
+                            : Colors.controlCenterButtonColor
+                        border.width: 1
+                        border.color: Colors.controlCenterButtonBorderColor
                         Behavior on color {
-                            ColorAnimation {
-                                duration: 150
-                                easing.type: Easing.InOutQuad
-                            }
+                            ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
+                        }
+                        Behavior on border.color {
+                            ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
                         }
                         Behavior on scale {
-                            NumberAnimation {
-                                duration: 100
-                                easing.type: Easing.InOutQuad
-                            }
+                            NumberAnimation { duration: 180; easing.type: Easing.OutBack }
                         }
                         Text{
-                            
                             anchors.centerIn: parent
                             text:""
                             font.pixelSize: 20
+                            color: Colors.controlCenterButtonIconColor
+                            Behavior on color { ColorAnimation { duration: 180; easing.type: Easing.OutCubic } }
                         }
                         MouseArea{
                             id: refreshShelllMouseArea
                             anchors.fill:parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
                             onClicked:{
                                 Quickshell.execDetached([
                                     "sh", "-c",
