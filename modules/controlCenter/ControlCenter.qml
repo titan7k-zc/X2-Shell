@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import "../wifi"
 import "../bluetooth"
+import "../notification"
 
 Item{
     implicitHeight: panel.height
@@ -25,11 +26,13 @@ Item{
             anchors.horizontalCenter: parent.horizontalCenter
             WifiPanel{id:wp}
             BluetoothPanel{id:bp}
+            Item{height:20;width:panel.width}
+            NotificationPanel{id:np}
 
-            Component.onCompleted:{
-                console.log("wp.width: "+wp.width+" wp.height: "+wp.height)
-                console.log("bp.width: "+bp.width+" bp.height: "+bp.height)
-            }
+            // Component.onCompleted:{
+            //     console.log("wp.width: "+wp.width+" wp.height: "+wp.height)
+            //     console.log("bp.width: "+bp.width+" bp.height: "+bp.height)
+            // }
         }
         
         

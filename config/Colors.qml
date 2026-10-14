@@ -235,4 +235,41 @@ Singleton {
     readonly property color wifiScanDisabledColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.12)
     readonly property color wifiSignalColor: mainTextColor
     readonly property color wifiSignalLowColor: focusColor
+
+
+
+
+
+
+
+    // === Notifications ===
+    // panel + cards
+    readonly property color notificationPanelColor: shellBackgroundColor
+    readonly property color notificationCardColor: Qt.tint(shellBackgroundColor, Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.07))   // lifts on dark themes, sinks on light themes
+    readonly property color notificationBorderColor: Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.08)
+    readonly property color notificationBorderHoverColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.40)
+
+    // text
+    readonly property color notificationTitleColor: mainTextColor
+    readonly property color notificationBodyColor: secondaryTextColor
+
+    // urgency (stripe + app name)
+    readonly property color notificationLowColor: secondaryTextColor
+    readonly property color notificationNormalColor: activeColor
+    readonly property color notificationCriticalColor: "#da6464"
+
+    // app icon
+    readonly property color notificationIconBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
+    readonly property color notificationIconTextColor: activeColor
+
+    // x button
+    readonly property color notificationCloseIconColor: secondaryTextColor
+
+    // header
+    readonly property color notificationHeaderTextColor: mainTextColor
+    readonly property color notificationBadgeColor: activeColor
+    readonly property color notificationBadgeTextColor: shellBackgroundColor
+    readonly property color notificationClearButtonBorderColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
+    readonly property color notificationClearButtonTextColor: mainTextColor
+    readonly property color notificationEmptyColor: secondaryTextColor
 }
