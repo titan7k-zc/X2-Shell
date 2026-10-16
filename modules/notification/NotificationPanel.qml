@@ -263,6 +263,24 @@ Item {
                 }
 
 
+                Timer {
+                    id: expireTimer
+
+                    property int timeout: notificationCard.modelData ? notificationCard.modelData.expireTimeout : -1
+
+                    interval: timeout
+                    repeat: false
+                    running: notificationCard.modelData !== null && notificationCard.modelData !== undefined && timeout !== -1
+
+                    onTriggered: {
+                        notificationCard.closeNotification()
+                        // console.log("timeout:" + notificationCard.modelData.expireTimeout)
+                        // console.log("running timeout:" + interval)
+                    }
+                }
+
+
+
                 Rectangle {
                     id: card
                     x: notificationCard.sideMargin

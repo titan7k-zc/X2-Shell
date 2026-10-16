@@ -86,14 +86,27 @@ Singleton {
         }
 
         console.log("No default action available")
-    }
+    } 
 
 
- 
- 
-} 
-   
- 
+    // clear notification by appname and summary
+    function clearNotification(appname, summary) {
+        const items = root.notifications.values
+        const snapshot = []
 
+        for (let i = 0; i < items.length; i++) {
+            snapshot.push(items[i])
+        }
+
+        for (const notification of snapshot) {
+            if (
+                notification.appName === appname &&
+                notification.summary === summary
+            ) {
+                notification.dismiss()
+            }
+        }
+    }  
 
   
+} 
