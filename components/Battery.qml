@@ -1,6 +1,8 @@
 import QtQuick
 import Quickshell.Services.UPower
+import Quickshell
 import "../config"
+import "../services"
 
 Row {
     id: root
@@ -25,18 +27,51 @@ Row {
         return String.fromCodePoint(0xF007A + (Math.floor(level / 10) - 1));
     }
 
-    Text{
-        text:root.icon
+
+
+    Text {
+        id: batteryIcon
+
+        text: root.icon
         color: Colors.batteryIconColor
-                         
+
         font {
             family: "JetBrainsMono Nerd Font Propo"
             letterSpacing: 0
             pixelSize: 14
             weight: 600
         }
-        rotation:0
+
+        SequentialAnimation on opacity {
+            running: root.level <= 35 && !root.charging
+            loops: Animation.Infinite
+
+            NumberAnimation {
+                to: 0.2
+                duration: 500
+                easing.type: Easing.InOutSine
+            }
+
+            NumberAnimation {
+                to: 1.0
+                duration: 500
+                easing.type: Easing.InOutSine
+            }
+
+            onRunningChanged: {
+                if (!running)
+                    batteryIcon.opacity = 1.0
+            }
+        }
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 150
+            }
+        }
     }
+
+
 
 
     Text {
@@ -54,4 +89,28 @@ Row {
     }
 
 
+    property bool lowBatteryNotified: false
+
+    onLevelChanged: {
+        if (level <= 35 && !charging && !lowBatteryNotified) {
+            Quickshell.execDetached(["notify-send", "-a", "X2-Shell", "-u", "critical", "Low Battery", "Battery is low. Please charge.."])
+            // Quickshell.execDetached(["notify-send", "-a", "X2-Shell", "-u", "critical", "-t", "50000", "Battery", "Low Battery.. please charge.."])
+            lowBatteryNotified = true
+        }
+    }
+
+    onChargingChanged:{
+        if (charging){
+            NotificationService.clearNotification("X2-Shell", "Low Battery")    
+            lowBatteryNotified = false
+
+        }
+    }
+
+
+
+
+
+
+   
 }
