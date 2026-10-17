@@ -3,6 +3,7 @@ import Quickshell
 import QtQuick.Shapes
 import QtQuick.Effects
 import "../../../config"
+import "../../../services/"
 import "../../../components"
 
 Item {
@@ -28,7 +29,7 @@ Item {
             width: root.wid
             height: root.hei
             topLeftRadius: root.rad
-            color: "black"//Colors.barBorderColor
+            color: Colors.barBorderColor
 
             Rectangle{
                 anchors.fill: parent
@@ -42,6 +43,112 @@ Item {
                     anchors.rightMargin:20
                     anchors.leftMargin:20
                     spacing: 10
+
+                    PerformanceCtrl{
+                        id:performanceCtrl
+                        anchors.verticalCenter:parent.verticalCenter
+                        
+                        implicitHeight: root.hei-5
+                    }
+                    Item{
+                        width: 30
+                        height: 20
+                    }
+                    BatteryCtrl{
+                        id:batteryCtrl
+                        anchors.verticalCenter:parent.verticalCenter
+                        implicitHeight: root.hei-5
+                    }
+                    Item{
+                        width: 20  
+                        height: 20
+                    }
+
+                    Rectangle{
+                        id: notificationCount
+                        anchors.verticalCenter:parent.verticalCenter
+                        width: notificationCountRow.implicitWidth + 20
+                        height: root.hei-8
+                        radius: height / 2
+                        color: Colors.notificationCounterBackgroundColor
+                        opacity: 1.0//NotificationService.notifications.values.length > 0 ? 1 : 0
+                        scale: NotificationService.notifications.values.length > 0 ? 1 : 0.85
+                        // visible: opacity > 0
+
+                        Row{
+                            id: notificationCountRow
+                            anchors.fill: parent
+                            anchors.margins: 10
+                            spacing: 8
+
+                            Text {
+                                id: notificationCount2
+                                anchors.verticalCenter:parent.verticalCenter
+                                anchors.verticalCenterOffset:2
+                                text: "󰍡"
+                                font.pixelSize: 20
+                                color: Colors.notificationCounterIconColor
+
+                            }
+                            Text{
+                                id: notificationCountText
+                                anchors.verticalCenter:parent.verticalCenter
+                                anchors.verticalCenterOffset:2
+                                text: count
+                                font.pixelSize: 12
+                                color: Colors.notificationCounterTextColor
+                                property string count: NotificationService.notifications.values.length < 10 ? String(NotificationService.notifications.values.length) : "9+"
+                                visible: NotificationService.notifications.values.length > 0
+                                SequentialAnimation {
+                                    id: countPulse
+                                    NumberAnimation {
+                                        target: notificationCountText
+                                        property: "scale"
+                                        to: 1.18
+                                        duration: 120
+                                        easing.type: Easing.OutCubic
+                                    }
+                                    NumberAnimation {
+                                        target: notificationCountText
+                                        property: "scale"
+                                        to: 1
+                                        duration: 180
+                                        easing.type: Easing.OutBack
+                                    }
+                                }
+
+                                onTextChanged: countPulse.restart()
+
+                            }
+                        }
+
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 180
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 260
+                                easing.type: Easing.OutBack
+                                easing.overshoot: 0.8
+                            }
+                        }
+
+                        Behavior on width {
+                            NumberAnimation {
+                                duration: 220
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+                    
+                    }
+                    Item{
+                        width: 20  
+                        height: 20
+                    }
                 }
                 
             }   
@@ -65,119 +172,4 @@ Item {
 
 
 
-
-    // Row{
-    //     anchors.centerIn:parent
-    //     anchors.verticalCenterOffset:12
-    //     spacing:20
-
-
-    //     Rectangle{
-    //         implicitHeight:row_net.implicitHeight+(row_net.implicitHeight/5)
-    //         implicitWidth:row_net.implicitWidth+(row_net.implicitWidth/5)
-    //         anchors.verticalCenter:parent.verticalCenter
-    //         color: "Transparent"//Colors.powerBarTransparentColor
-    //         radius:8
-    //         Row{
-    //             id:row_net
-    //             spacing:10
-    //             anchors.centerIn:parent
-    //             anchors.verticalCenterOffset:-1
-
-    //             Text {
-    //                 text: {
-    //                     const speed = SystemMonitor.downloadSpeed
-
-    //                     if (speed < 1024 * 1024)
-    //                         return "  " + (speed / 1024).toFixed(1) + " KB/s"
-    //                     else
-    //                         return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
-    //                 }
-    //                 color: Colors.powerBarIconColor
-    //                 font.pixelSize:15
-    //             }
-
-    //             Text {
-    //                 text: {
-    //                     const speed = SystemMonitor.uploadSpeed
-
-    //                     if (speed < 1024 * 1024)
-    //                         return "  " + (speed / 1024).toFixed(1) + " KB/s"
-    //                     else
-    //                         return "  " + (speed / (1024 * 1024)).toFixed(2) + " MB/s"
-    //                 }
-    //                 color: Colors.powerBarIconColor
-    //                 font.pixelSize:15
-    //             }
-    //         }
-
-
-
-    //         MouseArea {
-    //             id: netMouseArea
-    //             anchors.fill: parent
-    //             cursorShape: Qt.PointingHandCursor
-
-    //             onClicked: {
-    //                 Quickshell.execDetached(["kitty", "-e", "nethogs"]) 
-    //             }
-    //         }
-    //         scale: netMouseArea.pressed ? 0.92 : 1.0
-
-    //         Behavior on scale {
-    //             NumberAnimation {
-    //                 duration: 100
-    //                 easing.type: Easing.OutQuad
-    //             }
-    //         }
-    //     }
-    //     Rectangle{
-    //         implicitHeight:row_up.implicitHeight+(row_up.implicitHeight/5)
-    //         implicitWidth:row_up.implicitWidth+(row_up.implicitWidth/5)
-    //         anchors.verticalCenter:parent.verticalCenter
-    //         color: "Transparent"//Colors.powerBarTransparentColor
-    //         radius:8
-    //         Row {
-    //             id: row_up
-    //             spacing: 10
-    //             anchors.centerIn: parent
-    //             anchors.verticalCenterOffset: -1
-
-    //             Text {
-    //                 id: uptimeIcon
-    //                 property var ico:["","󱤌","","󰹻",]
-    //                 text: ico[1]
-    //                 color: Colors.powerBarActiveColor
-    //                 font.pixelSize:20
-
-    //                 RotationAnimation {
-    //                     target: uptimeIcon
-    //                     from: 0
-    //                     to: 360
-    //                     duration: 5000
-    //                     loops: Animation.Infinite
-    //                     running: true
-    //                 }
-    //             }
-
-    //             Text {
-    //                 anchors.verticalCenter: uptimeIcon.verticalCenter
-    //                 anchors.verticalCenterOffset:1
-    //                 text: SystemMonitor.uptimeString
-    //                 color: Colors.powerBarIconColor
-    //             }
-
-    //         }
-
-
-
-    //     }
-
-        
-
-    // }
-
-
 }
-
-

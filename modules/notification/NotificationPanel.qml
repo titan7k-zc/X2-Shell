@@ -270,7 +270,7 @@ Item {
 
                     interval: timeout
                     repeat: false
-                    running: notificationCard.modelData !== null && notificationCard.modelData !== undefined && timeout !== -1
+                    running: notificationCard.modelData !== null && notificationCard.modelData !== undefined && timeout !== -1  && timeout !== 0 
 
                     onTriggered: {
                         notificationCard.closeNotification()

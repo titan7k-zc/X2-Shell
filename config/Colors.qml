@@ -6,11 +6,11 @@ import QtCore
 Singleton {
     id: root
 
-    property alias theme: settings.theme 
+    property alias theme: stheme.theme 
 
     Settings {
-        id: settings
-        property int theme: 9
+        id: stheme
+        property int theme: 0
     }
 
 
@@ -134,6 +134,18 @@ Singleton {
     property color batteryIconColor: themeColors[theme][10]
     Behavior on batteryIconColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
     readonly property color batteryTextColor: mainTextColor
+
+    // === Battery control ===
+    readonly property color batteryCtrlBackgroundColor: shellBackgroundColor
+    readonly property color batteryCtrlActiveColor: activeColor
+    readonly property color batteryCtrlTextColor: secondaryTextColor
+    readonly property color batteryCtrlActiveTextColor: shellBackgroundColor
+
+    // === Performance control ===
+    readonly property color performanceCtrlBackgroundColor: shellBackgroundColor
+    readonly property color performanceCtrlActiveColor: activeColor
+    readonly property color performanceCtrlTextColor: secondaryTextColor
+    readonly property color performanceCtrlActiveTextColor: shellBackgroundColor
 
 
     // === Spotify ===
@@ -266,4 +278,9 @@ Singleton {
     readonly property color notificationClearButtonBorderColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
     readonly property color notificationClearButtonTextColor: mainTextColor
     readonly property color notificationEmptyColor: secondaryTextColor
+
+    // === Notification counter ===
+    readonly property color notificationCounterBackgroundColor: notificationBadgeColor
+    readonly property color notificationCounterIconColor: notificationBadgeTextColor
+    readonly property color notificationCounterTextColor: notificationBadgeTextColor
 }
