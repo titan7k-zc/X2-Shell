@@ -24,8 +24,8 @@ workspace tools, and a large collection of carefully tuned themes.
 
 <p align="center">
   <img src="assets/screenshot2.png" alt="X2-Shell preview" width="31%">
-  <img src="assets/screenshot3.png" alt="X2-Shell preview" width="31%">
   <img src="assets/screenshot_1.png" alt="X2-Shell preview" width="31%">
+  <img src="assets/screenshot3.png" alt="X2-Shell preview" width="31%">
 </p>
 
 <p align="center">
