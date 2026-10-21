@@ -113,25 +113,23 @@ Item {
         }
     }
 
-    Process {
-        id: batteryProcess
+    FileView {
+        id: batteryFile
 
-        command: [
-            "/usr/bin/python",
-            "/home/titan/.config/quickshell/X2-Shell/scripts/C_runner.py",
-            "conservation_mode"
-        ]
+        path: "/sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode"
+        watchChanges: true
 
-        stdout: StdioCollector {
-            onStreamFinished: {
-                console.log("Python output:", text)
-                root.currentIndex= text.trim() === "1" ? 1 : 0
-            }
+        onLoaded: {
+            root.currentIndex = batteryFile.text().trim() === "1" ? 1 : 0
+        }
+
+        onFileChanged: {
+            batteryFile.reload()
         }
     }
 
     Component.onCompleted: {
-        batteryProcess.running = true
+        batteryFile.reload()
     }
 
 
@@ -151,14 +149,6 @@ Item {
             index           
         ]
 
-        stdout: StdioCollector {
-            onStreamFinished: {
-                console.log("Python output:", text)
-                root.currentIndex= text.trim() === "1" ? 1 : 0
-                batteryProcess.running = true
-
-            }
-        }
     }
 
     
