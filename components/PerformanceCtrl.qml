@@ -135,28 +135,28 @@ Item {
         default:           return -1
         }
     }
-
-    Process {
-        id: profileProcess
-
-        command: [
-            "/usr/bin/python",
-            "/home/titan/.config/quickshell/X2-Shell/scripts/C_runner.py",
-            "platform_profile"
-        ]
-
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const index = root.profileToIndex(text)
-                if (index !== -1)
-                    root.currentIndex = index
-            }
-        }
-    }
- 
  
     Component.onCompleted:{
-        profileProcess.running=true
+        profileFile.reload()
+    }
+
+
+    FileView {
+        id: profileFile
+
+        path: "/sys/class/platform-profile/platform-profile-0/profile"
+        watchChanges: true
+
+        onLoaded: {
+            const index = root.profileToIndex(profileFile.text())
+
+            if (index !== -1)
+                root.currentIndex = index
+        }
+
+        onFileChanged: {
+            profileFile.reload()
+        }
     }
 
 
@@ -183,15 +183,6 @@ Item {
             profile
         ]
 
-        stdout: StdioCollector {
-            onStreamFinished: {
-                // const index = root.profileToIndex(text)
-                // if (index !== -1)
-                //     root.currentIndex = index
-            }
-        }
-
-        onExited: profileProcess.running = true
     }
 
 }
