@@ -11,13 +11,13 @@ import "../bar_comp2"
 Scope{
     id:root
     property color borderColor: Colors.barBorderColor
-    property int rootRadius: 20  // max 'tbHei/2' min 0
+    property real rootRadius: 17.5  // max 'tbHei/2' min 0
     property int screenCorners: rootRadius/3  
     property int lrBarWid: 15
     property int topCBarWid: 240
     property int bottomCBarWid: 640
-    property int tbHei: 40 // main height
-    property int hei: 60 // 
+    property int tbHei: 35 // Main visible top,bottom bar height
+    property int hei: tbHei+conHei //Total height for top/bottom PanelWindow
 
 
 
@@ -117,8 +117,6 @@ Scope{
                     Curves{
                         anchors.top: parent.bottom
                         anchors.left: parent.left
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: true
                         color: root.borderColor
@@ -127,8 +125,6 @@ Scope{
                     Curves{
                         anchors.top: parent.bottom
                         anchors.right: parent.right
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: true
                         color: root.borderColor
@@ -172,8 +168,6 @@ Scope{
                     Curves{
                         anchors.top: parent.bottom
                         anchors.left: parent.left
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: true
                         color: root.borderColor
@@ -182,8 +176,6 @@ Scope{
                     Curves{
                         anchors.top: parent.bottom
                         anchors.right: parent.right
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: true
                         color: root.borderColor
@@ -280,8 +272,6 @@ Scope{
                     Curves{
                         anchors.bottom: parent.top
                         anchors.left: parent.left
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: false
                         color: root.borderColor
@@ -290,8 +280,6 @@ Scope{
                     Curves{
                         anchors.bottom: parent.top
                         anchors.right: parent.right
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: false
                         color: root.borderColor
@@ -358,8 +346,6 @@ Scope{
                         Curves{
                             anchors.top: parent.top
                             anchors.right: parent.left
-                            width: root.rootRadius
-                            height: root.rootRadius
                             radius: root.rootRadius
                             isTop: true
                             color: root.borderColor
@@ -369,8 +355,6 @@ Scope{
                         Curves{
                             anchors.bottom: parent.bottom
                             anchors.right: parent.left
-                            width: root.rootRadius
-                            height: root.rootRadius
                             radius: root.rootRadius
                             isTop: false
                             mirrored: true
@@ -426,8 +410,6 @@ Scope{
                     Curves{
                         anchors.top: parent.top
                         anchors.left: parent.right
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: true
                         color: root.borderColor
@@ -436,8 +418,6 @@ Scope{
                     Curves{
                         anchors.bottom: parent.bottom
                         anchors.left: parent.right
-                        width: root.rootRadius
-                        height: root.rootRadius
                         radius: root.rootRadius
                         isTop: false
                         color: root.borderColor
