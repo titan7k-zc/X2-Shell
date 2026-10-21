@@ -329,7 +329,9 @@ Item {
         width: 405
         height: root.panelPadding * 2 + root.headerHeight + root.bodyHeight
 
-        radius: 18
+        radius: 9
+        topLeftRadius: 18
+        topRightRadius: 18
         color: root.backgroundColor
 
         border.width: 1
@@ -356,7 +358,9 @@ Item {
             }
 
             height: root.headerHeight
-            radius: 13
+            radius: 4
+            topLeftRadius: 16
+            topRightRadius: 16
             color: root.headerColor
 
             // Wi-Fi badge
@@ -381,7 +385,7 @@ Item {
                     anchors.centerIn: parent
                     text: root.wifiGlyph
                     font.pixelSize: 20
-                    color: root.wifiEnabled ? root.wifiActiveColor : root.wifiInactiveColor
+                    color: root.wifiInactiveColor//root.wifiEnabled ? root.wifiActiveColor : root.wifiInactiveColor
                     Behavior on color {
                         ColorAnimation { duration: 260 }
                     }

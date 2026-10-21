@@ -24,7 +24,10 @@ Item {
         color: Colors.notificationPanelColor
         border.width: 1
         border.color: root.withAlpha(Colors.notificationTitleColor, 0.06)
-        radius: 16
+        radius: 9
+        // radius: 
+        topLeftRadius: 18
+        topRightRadius: 18
 
         Component.onCompleted: {
             // stop dunst so qs can receive notifications
@@ -33,6 +36,26 @@ Item {
 
 
         // ── header: title + notification count ──────────────────────────────
+
+        Rectangle{
+            id: headerBackground
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                margins: 7
+            }
+
+            // width: 200
+            height: 58
+            radius: 4
+            topLeftRadius: 16
+            topRightRadius: 16
+
+            color:Colors.bluetoothHeaderColor
+
+        }
+
         Row {
             anchors {
                 top: parent.top
@@ -116,8 +139,8 @@ Item {
         ListView {
             id: list
             anchors.fill: parent
-            anchors.topMargin: 60
-            topMargin: 4
+            anchors.topMargin: 77
+            topMargin: 0
             bottomMargin: 12
             spacing: 0
             clip: true

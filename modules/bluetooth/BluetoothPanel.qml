@@ -41,9 +41,8 @@ Item {
     property color batteryColor: Colors.bluetoothBatteryColor
     property color batteryLowColor: Colors.bluetoothBatteryLowColor
 
-    // Fonts / glyphs - Nerd Font.
+    // Fonts 
     property string fontFamily: "Quicksand"
-    property string bluetoothGlyph: "\uf293"
 
     // -----------------------------------
     // Layout metrics
@@ -254,7 +253,10 @@ Item {
         width: 405
         height: root.panelPadding * 2 + root.headerHeight + root.bodyHeight
 
-        radius: 18
+        radius: 9
+        // radius: 
+        topLeftRadius: 18
+        topRightRadius: 18
         color: root.backgroundColor
 
         border.width: 1
@@ -283,7 +285,9 @@ Item {
             }
 
             height: root.headerHeight
-            radius: 13
+            radius: 4
+            topLeftRadius: 16
+            topRightRadius: 16
             color: root.headerColor
 
             // Bluetooth badge
@@ -306,9 +310,9 @@ Item {
 
                 Text {
                     anchors.centerIn: parent
-                    text: root.bluetoothGlyph
+                    text: "\uf293"
                     font.pixelSize: 28
-                    color: root.btEnabled ? root.bluetoothActiveColor : root.bluetoothInactiveColor
+                    color: root.bluetoothInactiveColor //root.btEnabled ? root.bluetoothActiveColor : root.bluetoothInactiveColor
                     Behavior on color {
                         ColorAnimation { duration: 260 }
                     }
