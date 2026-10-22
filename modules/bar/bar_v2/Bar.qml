@@ -12,12 +12,12 @@ Scope{
     id:root
     property color borderColor: Colors.barBorderColor
     property real rootRadius: 17.5  // max 'tbHei/2' min 0
-    property int screenCorners: rootRadius/3  
+    property int screenCorners: 10//rootRadius/3  
     property int lrBarWid: 15
     property int topCBarWid: 240
     property int bottomCBarWid: 640
     property int tbHei: 35 // Main visible top,bottom bar height
-    property int hei: tbHei+conHei //Total height for top/bottom PanelWindow
+    property int hei: tbHei+(tbHei/3.5) //Total height for top/bottom PanelWindow
 
 
 
@@ -306,6 +306,16 @@ Scope{
                     shadowHorizontalOffset: 0
                 }
 
+
+
+                // open control center when notification when button is clicked
+                Connections {
+                    target: rightBot
+
+                    function onNotificationClicked() {
+                        right_bottom_power_pop.show = !right_bottom_power_pop.show
+                    }
+                }
                 
 
 

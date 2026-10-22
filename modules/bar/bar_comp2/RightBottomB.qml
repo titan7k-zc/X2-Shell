@@ -15,6 +15,8 @@ Item {
     property int hei: 40
     property int wid: 640
 
+    signal notificationClicked()
+
 
     Rectangle {
         id: rightB
@@ -29,7 +31,7 @@ Item {
             width: root.wid
             height: root.hei
             topLeftRadius: root.rad
-            color: Colors.barBorderColor
+            color: "black"//Colors.barBorderColor
 
             Rectangle{
                 anchors.fill: parent
@@ -67,12 +69,12 @@ Item {
                     Rectangle{
                         id: notificationCount
                         anchors.verticalCenter:parent.verticalCenter
-                        width: notificationCountRow.implicitWidth + 20
-                        height: root.hei-8
+                        implicitWidth: notificationCountRow.implicitWidth + 20
+                        implicitHeight: root.hei-8
                         radius: height / 2
                         color: Colors.notificationCounterBackgroundColor
                         opacity: 1.0//NotificationService.notifications.values.length > 0 ? 1 : 0
-                        scale: NotificationService.notifications.values.length > 0 ? 1 : 0.85
+                        scale: notificationCountMouseArea.pressed ? 0.94 : (NotificationService.notifications.values.length > 0 ? 1 : 0.85)
                         // visible: opacity > 0
 
                         Row{
@@ -141,6 +143,17 @@ Item {
                             NumberAnimation {
                                 duration: 220
                                 easing.type: Easing.OutCubic
+                            }
+                        }
+
+                        MouseArea {
+                            id: notificationCountMouseArea
+                            anchors.fill: parent
+                            // enabled: NotificationService.notifications.values.length > 0
+                            cursorShape: Qt.PointingHandCursor
+                            anchors.margins: -5
+                            onClicked: {
+                                root.notificationClicked()
                             }
                         }
                     

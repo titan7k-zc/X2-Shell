@@ -14,7 +14,7 @@ Item {
     property int currentIndex: 0
 
     // Button labels
-    property var options: ["", "󰾅", "", "󰈸", ""]
+    property var options: ["", "󰾅", "", "󰈸", ""]
 
     // Colors
     property color backgroundColor: Colors.performanceCtrlBackgroundColor
