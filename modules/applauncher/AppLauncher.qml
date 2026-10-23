@@ -219,7 +219,7 @@ FocusScope {
                 Rectangle {
                     anchors.fill: parent
                     radius: 10
-                    color: "Transparent"
+                    color: Colors.launcherSearchInputColor
                     border.color: Colors.launcherSearchFocusColor
                     border.width: 1
                     opacity: searchInput.activeFocus ? 0.55 : 0
@@ -363,7 +363,7 @@ FocusScope {
                         }
 
                         radius: 10
-                        color: delegateRoot.isSelected ? Colors.launcherAccentColor : "Transparent"
+                        color: delegateRoot.isSelected ? Colors.launcherAccentColor : Colors.launcherBorderColor
                     }
 
                     // ─────────────────────────────────────────

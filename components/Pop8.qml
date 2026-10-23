@@ -112,7 +112,7 @@ Scope {
         WlrLayershell.layer: WlrLayer.Top//WlrLayer.Overlay
         WlrLayershell.keyboardFocus: root.show ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
         exclusiveZone: 0
-        color: "Transparent"
+        color: Colors.popupMenuTransparentColor
 
         anchors.top: root.anchorTop
         anchors.bottom: root.anchorBottom
@@ -150,7 +150,7 @@ Scope {
             layer.enabled: true
             layer.effect: MultiEffect{
                 shadowEnabled: true
-                shadowColor: Colors.pop8ShadowColor
+                shadowColor: Colors.pop8PopupShadowColor
                 shadowOpacity: 0.5
                 shadowBlur: 0.6
                 shadowHorizontalOffset: 0
@@ -272,7 +272,7 @@ Scope {
                     height: Math.max(0, menu.height - 20)
                     width: Math.max(0, menu.width - 20)
 
-                    color: "Transparent"
+                    color: Colors.popupMenuTransparentColor
                     radius: menu.safeRad
                     clip: true
 
@@ -478,9 +478,9 @@ Scope {
         MultiEffect {
             anchors.fill: clipper
             source: clipper
-            opacity: Colors.shadowOpacity
+            opacity: Colors.popupMenuShadowOpacity
             shadowEnabled: true
-            shadowColor: Colors.shadowColor
+            shadowColor: Colors.popupMenuShadowColor
             shadowBlur: 0.6
             shadowScale: 1.002
             shadowVerticalOffset: {

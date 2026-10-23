@@ -50,14 +50,8 @@ Item{
                         width: parent.width
                         height: Math.max(width, parent.height * modelData)
                         radius: width / 2
-                        color: Qt.rgba(root.barColor.r,root.barColor.g,root.barColor.b, 0.4 + (0.6 * modelData))
-                        // color: {
-                        //     if (modelData==0.0){
-                        //         return Qt.rgba(root.barColor.r,root.barColor.g,root.barColor.b, 1.0)
-                        //     } else {
-                        //         return Qt.rgba(root.barColor.r,root.barColor.g,root.barColor.b, 0.4 + (0.6 * modelData))
-                        //     }
-                        // }
+                        color: Qt.rgba(root.barColor.r, root.barColor.g, root.barColor.b, Colors.cavaBarGradientMinimumOpacity + (Colors.cavaBarGradientOpacityRange * modelData))
+
                         
 
                         Behavior on height{

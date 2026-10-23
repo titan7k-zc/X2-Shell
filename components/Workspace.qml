@@ -79,7 +79,7 @@ Item {
                 implicitWidth: shouldShow ? (dummyLabel.implicitWidth) : 0  //(dummyLabel.implicitWidth + 14)  spacing 
                 implicitHeight: 22
                 radius: 6
-                color: "Transparent"
+                color: Colors.workspaceTransparentColor
 
                 Text {
                     id: dummyLabel

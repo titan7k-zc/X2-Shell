@@ -13,9 +13,7 @@ Item {
     // Surfaces
     property color backgroundColor: Colors.bluetoothBackgroundColor
     property color headerColor: Colors.bluetoothHeaderColor
-    property color deviceBackgroundColor: Colors.bluetoothDeviceBackgroundColor
-    property color deviceColor: Colors.bluetoothDeviceColor
-    property color deviceConnectedColor: Colors.bluetoothDeviceConnectedColor
+
 
     // Text
     property color primaryTextColor: Colors.bluetoothPrimaryTextColor
@@ -32,10 +30,6 @@ Item {
     property color toggleKnobOnColor: Colors.bluetoothToggleKnobOnColor
     property color toggleKnobOffColor: Colors.bluetoothToggleKnobOffColor
 
-    // Scan button (sits on the header, so it needs to be lighter than it)
-    property color scanColor: Colors.bluetoothScanColor
-    property color scanActiveColor: Colors.bluetoothScanActiveColor
-    property color scanDisabledColor: Colors.bluetoothScanDisabledColor
 
     // Battery
     property color batteryColor: Colors.bluetoothBatteryColor
@@ -124,7 +118,7 @@ Item {
     component RadarIcon: Item {
         id: radar
 
-        property color color: "red"//Colors.bluetoothPrimaryTextColor
+        property color color: "red"//Colors.bluetoothRadarColor
         property bool active: false
         property real size: 22
         readonly property real ringWidth: Math.max(1.5, size * 0.075)
@@ -142,7 +136,7 @@ Item {
             anchors.rightMargin:-1
             anchors.bottomMargin:-1
             radius: width / 2
-            color: "transparent"
+            color: Colors.bluetoothRadarFillColor
             border.width: radar.ringWidth
             border.color: radar.color
             opacity: root.btEnabled?(radar.active ? 0.9 : 0.55) : 0.4
@@ -158,7 +152,7 @@ Item {
             width: radar.size * 0.58
             height: width
             radius: width / 2
-            color: "transparent"
+            color: Colors.bluetoothRadarFillColor
             border.width: radar.ringWidth * 0.8
             border.color: radar.color
             opacity: root.btEnabled? (radar.active ? 0 : 0.4) : 0.2
@@ -176,7 +170,7 @@ Item {
             width: radar.size * 0.2
             height: width
             radius: width / 2
-            color: "transparent"
+            color: Colors.bluetoothRadarFillColor
             border.width: radar.ringWidth * 0.8
             border.color: radar.color
             opacity: 0
@@ -260,7 +254,7 @@ Item {
         color: root.backgroundColor
 
         border.width: 1
-        border.color: root.withAlpha(root.primaryTextColor, 0.06)
+        border.color: root.withAlpha(root.primaryTextColor, Colors.bluetoothPanelBorderOpacity)
 
         opacity: Math.min(1, root.openProgress * 1.6)
         scale: 0.94 + 0.06 * root.openProgress
@@ -302,7 +296,7 @@ Item {
                 anchors.leftMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
 
-                color: "Transparent"//root.btEnabled ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.mutedTextColor, 0.10)
+                color: Colors.bluetoothBadgeBackgroundColor
 
                 Behavior on color {
                     ColorAnimation { duration: 260 }
@@ -542,7 +536,7 @@ Item {
                 anchors.rightMargin: 9
                 anchors.verticalCenter: parent.verticalCenter
 
-                color: "Transparent" //!canScan ? root.scanDisabledColor : (root.btScanning ? root.scanActiveColor : root.scanColor)
+                color: Colors.bluetoothScanButtonBackgroundColor
                 scale: scanArea.pressed ? 0.9 : (scanArea.containsMouse ? 1.06 : 1.0)
 
                 Behavior on iconColor {
@@ -622,7 +616,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 width:clearUnknownicon.implicitWidth
                 height:clearUnknownicon.implicitHeight
-                color:"Transparent"
+                color: Colors.bluetoothClearButtonBackgroundColor
 
                 Text{
                     id:clearUnknownicon
@@ -698,7 +692,7 @@ Item {
                 // width:380
                 height: Math.max(0, body.height - root.sectionGap)
                 radius: 13
-                color:"Transparent"//root.deviceBackgroundColor//Qt.rgba(root.deviceBackgroundColor.r,root.deviceBackgroundColor.g,root.deviceBackgroundColor.b,0.7)
+                color: Colors.bluetoothDeviceSectionBackgroundColor
                 clip: true
 
                 // Empty state
@@ -874,10 +868,10 @@ Item {
                             anchors.fill: parent
                             radius: 11
 
-                            color:"Transparent" //delegateRoot.connected ? root.deviceConnectedColor : root.deviceColor
+                            color: Colors.bluetoothDeviceCardBackgroundColor
 
                             border.width: 1
-                            border.color: root.withAlpha( root.bluetoothActiveColor, delegateRoot.connected ? 0.4 : 0)
+                            border.color: root.withAlpha(root.bluetoothActiveColor, delegateRoot.connected ? Colors.bluetoothConnectedBorderOpacity : 0)
 
                             scale: cardArea.pressed ? 0.975 : 1
 
@@ -920,7 +914,7 @@ Item {
                                 anchors.leftMargin: 11
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                color: delegateRoot.connected ? root.withAlpha(root.bluetoothActiveColor, 0.16) : root.withAlpha(root.primaryTextColor, 0.05)
+                                color: delegateRoot.connected ? root.withAlpha(root.bluetoothActiveColor, Colors.bluetoothConnectedOverlayOpacity) : root.withAlpha(root.primaryTextColor, Colors.bluetoothNeutralOverlayOpacity)
 
                                 Behavior on color {
                                     ColorAnimation { duration: 240 }
@@ -1011,7 +1005,7 @@ Item {
                                 anchors.rightMargin: 13
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                color: root.withAlpha(root.primaryTextColor, 0.06)
+                                color: root.withAlpha(root.primaryTextColor, Colors.bluetoothPanelBorderOpacity)
                                 clip: true
 
                                 Rectangle {
@@ -1020,7 +1014,7 @@ Item {
 
                                     width: Math.max(height, parent.width * Math.min(100, delegateRoot.batteryValue) / 100)
 
-                                    color: root.withAlpha( delegateRoot.batteryValue <= 20 ? root.batteryLowColor : root.bluetoothActiveColor, 0.3)
+                                    color: root.withAlpha(delegateRoot.batteryValue <= 20 ? root.batteryLowColor : root.bluetoothActiveColor, Colors.bluetoothBatteryIndicatorOpacity)
 
                                     Behavior on width {
                                         NumberAnimation {
@@ -1116,7 +1110,7 @@ Item {
                     height: Math.max(22, deviceList.visibleArea.heightRatio * deviceList.height)
                     radius: 1.5
 
-                    color: root.withAlpha(root.secondaryTextColor, 0.6)
+                    color: root.withAlpha(root.secondaryTextColor, Colors.bluetoothSecondaryTrackOpacity)
                     opacity: deviceList.moving ? 1 : 0
 
                     Behavior on opacity {

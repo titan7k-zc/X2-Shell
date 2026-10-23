@@ -49,7 +49,7 @@ Scope{
                 
                 exclusiveZone: root.tbHei   // handles reserved space
 
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 
 
                 implicitHeight: root.hei
@@ -140,8 +140,8 @@ Scope{
                 MultiEffect {
                     anchors.fill: topConnectorBar1
 
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
 
                     source: topConnectorBar1
 
@@ -190,8 +190,8 @@ Scope{
                 MultiEffect {
                     anchors.fill: topConnectorBar2
 
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
 
                     source: topConnectorBar2
 
@@ -222,7 +222,7 @@ Scope{
                 
                 exclusiveZone: root.tbHei   // handles reserved space
 
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 
                 // margins.top: -root.tbHei
 
@@ -293,8 +293,8 @@ Scope{
                 MultiEffect {
                     anchors.fill: bottomConnectorBar
 
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
 
                     source: bottomConnectorBar
 
@@ -333,7 +333,7 @@ Scope{
                 property int radius: root.rootRadius
                 property int borderThickness: 0
                 property color borderColor: root.borderColor
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 anchors.top: true
                 anchors.bottom: true
                 anchors.right: true
@@ -377,8 +377,8 @@ Scope{
 
 
                  MultiEffect {
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
                     anchors.fill: shape
                     source: shape
 
@@ -397,7 +397,7 @@ Scope{
                 id:leftBarWindow
                 property int barWidth: root.lrBarWid
                 property int radius: root.rootRadius
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 anchors.top: true
                 anchors.bottom: true
                 anchors.left: true
@@ -439,8 +439,8 @@ Scope{
                 }
 
                  MultiEffect {
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
                     anchors.fill: shape2
                     source: shape2
 

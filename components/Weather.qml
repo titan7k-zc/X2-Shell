@@ -11,9 +11,9 @@ Item {
     // Appearance
     // =========================
 
-    property color backgroundColor: "Transparent"//Colors.barBackgroundColor
-    property color primaryColor: Colors.weatherPrimaryColor
-    property color secondaryColor: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, 0.4)
+    property color backgroundColor: Colors.weatherBackgroundColor
+    property color primaryColor: Colors.weatherPrimaryTextColor
+    property color secondaryColor: Qt.rgba(primaryColor.r, primaryColor.g, primaryColor.b, Colors.weatherSecondaryTextOpacity)
     property color iconTempColor: primaryColor
 
 
@@ -33,7 +33,7 @@ Item {
 
         scale: weatherButtonMouseArea.pressed ? 0.98 : 1.0
 
-        color: "Transparent"
+        color: Colors.weatherTransparentColor
 
             // =========================
         // Left side

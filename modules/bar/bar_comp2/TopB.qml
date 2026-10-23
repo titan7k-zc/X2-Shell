@@ -37,7 +37,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: top_main_pop.show ? 105 : 20 
-                primaryColor: top_main_pop.show? Colors.cavaBarColor2: Colors.weatherPrimaryColor
+                primaryColor: top_main_pop.show ? Colors.active : Colors.weatherPrimaryTextColor
                 width: 200
                 height:root.hei
 
@@ -75,13 +75,11 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: top_main_pop.show ? 105 : 20
-                barColor:  Colors.cavaBarColor
 
                 height: 32
                 width: 250
 
                 radius: root.rad
-                bgColor: "Transparent"
                 
 
                 Behavior on anchors.rightMargin {
@@ -98,8 +96,8 @@ Item {
     MultiEffect {
         anchors.fill: topMid
 
-        opacity: Colors.shadowOpacity
-        shadowColor: Colors.shadowColor
+        opacity: Colors.topBarShadowOpacity
+        shadowColor: Colors.topBarShadowColor
 
         source: topMid
 

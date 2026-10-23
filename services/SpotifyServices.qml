@@ -12,6 +12,7 @@ Singleton {
     property var player: {
         for (let i = 0; i < Mpris.players.values.length; i++) {
             const p = Mpris.players.values[i];
+            // return p
             if (p.dbusName && p.dbusName.indexOf("spotify") !== -1) return p;
             if (p.identity && p.identity.toLowerCase().indexOf("spotify") !== -1) return p;
         }

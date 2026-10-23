@@ -15,7 +15,7 @@ Item{
 
     Rectangle{
         anchors.fill: parent
-        color:"Transparent"
+        color: Colors.barBackgroundColor
         
         // left side row
         Row{
@@ -57,7 +57,7 @@ Item{
                         anchors.left: parent.left
                         anchors.leftMargin: 10
                         text: tb.displayTitle.length > 50? tb.displayTitle.substring(0, 50) + " ...": tb.displayTitle
-                        color: Qt.rgba(Colors.powerBarTextColor.r, Colors.powerBarTextColor.g, Colors.powerBarTextColor.b, 0.7)
+                        color: Colors.barTopTextSecondaryColor
                         font{
                             family:"Quicksand"
                             letterSpacing:0
@@ -135,21 +135,21 @@ Item{
                     Rectangle{
                         width: bat.implicitWidth+20
                         height: 35
-                        color: "Transparent"
+                        color: Colors.barPowerTransparentColor
                         Brightness{id:brig;anchors.centerIn: parent}
                     }
 
                     Rectangle{
                         width: sou.implicitWidth+20
                         height: 35
-                        color: "Transparent"
+                        color: Colors.barPowerTransparentColor
                         Volume{id:sou;anchors.centerIn: parent}
                     }
 
                     Rectangle{
                         width: bat.implicitWidth+20
                         height: 35
-                        color: "Transparent"
+                        color: Colors.barPowerTransparentColor
                         Battery{id:bat;anchors.centerIn: parent}
                     }
                 }

@@ -13,274 +13,486 @@ Singleton {
         property int theme: 0
     }
 
-
-
-
     property int themeAnimationDuration: 800
 
-    property var themeColors: [
-        ["Cherry", "#1E1418", "#F0DCE2", "#A98A94", "#D7BBC3", "#FF8FA3", "#FF6B81", "#FF9FB0", "#FF8FA3", "#FF6B81", "#A8D88A",'#1E1418'], // AAA
-        ["Crimson", "#000000", '#b0b0b0', "#c8959595", "#959595", "#ffffff", '#ed1358', "#959595",  "#ef2a68", "#ef2a68", "#ef2a68",'#0e0000'],//AAA 
-        ["Nord", "#626f89", "#D8DEE9", "#c8D8DEE9", "#D8DEE9", "#ECEFF4", "#88C0D0", "#D8DEE9", "#88C0D0", "#88C0D0", "#88C0D0",'#12151b'], // AAA 
-        ["Monochrome", "#0A0A0A", "#F5F5F5", "#8A8A8A", '#c6d0d0d0', "#FFFFFF", "#FFFFFF", "#E0E0E0", "#FFFFFF", "#FFFFFF", "#FFFFFF",'#838383'],//AAA 
+    // property var themeColors: [["sam1", "#282828", "#2bc1b086", "#f5d69d", "#c7ba9a", "#6bc7ba9a", "#87dd6363"]]
 
+property var themeColors: [
 
-        ["Ayu Dark", "#0D1017", "#D5D8DA", "#8A9199", "#B7BDC5", "#C7D1DB", "#E6B450", "#73B7FF",  "#E6B450", "#73B7FF", "#7FD962"],
-        ["Coffee Dark", "#211B18", "#E8DDD5", "#A4948C", "#D1C0B7", "#D9A066", "#C78B5A", "#E0B084",  "#D9A066", "#D9A066", '#D9A066'], // AA
-        ["Gruvbox", "#282828", "#EBDBB2", "#A89984", "#D5C4A1", "#FBF1C7", "#83A598", "#8EC07C",  "#83C07C", "#83A598", '#49bb26'],
-        ["Paper White", '#bab6b6', "#0A0A0A", "#6E6E6E", '#af2a2a2a', "#000000", "#000000", "#3A3A3A", "#000000", "#000000", "#000000"],//AA
-                        //FAFAFA
+        ["Cherry",           "#1E1418", "#2bD7BBC3", "#FF8FA3", "#D7BBC3", "#6bD7BBC3", "#87E0505F"],
+        ["Crimson",          "#000000", "#2bB0B0B0", "#ED1358", "#B0B0B0", "#6bB0B0B0", "#87FFA040"],
+        ["Nord",             "#2E3440", "#2bD8DEE9", "#88C0D0", "#D8DEE9", "#6bD8DEE9", "#87BF616A"],
+        ["Monochrome",       "#0A0A0A", "#2bD0D0D0", "#FFFFFF", "#D0D0D0", "#6bD0D0D0", "#87FF6B6B"],
+        ["Gruvbox",          "#282828", "#2bD5C4A1", "#83A598", "#D5C4A1", "#6bD5C4A1", "#87FB4934"],
+        ["Paper White",      "#BAB6B6", "#2b2A2A2A", "#000000", "#2A2A2A", "#6b2A2A2A", "#87B00020"],
+        ["Polar Night",      "#242933", "#2bC8D0DC", "#88C0D0", "#C8D0DC", "#6bC8D0DC", "#87BF616A"],
 
-        ["Nord Frost", "#2E3440", "#ECEFF4", "#AEB8C7", "#D8DEE9", "#8FBCBB", "#81A1C1", "#88C0D0",  "#88C0D0", "#81A1C1", "#A3BE8C"],
-        ["Polar Night", "#242933", "#E5E9F0", "#9AA4B2", "#C8D0DC", "#81A1C1", "#88C0D0", "#8FBCBB", "#88C0D0", "#81A1C1", '#8da9d8'],
-        ["Blue Steel", "#202833", "#DCE6F2", "#8B9BAD", "#B8C7D9", "#8CB4D8", "#6FA8DC", "#91C4E8", "#8CB4D8", "#6FA8DC", "#9BCB8B"],
-        ["Deep Ocean", "#0D1B24", "#D6E5EA", "#78909C", "#B0C4CC", "#5FB3B3", "#4FA3D1", "#72C7D9",  "#5FB3B3", "#4FA3D1", "#9CCC65"],
-        ["Aurora", "#182027", "#DCE7E5", "#899B99", "#B9CCC7", "#A3BE8C", "#88C0D0", "#B48EAD", "#8FBCBB", "#88C0D0", "#A3BE8C"],
-        ["Catppuccin Mocha", "#1E1E2E", "#CDD6F4", "#A6ADC8", "#BAC2DE", "#F5E0E8", "#89B4FA", "#B4BEFE", "#89DCEB", "#89B4FA", "#A6E3A1"],
-        ["Tokyo Night", "#1A1B26", "#C0CAF5", "#9AA5CE", "#A9B1D6", "#BB9AF7", "#7AA2F7", "#89DDFF",  "#7DCFFF", "#7AA2F7", "#9ECE6A"],
-        ["Dracula", "#282A36", "#F8F8F2", "#BFBFBF", "#F8F8F2", "#8BE9FD", "#BD93F9", "#FF79C6",  "#8BE9FD", "#50FA7B", "#F1FA8C"],
-        ["Emerald Night", "#14181F", "#E8EDF2", "#8D98A8", "#C5CDD9", "#4FD1A5", "#4FD1A5", "#63E6BE", "#FFD166", "#4FD1A5", "#A3E4B5"],
-        ["Rose Pine", "#191724", "#E0DEF4", "#908CAA", "#E0DEF4", "#F6C177", "#C4A7E7", "#EBBCBA",  "#9CCFD8", "#C4A7E7", "#9CCFD8"],
-        ["Everforest", "#2D353B", "#D3C6AA", "#9DA9A0", "#D3C6AA", "#A7C080", "#A7C080", "#83C092",  "#83C092", "#7FBBB3", "#A7C080"],
-        ["One Dark", "#282C34", "#ABB2BF", "#7F848E", "#ABB2BF", "#D19A66", "#61AFEF", "#C678DD",  "#56B6C2", "#61AFEF", "#98C379"],
-        ["Kanagawa", "#1F1F28", "#DCD7BA", "#727169", "#C8C093", "#98BB6C", "#7E9CD8", "#7FB4CA",  "#7AA89F", "#7E9CD8", "#98BB6C"],
-        ["Nord Aurora", "#3B4252", "#ECEFF4", "#D8DEE9", "#E5E9F0", "#A3BE8C", "#88C0D0", "#B48EAD", "#81A1C1", "#88C0D0", "#A3BE8C"],
-        ["Material Ocean", "#0F111A", "#EEFFFF", "#8F93A2", "#C5C8C6", "#89DDFF", "#82AAFF", "#C792EA", "#89DDFF", "#82AAFF", "#C3E88D"],
-        ["Moonlight", "#222436", "#C8D3F5", "#828BB8", "#A9B8E8", "#86E1FC", "#82AAFF", "#C099FF",  "#86E1FC", "#82AAFF", "#C3E88D"], // AA
-        ["Horizon", "#1C1E26", "#D5D8DA", "#A1A1A1", "#D5D8DA", "#E95678", "#FAB795", "#B877DB",  "#25B0BC", "#FAB795", "#29D398"],
-        ["Monokai", "#272822", "#F8F8F2", "#A6A69C", "#F8F8F2", "#A6E22E", "#66D9EF", "#FD971F",  "#A6E22E", "#66D9EF", "#E6DB74"],
-        ["Solarized Dark", "#002B36", "#839496", "#657B83", "#93A1A1", "#B58900", "#268BD2", "#2AA198", "#B58900", "#268BD2", "#859900"],
-        ["Cyberpunk", "#0B0E14", "#E6E6E6", "#7A7F8B", "#C5C8C6", "#00E5FF", "#FF00A8", "#B967FF",  "#00E5FF", "#FF00A8", "#A6FF00"],
-        ["Synthwave", "#241B2F", "#F8F8F2", "#A89BB9", "#E6E1FF", "#FF7EDB", "#FF7EDB", "#36F9F6",  "#36F9F6", "#FF7EDB", "#72F1B8"],
-        ["Amethyst", "#17131F", "#E8E0F0", "#9C91A8", "#D4C5E2", "#C8A2FF", "#A970FF", "#E0AAFF",  "#C8A2FF", "#A970FF", "#9BE28C"],
-        ["Oceanic", "#0B1E26", "#D8E6E9", "#8199A1", "#B8CDD2", "#5CCFE6", "#4DB6E8", "#89DDFF",  "#5CCFE6", "#4DB6E8", "#91D67A"],
-        ["Forest Night", "#101A16", "#D8E8DF", "#81968A", "#B9D0C1", "#8FCB9B", "#78C091", "#A3D9A5",  "#8FCB9B", "#78C091", "#C5D86D"],
-        ["Midnight", "#10141C", "#D7DEE9", "#7F8A9A", "#B8C2D1", "#8BA4C7", "#6C8ED4", "#91B4E8", "#8BA4C7", "#6C8ED4", "#91C483"],
-        ["Obsidian", "#111111", "#E6E6E6", "#858585", "#C8C8C8", "#A8D08D", "#6EA8FE", "#C586C0",  "#7FDBCA", "#6EA8FE", "#A8D08D"],
-        ["Slate", "#20242B", "#D9DEE7", "#8B939F", "#BEC6D1", "#9AA8B8", "#7FA6D9", "#9BB7D4",  "#8FB9A8", "#7FA6D9", "#A5C982"],
-        ["Arctic", "#18212B", "#E5EDF5", "#91A4B7", "#C7D5E3", "#A6D8FF", "#72B7FF", "#9AC7FF",  "#8ED6FF", "#72B7FF", "#9EDC9A"],
-        ["Deep Purple", "#181520", "#E6DFF2", "#9288A3", "#C8BED8", "#B8A0FF", "#9B7BFF", "#D0A8FF", "#B8A0FF", "#9B7BFF", "#A6D98A"],
-        // ["Ember", "#211714", "#F0DDD5", "#A99087", "#D6C0B8", "#FF9E64", "#FF8F5E", "#FFB088",  "#FF9E64", "#FF8F5E", "#B5D66A"],
-        ["Lavender", "#191722", "#E4DDF5", "#9690AA", "#CAC2DF", "#B9A7FF", "#A78BFA", "#D0B8FF", "#B9A7FF", "#A78BFA", "#A8D68A"],
+        ["Warm Sand",         "#282828",      "#2bc1b086",    '#f5d69d',   '#d0c29f',   "#6bc7ba9a",    "#87dd6363"],
+        ["Matcha Sage",       "#1e231f",      "#2b8fa893",    "#b8e0b9",   "#9cb39f",   "#6b9cb39f",    "#87dd6b63"],
+        ["Nordic Ice",        "#1b2028",      "#2b849db3",    "#a3d4f7",   "#96adc2",   "#6b96adc2",    "#87db6571"],
+        ["Rosewater",         "#241c20",      "#2bb58e98",    "#f5b8c8",   "#c7a5ae",   "#6bc7a5ae",    "#87e06666"],
+        ["Espresso Cream",    "#1f1b18",      "#2bb59984",    "#f2c9a7",   "#c4ae9b",   "#6bc4ae9b",    "#87d9625b"],
+        ["Lavender Haze",     "#1e1c26",      "#2b968bb3",    "#cdb8f7",   "#ada3c7",   "#6bada3c7",    "#87e06680"],
+        ["Amber Glow",        "#241e17",      "#2bc2986b",    "#f7c688",   "#c7ad8c",   "#6bc7ad8c",    "#87d95b5b"],
+        ["Ocean Mist",        "#172224",      "#2b7eaba8",    "#9df0e8",   "#93bdb9",   "#6b93bdb9",    "#87db6b6b"],
+        ["Crimson Velvet",    "#211719",      "#2bb87d87",    "#f79ca9",   "#c799a0",   "#6bc799a0",    "#87f05454"],
+        ["Slate Monochrome",  "#1c1c1e",      "#2b9e9ea6",    "#e5e5ea",   "#b5b5bd",   "#6bb5b5bd",    "#87d96565"],
+        ["Pistachio",         "#21241c",      "#2ba8b384",    "#d8f09d",   "#b5c296",   "#6bb5c296",    "#87db675c"],
+        ["Twilight Plum",     "#221a24",      "#2bad84b3",    "#ebb3f5",   "#bfa1c4",   "#6bbfa1c4",    "#87e06674"],
+        ["Cyber Mint",        "#141c1a",      "#2b6eb59e",    "#8cf7d4",   "#8cc4b2",   "#6b8cc4b2",    "#87e35f75"],
+        ["Sunset Peach",      "#261d1c",      "#2bc28e86",    "#f7b5a8",   "#c7a59e",   "#6bc7a59e",    "#87e05858"],
+        ["Deep Cobalt",       "#161a24",      "#2b7f8fb5",    "#a6c0f7",   "#97a5c4",   "#6b97a5c4",    "#87de646e"],
+        ["Evergreen Gold",    "#19211d",      "#2bb0a882",    "#ebd99b",   "#bdb799",   "#6bbdb799",    "#87d9665f"]
     ]
 
-    // === Global ===
-    property color shellBackgroundColor: themeColors[theme][1]
-    property color mainTextColor: themeColors[theme][2]
-    property color secondaryTextColor: themeColors[theme][3]
-    property color mainIconColor: themeColors[theme][4]
-    property color aliveIconColor: themeColors[theme][5]
-    property color activeColor: themeColors[theme][6]
-    property color focusColor: themeColors[theme][7]
-    property color shadowColor: getShadowColor()
+
+
+
+
+
+
+
+
+    // // === Global ===
+
+    property color shadowColor: getShadowColor() 
+    property color background: themeColors[theme][1]
+    property color surface: themeColors[theme][2]
+    property color active: themeColors[theme][3]
+    property color primary: themeColors[theme][4]
+    property color secondary: themeColors[theme][5]
+    property color s0: primary
+    property color s1: active
+    property color s2: themeColors[theme][6]
+
+
+
+
+
+
+
+
+
     property real shadowOpacity: 0.7
+    readonly property color shellFallbackShadowColor: '#000000' 
 
     function getShadowColor() {
-        if (!themeColors[theme][11] === null || themeColors[theme][11] === undefined) {
-            return "#000000"
-        }
-        return themeColors[theme][11]
+        var selectedTheme = themeColors[theme]
+        return selectedTheme && selectedTheme.length > 7 && selectedTheme[7] ? selectedTheme[7] : shellFallbackShadowColor
     }
 
-    // === Animations ===
-    Behavior on shellBackgroundColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    Behavior on mainTextColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    Behavior on secondaryTextColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    Behavior on mainIconColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    Behavior on aliveIconColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    Behavior on activeColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    Behavior on focusColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    Behavior on shadowColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-
-    // === cava ===
-    readonly property color cavaBackgroundColor: Qt.rgba(shellBackgroundColor, shellBackgroundColor, shellBackgroundColor, 0.3)
-    readonly property color cavaBarColor: mainTextColor
-    readonly property color cavaBarColor2: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 1.0)
-
-    // === Weather ===
-    readonly property color weatherPrimaryColor: mainTextColor
-    readonly property color weatherPrimaryColor2: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 1.0)
-
-    // === Workspace ===
-    readonly property color workspaceActiveColor: activeColor
-    readonly property color workspaceAliveColor: activeColor
-    readonly property color workspaceInactiveColor: mainIconColor
-
-    // === Clock ===
-    readonly property color clockTextColor: mainTextColor
-
-    // === Control center ===
-    readonly property color controlCenterButtonColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.10)
-    readonly property color controlCenterButtonHoverColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.18)
-    readonly property color controlCenterButtonPressedColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.28)
-    readonly property color controlCenterButtonActiveColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.88)
-    readonly property color controlCenterButtonBorderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.30)
-    readonly property color controlCenterButtonActiveBorderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.95)
-    readonly property color controlCenterButtonIconColor: mainTextColor
-    readonly property color controlCenterButtonActiveIconColor: shellBackgroundColor
-
+    Behavior on shadowColor {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on background {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on surface {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on active {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on primary {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on secondary {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on s0 {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on s1 {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
+    Behavior on s2 {ColorAnimation {duration: root.themeAnimationDuration;easing.type: Easing.InOutQuad}}
     // === Brightness ===
-    property color brightnessIconColor: themeColors[theme][8]
     Behavior on brightnessIconColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    readonly property color brightnessTextColor: mainTextColor
-
     // === Volume ===
-    property color volumeIconColor: themeColors[theme][9]
     Behavior on volumeIconColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    readonly property color volumeTextColor: mainTextColor
-
-
     // === Battery ===
-    property color batteryIconColor: themeColors[theme][10]
     Behavior on batteryIconColor { ColorAnimation { duration: root.themeAnimationDuration; easing.type: Easing.InOutQuad } }
-    readonly property color batteryTextColor: mainTextColor
-
-    // === Battery control ===
-    readonly property color batteryCtrlBackgroundColor: shellBackgroundColor
-    readonly property color batteryCtrlActiveColor: activeColor
-    readonly property color batteryCtrlTextColor: secondaryTextColor
-    readonly property color batteryCtrlActiveTextColor: shellBackgroundColor
-
-    // === Performance control ===
-    readonly property color performanceCtrlBackgroundColor: shellBackgroundColor
-    readonly property color performanceCtrlActiveColor: activeColor
-    readonly property color performanceCtrlTextColor: secondaryTextColor
-    readonly property color performanceCtrlActiveTextColor: shellBackgroundColor
 
 
-    // === Spotify ===
-    readonly property color spotifyPanelColor: "Transparent"
-    readonly property color spotifyAlbumPlaceholderColor: "#3B4252"
-    readonly property color spotifyAlbumBorder: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.7)
-    readonly property color spotifyTitleColor: activeColor
-    readonly property color spotifyArtistColor: secondaryTextColor
-    readonly property color spotifyControlColor: mainTextColor
-    readonly property color spotifyControlColor2: Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.7)
-    readonly property color spotifyControlIconColor: shellBackgroundColor
-    readonly property color spotifyPlayColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.8)
+
+    // property color background: '#282828'
+    // property color surface: '#2bc1b086'
+
+    // property color active: '#f5d69d' 
+    // property color primary: '#c7ba9a' 
+    // property color secondary: '#6bc7ba9a'
+    
+    // property color s0: primary
+    // property color s1: active
+    // property color s2: '#87dd6363'
 
 
+
+
+
+
+                                                                                                                // background
+    
+    
     // === Popups ===
-    readonly property color pop8MenuColor: shellBackgroundColor
-    readonly property color pop8ShadowColor: shellBackgroundColor
-
-
-    // === Taskbar ===
-    readonly property color taskbarTextColor: mainTextColor
-    readonly property color taskbarActiveColor: activeColor
-
-    // === Wallpaper ===
-    readonly property color wallpaperLoadingTextColor: mainTextColor
-    readonly property color themeBackgroundColor:Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.1)// "#a9000000"
-    readonly property color themeIconColor: activeColor
-    readonly property color themeTextColor: mainTextColor
-    readonly property color wallthemeSelectedColor: secondaryTextColor   
-    readonly property color wallthemeActiveColor: activeColor
-
-    // === Overview ===
-    readonly property color overviewTextColor: mainTextColor
-    readonly property color overviewSecondaryTextColor: secondaryTextColor
-    readonly property color overviewSurfaceFillColor: "Transparent"    // dont chnage
-    readonly property color overviewIndicatorColor: activeColor
-    readonly property color overviewIndicatorIconColor: mainIconColor
-    readonly property color overviewIndicatorTrackColor: Qt.rgba(overviewIndicatorColor.r, overviewIndicatorColor.g, overviewIndicatorColor.b, 0.1)//Qt.rgba(1, 1, 1, 0.12)
-    readonly property color overviewWarningColor: activeColor // for temperature value
-    readonly property color overviewNormalColor: mainTextColor // for temperature value
-
-    // === LevelBar ===
-    readonly property color levelBarBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.1)//mainTextColor 
-    readonly property color levelBarFillColor: activeColor 
-
-    // === Power menu ===
-    readonly property color powerButtonColor: "Transparent"
-    readonly property color powerIconColor: mainIconColor
-    readonly property color powerFocusedIconColor: activeColor
-
+    readonly property color pop8MenuColor: background
     // === Bar ===
-    readonly property color barBorderColor: shellBackgroundColor
-    readonly property color barButtonColor: activeColor
+    readonly property color barBorderColor: background
+    // spotify
+    readonly property color spotifyControlIconColor: background
+    // performance , battery 
+    readonly property color performanceCtrlActiveTextColor: background
+    readonly property color batteryCtrlActiveTextColor: background
+    // === Notification counter ===
+    readonly property color notificationCounterIconColor: background
+    readonly property color notificationCounterTextColor: background
+    // === Control center ===
+    readonly property color controlCenterButtonActiveIconColor: background
+    
+    //=========
 
-    // === Power bar / topbar ===
-    readonly property color powerBarTextColor: mainTextColor
-    readonly property color powerBarBulletColor: Qt.rgba(shellBackgroundColor, shellBackgroundColor, shellBackgroundColor, 0.3)
+
+                                                                                                                // primary   
+    // === Workspace ===
+    readonly property color workspaceInactiveColor: primary
+    // === Weather ===
+    readonly property color weatherPrimaryTextColor: primary
+    // === Clock ===
+    readonly property color powerBarTextColor: primary
+    // === Cava ===
+    readonly property color cavaBarColor: primary
+    // === Brightness ,Volume, Battery ===
+    property color brightnessIconColor:primary 
+    property color volumeIconColor:primary 
+    property color batteryIconColor: primary
+    // power menue
+    readonly property color powerIconColor: primary
+    // === Overview ===
+    readonly property color overviewTextColor: primary
+    readonly property color overviewNormalColor: primary // for temperature value
+    readonly property color overviewIndicatorIconColor: primary
+    // wallpaper theme
+    readonly property color wallpaperLoadingTextColor: primary
+    readonly property color wallpaperThemeTextColor: primary
+    // performance , battery 
+    readonly property color performanceCtrlTextColor: primary
+    readonly property color batteryCtrlTextColor: primary
+    // === Control center ===
+    readonly property color controlCenterButtonIconColor: primary
+
+
+
+
+
+
+    // === Brightness ,Volume, Battery ===
+    readonly property color brightnessTextColor: primary
+    readonly property color volumeTextColor: primary
+    readonly property color batteryTextColor: primary
+                                                                                                                // secondary
+
+
+    // overview
+    readonly property color overviewSecondaryTextColor: secondary
+    // spotify
+    readonly property color spotifyArtistColor: secondary
+    readonly property color spotifyControlColor2: Qt.rgba(secondary.r, secondary.g, secondary.b, 0.7)
+    // wallpaper theme
+    readonly property color wallpaperThemeSelectedColor: secondary
+
+
+
+                                                                                                                // active
+    // == workspace ===
+    readonly property color workspaceActiveColor: active
+    readonly property color workspaceAliveColor: active
+
+    // == battery, performance, notification ===
+    readonly property color batteryCtrlActiveColor: active
+    readonly property color performanceCtrlActiveColor: active
+    readonly property color notificationCounterBackgroundColor: active
+    // === Power menu ===
+    readonly property color powerFocusedIconColor: active
+    // === wallpaper theme ===
+    readonly property color wallpaperThemeIconColor: active
+    readonly property color wallpaperThemeActiveColor: active
+    readonly property color wallpaperThemeBackgroundColor:Qt.rgba(active.r, active.g, active.b, 0.1)// "#a9000000"
+    // === Overview ===
+    readonly property color overviewIndicatorColor: active
+    readonly property color overviewIndicatorTrackColor: Qt.rgba(overviewIndicatorColor.r, overviewIndicatorColor.g, overviewIndicatorColor.b, 0.1)//Qt.rgba(1, 1, 1, 0.12)
+    readonly property color overviewWarningColor: active // for temperature value
+    // === LevelBar ===
+    readonly property color levelBarBackgroundColor: Qt.rgba(active.r, active.g, active.b, 0.1)//mainTextColor 
+    readonly property color levelBarFillColor: active 
+    // spotify
+    readonly property color spotifyTitleColor: active
+    readonly property color spotifyPlayColor: Qt.rgba(active.r, active.g, active.b, 0.8)
+    readonly property color spotifyAlbumBorderColor: Qt.rgba(active.r, active.g, active.b, 0.7)
+    // == taskbar ===
+    readonly property color taskbarActiveColor: active
+    // === Control center ===
+    readonly property color controlCenterButtonHoverColor: Qt.rgba(active.r, active.g, active.b, 0.18)
+    readonly property color controlCenterButtonPressedColor: Qt.rgba(active.r, active.g, active.b, 0.28)
+    readonly property color controlCenterButtonActiveColor: Qt.rgba(active.r, active.g, active.b, 0.88)
+    readonly property color controlCenterButtonBorderColor: Qt.rgba(active.r, active.g, active.b, 0.30)
+    readonly property color controlCenterButtonActiveBorderColor: Qt.rgba(active.r, active.g, active.b, 0.95)
+
+    
+
+    
+    
+
+
+
+
+                                                                                                                // surface
+
+    // wifi , bluetooth , notification header
+    readonly property color bluetoothHeaderColor: surface
+    readonly property color wifiHeaderColor: surface
+    readonly property color notificationHeaderColor: surface
+
+
+    // === Bluetooth ===
+    readonly property color bluetoothBackgroundColor: "Transparent"
+    readonly property color bluetoothPrimaryTextColor: primary//mainTextColor                                                              // scan , primaryTextColor , icon_bg with op , sign_bg with op
+    readonly property color bluetoothSecondaryTextColor: secondary//secondaryTextColor                                                        // secondaryTextColor
+    readonly property color bluetoothMutedTextColor: secondary//mainIconColor                                                                 // item icon , empty scanner , clear  
+    readonly property color bluetoothActiveColor: active//activeColor                                                                       // active second text, icon, icon bg , scanning(both) 
+    readonly property color bluetoothInactiveColor: primary//mainIconColor                                                            // main icon
+    readonly property color bluetoothToggleOnColor: active//activeColor
+    readonly property color bluetoothToggleOffColor: primary//Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
+    readonly property color bluetoothToggleKnobOnColor: background
+    readonly property color bluetoothToggleKnobOffColor: background
+    readonly property color bluetoothBatteryColor: primary
+    readonly property color bluetoothBatteryLowColor: s2
+
+    
+    // === Wi-Fi ===
+    readonly property color wifiBackgroundColor: "Transparent" 
+    readonly property color wifiDeviceBackgroundColor: background//Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.7)    // <- password field background color
+    readonly property color wifiDeviceSurfaceColor: surface//Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)      // cancel , passowrd enter filed
+    readonly property color wifiPrimaryTextColor: primary
+    readonly property color wifiSecondaryTextColor: secondary
+    readonly property color wifiMutedTextColor: secondary
+    readonly property color wifiActiveColor: active
+    readonly property color wifiInactiveColor: primary
+    readonly property color wifiToggleOnColor: active
+    readonly property color wifiToggleOffColor: primary//Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
+    readonly property color wifiToggleKnobOnColor: background
+    readonly property color wifiToggleKnobOffColor: background
+    readonly property color wifiSignalColor: primary
+    readonly property color wifiSignalLowColor: s2 
+
+    
+    // === Notifications ===
+    readonly property color notificationPanelColor: "Transparent"
+    readonly property color notificationCardColor: "Transparent"//Qt.rgba(secondary.r, secondary.g, secondary.b, 0.05)//Qt.tint(shellBackgroundColor, Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.07))   // lifts on dark themes, sinks on light themes
+    readonly property color notificationCarHoverdColor: Qt.rgba(secondary.r, secondary.g, secondary.b, 0.06)//Qt.tint(shellBackgroundColor, Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.12))   // lifts on dark themes, sinks on light themes
+    readonly property color notificationBorderColor: "Transparent"//secondary//Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.08)
+    readonly property color notificationBorderHoverColor: active//"//Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.40)
+    readonly property color notificationTitleColor: primary//mainTextColor
+    readonly property color notificationBodyColor: secondary
+    readonly property color notificationCloseIconColor: secondary              // x button
+    readonly property color notificationIconBackgroundColor: secondary//Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
+    readonly property color notificationIconTextColor: primary//activeColor
+    readonly property color notificationHeaderTextColor: primary
+    readonly property color notificationBadgeColor: secondary
+    readonly property color notificationBadgeTextColor: background
+    readonly property color notificationClearButtonBorderColor: primary//Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
+    readonly property color notificationClearButtonTextColor: primary//mainTextColor
+    readonly property color notificationEmptyColor: secondary
+    readonly property color notificationLowColor: s1
+    readonly property color notificationNormalColor: s0
+    readonly property color notificationCriticalColor: s2
+ 
+ 
+
+  
+
+
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // === Launcher ===
     readonly property color launcherPanelColor: "Transparent"
     readonly property color launcherBorderColor: "Transparent"
-    readonly property color launcherPrimaryTextColor: mainTextColor//"#EBCB8B"
-    readonly property color launcherDimTextColor: mainTextColor
-    readonly property color launcherAccentColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.3)  // dont change
     readonly property color launcherAccentIconColor: "Transparent"
-    readonly property color launcherSearchBackgroundColor: Qt.rgba(1, 1, 1, 0.07)
-    readonly property color launcherSearchFocusColor: activeColor
-    readonly property color launcherIconBubbleColor: Qt.rgba(1, 1, 1, 0.08)
     readonly property color launcherDragHandleColor: "Transparent"
 
+    readonly property color launcherDimTextColor: primary
+    readonly property color launcherPrimaryTextColor: secondary//mainTextColor//"#EBCB8B"             need to fix bcz selsected text aslo using this ..
+    readonly property color launcherAccentColor: Qt.rgba(active.r, active.g, active.b, 0.3)  // dont change  
+    readonly property color launcherSearchBackgroundColor: Qt.rgba(1, 1, 1, 0.07)
+    readonly property color launcherSearchFocusColor: active
+    readonly property color launcherIconBubbleColor: Qt.rgba(1, 1, 1, 0.08)
+
+
+
+
+
+    // === cava ===
+    readonly property color cavaBackgroundColor: "Transparent" // background color
+    // readonly property color cavaAccentBarColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 1.0)  
+    readonly property color cavaAccentBarColor: Qt.rgba(active.r, active.g, active.b, 1.0)// need to check
+    readonly property real cavaBarGradientMinimumOpacity: 0.4
+    readonly property real cavaBarGradientOpacityRange: 0.6
+
+    // === Control center ===
+    readonly property color controlCenterButtonColor: "Transparent"//Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.10)
+
+    // === Overview ===    
+    readonly property color overviewSurfaceFillColor: "Transparent"    // dont chnage
+
+    // === Workspace ===
+    readonly property color workspaceTransparentColor: "transparent"
+
+    // === Battery control ===
+    readonly property color batteryCtrlBackgroundColor: "transparent"
+
+    // === Performance control ===
+    readonly property color performanceCtrlBackgroundColor: "Transparent"
+
+    // === Popup menu ===
+    readonly property color popupMenuTransparentColor: "transparent"
+    
+    // === Power menu ===
+    readonly property color powerButtonColor: "Transparent"
+
+    // === Spotify ===
+    readonly property color spotifyPanelColor: "Transparent"
+    readonly property color spotifyAlbumPlaceholderColor: "#3B4252"
+    
+    // === Wallpaper ===
+    readonly property color wallpaperSwitcherTransparentColor: "transparent"
+    
+    // === Notifications ===
+    readonly property color notificationClearButtonBackgroundColor: "transparent"
+    readonly property real notificationPanelBorderOpacity: 0.06
+
+    // === Control center ===
+    readonly property color controlCenterTransparentColor: "transparent"
+
+    // === Launcher ===
+    readonly property color launcherSearchInputColor: "transparent"
+
+    // === Power menu ===
+    readonly property color powerMenuSurfaceColor: "transparent"
+
+    // === Weather ===
+    readonly property color weatherBackgroundColor: "transparent"
+    readonly property color weatherTransparentColor: "transparent"
+    readonly property real weatherSecondaryTextOpacity: 0.4
+
+    // === Curves ===
+    readonly property color curvesStrokeColor: "transparent"
+
+
+
+
+
+    // === Shared bar components ===
+    readonly property color barBackgroundColor: "transparent"
+    readonly property color barShadowColor: getShadowColor()
+    readonly property real barShadowOpacity: 0.7
+    readonly property color barV2ShadowColor: getShadowColor()
+    readonly property real barV2ShadowOpacity: 0.7
+    readonly property color topBarShadowColor: getShadowColor()
+    readonly property real topBarShadowOpacity: 0.7
+    readonly property color rightBottomBarShadowColor: getShadowColor()
+    readonly property real rightBottomBarShadowOpacity: 0.7
+    readonly property color leftBottomBarShadowColor: getShadowColor()
+    readonly property real leftBottomBarShadowOpacity: 0.7
+    readonly property color rightTopBarShadowColor: getShadowColor()
+    readonly property real rightTopBarShadowOpacity: 0.7
+    readonly property color leftTopBarShadowColor: getShadowColor()
+    readonly property real leftTopBarShadowOpacity: 0.7
+    readonly property color popupMenuShadowColor: getShadowColor()
+    readonly property real popupMenuShadowOpacity: 0.7
+    readonly property color pop8PopupShadowColor: getShadowColor()
+    readonly property color barBorderFallbackColor: "black"
+    readonly property color barPowerTransparentColor: "transparent"
+    readonly property color barTopTextSecondaryColor: Qt.rgba(powerBarTextColor.r, powerBarTextColor.g, powerBarTextColor.b, 0.7)  // need to check 
+
+
+
+
+
+
+    // === Taskbar ===
+    readonly property color taskbarTextColor: primary // component is not active but for future use
+
+
+
+
+
+
+
+
     // === Bluetooth ===
-    readonly property color bluetoothBackgroundColor: shellBackgroundColor
-    readonly property color bluetoothHeaderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
-    readonly property color bluetoothDeviceBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.08)
-    readonly property color bluetoothDeviceColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
-    readonly property color bluetoothDeviceConnectedColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.22)
-    readonly property color bluetoothPrimaryTextColor: mainTextColor
-    readonly property color bluetoothSecondaryTextColor: secondaryTextColor
-    readonly property color bluetoothMutedTextColor: mainIconColor
-    readonly property color bluetoothActiveColor: activeColor
-    readonly property color bluetoothInactiveColor: mainIconColor
-    readonly property color bluetoothToggleOnColor: activeColor
-    readonly property color bluetoothToggleOffColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
-    readonly property color bluetoothToggleKnobOnColor: shellBackgroundColor
-    readonly property color bluetoothToggleKnobOffColor: secondaryTextColor
-    readonly property color bluetoothScanColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.16)
-    readonly property color bluetoothScanActiveColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.28)
-    readonly property color bluetoothScanDisabledColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.12)
-    readonly property color bluetoothBatteryColor: mainTextColor
-    readonly property color bluetoothBatteryLowColor: focusColor
+    readonly property color bluetoothRadarColor: primary
+    readonly property color bluetoothRadarFillColor: "transparent"
+    readonly property color bluetoothBadgeBackgroundColor: "transparent"
+    readonly property color bluetoothScanButtonBackgroundColor: "transparent"
+    readonly property color bluetoothClearButtonBackgroundColor: "transparent"
+    readonly property color bluetoothDeviceSectionBackgroundColor: "transparent"
+    readonly property color bluetoothDeviceCardBackgroundColor: "transparent"
+    readonly property real bluetoothPanelBorderOpacity: 0.06
+    readonly property real bluetoothConnectedBorderOpacity: 0.4
+    readonly property real bluetoothConnectedOverlayOpacity: 0.16
+    readonly property real bluetoothNeutralOverlayOpacity: 0.05
+    readonly property real bluetoothBatteryIndicatorOpacity: 0.3
+    readonly property real bluetoothSecondaryTrackOpacity: 0.6
 
     // === Wi-Fi ===
-    readonly property color wifiBackgroundColor: shellBackgroundColor
-    readonly property color wifiHeaderColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
-    readonly property color wifiDeviceBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.08)
-    readonly property color wifiDeviceColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
-    readonly property color wifiDeviceConnectedColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.22)
-    readonly property color wifiPrimaryTextColor: mainTextColor
-    readonly property color wifiSecondaryTextColor: secondaryTextColor
-    readonly property color wifiMutedTextColor: mainIconColor
-    readonly property color wifiActiveColor: activeColor
-    readonly property color wifiInactiveColor: mainIconColor
-    readonly property color wifiToggleOnColor: activeColor
-    readonly property color wifiToggleOffColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
-    readonly property color wifiToggleKnobOnColor: shellBackgroundColor
-    readonly property color wifiToggleKnobOffColor: secondaryTextColor
-    readonly property color wifiScanColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.16)
-    readonly property color wifiScanActiveColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.28)
-    readonly property color wifiScanDisabledColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.12)
-    readonly property color wifiSignalColor: mainTextColor
-    readonly property color wifiSignalLowColor: focusColor
+    readonly property color wifiRadarColor: primary 
+    readonly property color wifiRadarFillColor: "transparent"
+    readonly property color wifiPromptButtonTextColor: "white"
+    readonly property color wifiPromptButtonHoverColor: "white"
+    readonly property color wifiPromptButtonHoverOverlayColor: "white"
+    readonly property color wifiBadgeBackgroundColor: "transparent"
+    readonly property color wifiDeviceSectionBackgroundColor: "transparent"
+    readonly property color wifiNetworkCardBackgroundColor: "transparent"
+    readonly property color wifiPasswordFieldBackgroundColor: "transparent"
+    readonly property real wifiPanelBorderOpacity: 0.06
+    readonly property real wifiConnectedBorderOpacity: 0.4
+    readonly property real wifiConnectedOverlayOpacity: 0.16
+    readonly property real wifiNeutralOverlayOpacity: 0.05
+    readonly property real wifiInputBorderOpacity: 0.06
+    readonly property real wifiSignalIndicatorOpacity: 0.3
+    readonly property real wifiSecondaryTrackOpacity: 0.6
+    readonly property real wifiInputFocusBorderOpacity: 0.5
+    readonly property real wifiInputSelectionOpacity: 0.4
 
 
-    // === Notifications ===
-    readonly property color notificationPanelColor: shellBackgroundColor
-    readonly property color notificationCardColor: Qt.tint(shellBackgroundColor, Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.07))   // lifts on dark themes, sinks on light themes
-    readonly property color notificationBorderColor: Qt.rgba(mainTextColor.r, mainTextColor.g, mainTextColor.b, 0.08)
-    readonly property color notificationBorderHoverColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.40)
-    readonly property color notificationTitleColor: mainTextColor
-    readonly property color notificationBodyColor: secondaryTextColor
-    readonly property color notificationLowColor: secondaryTextColor
-    readonly property color notificationNormalColor: activeColor
-    readonly property color notificationCriticalColor: "#da6464"
-    readonly property color notificationIconBackgroundColor: Qt.rgba(activeColor.r, activeColor.g, activeColor.b, 0.12)
-    readonly property color notificationIconTextColor: activeColor
-    readonly property color notificationCloseIconColor: secondaryTextColor
-    readonly property color notificationHeaderTextColor: mainTextColor
-    readonly property color notificationBadgeColor: activeColor
-    readonly property color notificationBadgeTextColor: shellBackgroundColor
-    readonly property color notificationClearButtonBorderColor: Qt.rgba(mainIconColor.r, mainIconColor.g, mainIconColor.b, 0.35)
-    readonly property color notificationClearButtonTextColor: mainTextColor
-    readonly property color notificationEmptyColor: secondaryTextColor
 
-    // === Notification counter ===
-    readonly property color notificationCounterBackgroundColor: notificationBadgeColor
-    readonly property color notificationCounterIconColor: notificationBadgeTextColor
-    readonly property color notificationCounterTextColor: notificationBadgeTextColor
+    // === Power bar / topbar ===
+    readonly property color powerBarBulletColor: Qt.rgba(background.r, background.g, background.b, 0.3)
+
+
+
+
 }

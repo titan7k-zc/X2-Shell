@@ -141,7 +141,7 @@ FocusScope {
         implicitWidth: viewArea.implicitWidth
 
         radius: 10
-        color: "Transparent"
+        color: Colors.wallpaperSwitcherTransparentColor
         // border.color: "Transparent"
         // border.width: 2
 
@@ -149,7 +149,7 @@ FocusScope {
             id: viewArea
             implicitWidth: gridLayout.implicitWidth+20//640  //1100
             implicitHeight: 518
-            color: "Transparent"
+            color: Colors.wallpaperSwitcherTransparentColor
             // border.color: "green"
             // border.width: 2
             clip: true
@@ -170,7 +170,7 @@ FocusScope {
                     id:wallpaperBG
                     Layout.preferredWidth: 320
                     Layout.fillHeight: true
-                    color: "Transparent"
+                    color: Colors.wallpaperSwitcherTransparentColor
 
                     ListView {
                         id: wallpaperList
@@ -232,16 +232,16 @@ FocusScope {
                                 anchors.centerIn:parent
 
                                 radius: 10
-                                color: "Transparent"
-                                //border.color: wallpaperList.currentIndex === index ? Colors.wallthemeActiveColor : "Transparent"
+                                color: Colors.wallpaperSwitcherTransparentColor
+                                //border.color: wallpaperList.currentIndex === index ? Colors.wallpaperThemeActiveColor : Colors.wallpaperSwitcherTransparentColor
                                 
                                 
 
-                                border.color: wallpaperList.currentIndex === index ? Colors.wallthemeActiveColor : wall.currentWallpaperPath === decodeURIComponent(
+                                border.color: wallpaperList.currentIndex === index ? Colors.wallpaperThemeActiveColor : wall.currentWallpaperPath === decodeURIComponent(
                                     wallpaperFolder.get(index, "fileUrl")
                                         .toString()
                                         .replace("file://", "")
-                                ) ? Colors.wallthemeSelectedColor : "Transparent"
+                                ) ? Colors.wallpaperThemeSelectedColor : Colors.wallpaperSwitcherTransparentColor
 
                                 Behavior on border.color {
                                     ColorAnimation { duration: 150 }
@@ -363,7 +363,7 @@ FocusScope {
                     id:themeBG
                     Layout.preferredWidth: 300//360
                     Layout.fillHeight: true
-                    color: "Transparent"
+                    color: Colors.wallpaperSwitcherTransparentColor
                     // border.color: "red"
                     // border.width: 2
 
@@ -416,11 +416,11 @@ FocusScope {
                                 implicitHeight: colorRow.implicitHeight + 40
                                 implicitWidth: Math.max(colorRow.implicitWidth + 20, nameText.implicitWidth + 20)
                                 radius: 10
-                                color: Colors.themeBackgroundColor
+                                color: Colors.wallpaperThemeBackgroundColor
                                 //border.color: colorList.currentIndex === index ? Colors.activeColor : "transparent"
-                                border.color: colorList.currentIndex === index ? Colors.wallthemeActiveColor
-                                : Colors.theme === index ? Colors.wallthemeSelectedColor
-                                : "transparent"
+                                border.color: colorList.currentIndex === index ? Colors.wallpaperThemeActiveColor
+                                : Colors.theme === index ? Colors.wallpaperThemeSelectedColor
+                                : Colors.wallpaperSwitcherTransparentColor
                                 
                                 border.width: 2
                                 // opacity: colorList.currentIndex === index ? 1 : 0.7
@@ -457,7 +457,7 @@ FocusScope {
                                     font.family: "Quicksand"
                                     font.weight: Font.Bold
                                     font.pixelSize: colorList.currentIndex === parentIndex ? 18 : 16
-                                    color: Colors.mainTextColor
+                                    color: Colors.wallpaperThemeTextColor
                                     Behavior on font.pixelSize {
                                         NumberAnimation {
                                             duration: 240
@@ -480,7 +480,7 @@ FocusScope {
                                             height: width
                                             radius:  width / 2
                                             color: modelData
-                                            border.color: Colors.themeIconColor
+                                            border.color: Colors.wallpaperThemeIconColor
                                             border.width: 1
 
                                             Behavior on width {

@@ -13,7 +13,7 @@ Item{
         id:panel
         width:450
         height:1400
-        color:"Transparent"
+        color: Colors.controlCenterTransparentColor
         
         ColumnLayout {
             anchors.fill: parent
@@ -42,7 +42,7 @@ Item{
 
                 Layout.fillWidth: true
                 Layout.preferredHeight: 45
-                color: "Transparent"
+                color: Colors.controlCenterTransparentColor
 
                 RowLayout{
                     anchors.fill:parent

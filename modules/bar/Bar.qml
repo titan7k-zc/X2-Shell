@@ -38,7 +38,7 @@ Scope{
                 property int barHeight: root.tBarHei
                 property int radius: root.rootRadius
                 property int borderThickness: 0
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 anchors.top: true
                 anchors.left: true
                 anchors.right: true
@@ -55,7 +55,7 @@ Scope{
                         anchors.right: parent.right
                         anchors.left: parent.left
                         height: topBarWindow.barHeight
-                        color:"black"
+                        color: Colors.barBorderFallbackColor
 
                         Rectangle{
                             anchors.fill: parent
@@ -76,8 +76,8 @@ Scope{
 
 
                 MultiEffect {
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barShadowOpacity
+                    shadowColor: Colors.barShadowColor
                     anchors.fill: shape0
                     source: shape0
 
@@ -98,7 +98,7 @@ Scope{
                 property int barHeight: root.bBarHei
                 property int radius: root.rootRadius
                 property int borderThickness: 0
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 anchors.bottom: true
                 anchors.left: true
                 anchors.right: true
@@ -115,7 +115,7 @@ Scope{
                         anchors.right: parent.right
                         anchors.left: parent.left
                         height: bottomBarWindow.barHeight
-                        color:"black"
+                        color: Colors.barBorderFallbackColor
                         
                         Rectangle{
                             anchors.fill: parent
@@ -129,8 +129,8 @@ Scope{
 
 
                 MultiEffect {
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barShadowOpacity
+                    shadowColor: Colors.barShadowColor
                     anchors.fill: shape01
                     source: shape01
 
@@ -150,7 +150,7 @@ Scope{
                 id:rightBarWindow
                 property int barWidth: root.rBarWid
                 property int radius: root.rootRadius
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 anchors.top: true
                 anchors.bottom: true
                 anchors.right: true
@@ -200,8 +200,8 @@ Scope{
 
                 // shadow
                  MultiEffect {
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barShadowOpacity
+                    shadowColor: Colors.barShadowColor
                     anchors.fill: shape1
                     source: shape1
 
@@ -222,7 +222,7 @@ Scope{
                 id:leftBarWindow
                 property int barWidth: root.lBarWid
                 property int radius: root.rootRadius
-                color: "Transparent"
+                color: Colors.barBackgroundColor
                 anchors.top: true
                 anchors.bottom: true
                 anchors.left: true
@@ -267,8 +267,8 @@ Scope{
 
                 // shadow
                  MultiEffect {
-                    opacity: Colors.shadowOpacity
-                    shadowColor: Colors.shadowColor
+                    opacity: Colors.barShadowOpacity
+                    shadowColor: Colors.barShadowColor
                     anchors.fill: shape2
                     source: shape2
 

@@ -20,14 +20,14 @@ Item {
         anchors.top: parent.top
         width: root.wid
         height: root.hei + root.rad
-        color: "Transparent"
+        color: Colors.barBackgroundColor
         Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             width: root.wid
             height: root.hei
             bottomLeftRadius: root.rad
-            color: "black"//Colors.barBorderColor
+            color: Colors.barBorderFallbackColor
 
             Rectangle{
                 anchors.fill: parent
@@ -46,7 +46,7 @@ Item {
                         width: bat.implicitWidth+20
                         height: 35
                         radius: 6
-                        color: "Transparent"//Colors.powerBarTransparentColor
+                        color: Colors.barPowerTransparentColor
                         Brightness{id:brig;anchors.centerIn: parent}
                     }
 
@@ -54,7 +54,7 @@ Item {
                         width: sou.implicitWidth+20
                         height: 35
                         radius: 6
-                        color: "Transparent"//Colors.powerBarTransparentColor
+                        color: Colors.barPowerTransparentColor
                         Volume{id:sou;anchors.centerIn: parent}
                     }
 
@@ -62,7 +62,7 @@ Item {
                         width: bat.implicitWidth+20
                         height: 35
                         radius: 6
-                        color: "Transparent"//Colors.powerBarTransparentColor
+                        color: Colors.barPowerTransparentColor
                         Battery{id:bat;anchors.centerIn: parent}
                     }
                 }
@@ -76,8 +76,8 @@ Item {
 
     }
     MultiEffect {
-        opacity: Colors.shadowOpacity
-        shadowColor: Colors.shadowColor
+        opacity: Colors.rightTopBarShadowOpacity
+        shadowColor: Colors.rightTopBarShadowColor
         anchors.fill: rightT
         source: rightT
 

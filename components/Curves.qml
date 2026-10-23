@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
+import "../config"
 
 
 Shape {
@@ -26,7 +27,7 @@ Shape {
 
     ShapePath {
         fillColor: root.color
-        strokeColor: "transparent"
+        strokeColor: Colors.curvesStrokeColor
         startX: root.isTop ? root.cWidth : 0
         startY: 0
 

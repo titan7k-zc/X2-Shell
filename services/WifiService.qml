@@ -307,7 +307,7 @@ Singleton {
 
 
 
-    readonly property bool mockMode: false
+    readonly property bool mockMode: true
 
     readonly property var mockNetworks: [
         {

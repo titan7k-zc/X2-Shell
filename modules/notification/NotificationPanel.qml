@@ -23,7 +23,7 @@ Item {
         anchors.fill: parent
         color: Colors.notificationPanelColor
         border.width: 1
-        border.color: root.withAlpha(Colors.notificationTitleColor, 0.06)
+        border.color: root.withAlpha(Colors.notificationTitleColor, Colors.notificationPanelBorderOpacity)
         radius: 9
         // radius: 
         topLeftRadius: 18
@@ -52,7 +52,7 @@ Item {
             topLeftRadius: 16
             topRightRadius: 16
 
-            color:Colors.bluetoothHeaderColor
+            color:Colors.notificationHeaderColor
 
         }
 
@@ -108,12 +108,12 @@ Item {
             implicitWidth: clearAllButtonText.implicitWidth + 28
             implicitHeight: 32
             radius: height / 2
-            color: "transparent"
+            color: Colors.notificationClearButtonBackgroundColor
             border.width: 1
             border.color: Colors.notificationClearButtonBorderColor
 
             visible: list.count > 0
-            scale: clearAllButtonMouseArea.pressed ? 0.92 : 1.0
+            scale: clearAllButtonMouseArea.pressed ? 0.82 : clearAllButtonMouseArea.containsMouse ? 1.0 : 0.92
             Behavior on scale { NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
 
             Text {
@@ -129,6 +129,7 @@ Item {
             MouseArea {
                 id: clearAllButtonMouseArea
                 anchors.fill: parent
+                hoverEnabled:true
                 cursorShape: Qt.PointingHandCursor
                 onClicked: NotificationService.clearNotifications()
             }
@@ -311,13 +312,14 @@ Item {
                     width: notificationCard.width - notificationCard.sideMargin * 2
                     height: Math.max(notificationCard.cardMinHeight, textColumn.implicitHeight + notificationCard.cardPadding * 2)
                     radius: notificationCard.cardRadius
-                    color: Colors.notificationCardColor
+                    color: notificationCard.hovered ? Colors.notificationCarHoverdColor :Colors.notificationCardColor
                     border.width: 1
-                    border.color: notificationCard.hovered ? Colors.notificationBorderHoverColor : Colors.notificationBorderColor
+                    border.color: Colors.notificationBorderColor//notificationCard.hovered ? Colors.notificationBorderHoverColor : Colors.notificationBorderColor
                     Behavior on border.color { ColorAnimation { duration: 180 } }
 
-                    scale: cardMouse.pressed ? 0.985 : 1.0
+                    scale: cardMouse.pressed ? 0.885 : 0.94
                     Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+                    Behavior on color { ColorAnimation { duration: 200; easing.type: Easing.OutCubic } }
 
                     // urgency stripe -> (grey = low, accent = normal, red = critical)
                     Rectangle {
@@ -379,7 +381,7 @@ Item {
                         spacing: 2
 
                         Text {
-                            width: parent.width - 20        // leave room for the × button
+                            width: parent.width - 20        // leave for the × button
                             visible: text !== ""
                             text: notificationCard.snap.appName
                             color: notificationCard.accent

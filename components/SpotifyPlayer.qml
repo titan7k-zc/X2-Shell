@@ -55,7 +55,7 @@ Item {
                     Layout.preferredHeight: Layout.preferredWidth
                     Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                     radius: Layout.preferredHeight/12
-                    border.color: Colors.spotifyAlbumBorder
+                    border.color: Colors.spotifyAlbumBorderColor
                     border.width: 3
                     opacity: 0.7
                     color: Colors.spotifyAlbumPlaceholderColor

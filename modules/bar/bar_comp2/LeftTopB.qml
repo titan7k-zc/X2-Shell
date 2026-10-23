@@ -19,7 +19,7 @@ Item {
         anchors.top: parent.top
         width: root.wid
         height: root.hei + root.rad
-        color: "Transparent"
+        color: Colors.barBackgroundColor
         
         Rectangle {
             anchors.left: parent.left
@@ -27,7 +27,7 @@ Item {
             width: root.wid
             height: root.hei
             bottomRightRadius: root.rad
-            color: "black"//Colors.barBorderColor
+            color: Colors.barBorderFallbackColor
 
             Rectangle{
                 anchors.fill: parent
@@ -46,8 +46,8 @@ Item {
     }
 
     MultiEffect {
-        opacity: Colors.shadowOpacity
-        shadowColor: Colors.shadowColor
+        opacity: Colors.leftTopBarShadowOpacity
+        shadowColor: Colors.leftTopBarShadowColor
         anchors.fill: leftT
         source: leftT
 
