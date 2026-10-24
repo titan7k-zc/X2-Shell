@@ -312,14 +312,26 @@ Item {
                     width: notificationCard.width - notificationCard.sideMargin * 2
                     height: Math.max(notificationCard.cardMinHeight, textColumn.implicitHeight + notificationCard.cardPadding * 2)
                     radius: notificationCard.cardRadius
-                    color: notificationCard.hovered ? Colors.notificationCarHoverdColor :Colors.notificationCardColor
+                    color: Colors.notificationCardColor
                     border.width: 1
                     border.color: Colors.notificationBorderColor//notificationCard.hovered ? Colors.notificationBorderHoverColor : Colors.notificationBorderColor
                     Behavior on border.color { ColorAnimation { duration: 180 } }
 
-                    scale: cardMouse.pressed ? 0.885 : 0.94
-                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
+                    scale: cardMouse.pressed ? 0.875 : 0.94
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
                     Behavior on color { ColorAnimation { duration: 200; easing.type: Easing.OutCubic } }
+
+                    // Hover highlight, matching the Wi-Fi network card.
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: parent.radius
+                        color: Colors.notificationTitleColor
+                        opacity: notificationCard.hovered ? 0.05 : 0
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 140 }
+                        }
+                    }
 
                     // urgency stripe -> (grey = low, accent = normal, red = critical)
                     Rectangle {
