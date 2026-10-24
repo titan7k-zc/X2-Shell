@@ -1,5 +1,3 @@
-
-
 import QtQuick
 import QtQuick.Layouts
 import Qt.labs.folderlistmodel
@@ -18,44 +16,26 @@ FocusScope {
     onShowingChanged: {
         if (showing) {
             wallpaperQuery.running = true;
-            colorList.currentIndex = Colors.theme
+            colorList.currentIndex = Colors.theme;
         }
     }
 
     property string folderpath: "file:///home/titan/disk0/syscustom/wallpapers/"
     property string currentWallpaperPath: ""
 
-    // function setWallpaper(path) {
-    //     if (wallpaperSetter.running) {
-    //         wallpaperSetter.running = false;
-    //     }
-
-    //     wallpaperSetter.command = [
-    //         "awww",
-    //         "img",
-    //         "--transition-type", "any",
-    //         "--transition-duration", "2",
-    //         "--transition-fps", "60",
-    //         path
-    //     ];
-    //     wall.currentWallpaperPath = path;
-    //     wallpaperSetter.running = true;
-    // }
-
-
     property int setAni: 7
 
     property var wallpaperAnimations: [
-        { type: "wave",   angle: 30,  wave: "20,20", duration: 2,   fps: 60 },         // 0: gentle ripple
-        { type: "wave",   angle: 120, wave: "50,60", duration: 2.5, fps: 60 },        // 1: big rolling swell
-        { type: "wipe",   angle: 15,  duration: 1.5, fps: 60 },                      // 2: sharp diagonal wipe
-        { type: "wipe",   angle: 200, duration: 1.5, fps: 60 },                     // 3: reverse diagonal wipe
-        { type: "grow",   pos: "center",       duration: 2,   fps: 60 },           // 4: classic expanding circle
-        { type: "grow",   pos: "top",        duration: 1.5, fps: 60 },            // 5: grow from corner
-        { type: "outer",  pos: "bottom-right", duration: 2.2, fps: 60 },         // 6: shrinking circle
+        { type: "wave",   angle: 30,  wave: "20,20", duration: 2,   fps: 60 },  // 0: gentle ripple
+        { type: "wave",   angle: 120, wave: "50,60", duration: 2.5, fps: 60 },  // 1: big rolling swell
+        { type: "wipe",   angle: 15,  duration: 1.5, fps: 60 },                 // 2: sharp diagonal wipe
+        { type: "wipe",   angle: 200, duration: 1.5, fps: 60 },                 // 3: reverse diagonal wipe
+        { type: "grow",   pos: "center",       duration: 2,   fps: 60 },        // 4: expanding circle
+        { type: "grow",   pos: "top",          duration: 1.5, fps: 60 },        // 5: grow from top
+        { type: "outer",  pos: "bottom-right", duration: 2.2, fps: 60 },        // 6: shrinking circle
         { type: "any",    duration: 2,   fps: 60 },                             // 7: random-point grow
-        { type: "fade",   duration: 1.5, fps: 60 },                            // 8: smooth bezier crossfade
-        { type: "random", duration: 2,   fps: 60 },                           // 9: awww picks a random type
+        { type: "fade",   duration: 1.5, fps: 60 },                             // 8: bezier crossfade
+        { type: "random", duration: 2,   fps: 60 },                             // 9: awww picks random
     ]
 
     function setWallpaper(path) {
@@ -79,9 +59,6 @@ FocusScope {
         wallpaperSetter.running = true;
     }
 
-
-
-
     // Query current wallpaper on load
     Process {
         id: wallpaperQuery
@@ -89,8 +66,8 @@ FocusScope {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                const out = text; // full captured stdout
-                const match = out.match(/image:\s*(\S+)/);
+                // (.+) up to end of line, so paths with spaces also work
+                const match = text.match(/image:\s*(.+)/);
                 if (match) {
                     wall.currentWallpaperPath = match[1].trim();
                     wall.trySelectCurrentWallpaper();
@@ -102,7 +79,7 @@ FocusScope {
     FolderListModel {
         id: wallpaperFolder
         folder: wall.folderpath
-        nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp",]
+        nameFilters: ["*.png", "*.jpg", "*.jpeg", "*.webp"]
         showDirs: false
 
         onStatusChanged: {
@@ -136,155 +113,122 @@ FocusScope {
     }
 
     Rectangle {
-        id: tab // for frame
+        id: tab // frame
         implicitHeight: viewArea.implicitHeight + 40
         implicitWidth: viewArea.implicitWidth
 
         radius: 10
         color: Colors.wallpaperSwitcherTransparentColor
-        // border.color: "Transparent"
-        // border.width: 2
 
         Rectangle {
             id: viewArea
-            implicitWidth: gridLayout.implicitWidth+20//640  //1100
+            implicitWidth: gridLayout.implicitWidth + 20
             implicitHeight: 518
             color: Colors.wallpaperSwitcherTransparentColor
-            // border.color: "green"
-            // border.width: 2
             clip: true
             anchors.centerIn: parent
-            
-
 
             GridLayout {
                 id: gridLayout
                 columns: 2
                 anchors.fill: parent
-                anchors.margins: 15 // left min must be 15, others 10
+                anchors.margins: 15
                 columnSpacing: 20
 
-
-                // wallpaper part
+                // ================= wallpaper part =================
                 Rectangle {
-                    id:wallpaperBG
+                    id: wallpaperBG
                     Layout.preferredWidth: 320
                     Layout.fillHeight: true
                     color: Colors.wallpaperSwitcherTransparentColor
 
                     ListView {
                         id: wallpaperList
+                        readonly property real itemH: 180
 
                         anchors.fill: parent
-                        spacing: 10
+                        spacing: 4
                         clip: true
-
                         orientation: ListView.Vertical
+
                         highlightRangeMode: ListView.StrictlyEnforceRange
                         preferredHighlightBegin: height / 3.15
-                        preferredHighlightEnd: preferredHighlightBegin
+                        preferredHighlightEnd: preferredHighlightBegin + itemH
                         highlightMoveDuration: 320
                         highlightMoveVelocity: -1
 
                         focus: true
 
-                        Keys.onReturnPressed: handleSelect()
-                        Keys.onEnterPressed: handleSelect()
+                        // Keys.onReturnPressed: handleSelect()
+                        // Keys.onEnterPressed: handleSelect()
+
+                        property bool keyPressed: false
+
+                        Keys.onPressed: function(event) {
+                            if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                                if (!event.isAutoRepeat) {
+                                    keyPressed = true
+                                    handleSelect()
+                                }
+                                event.accepted = true
+                            }
+                        }
+                        Keys.onReleased: function(event) {
+                            if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter) && !event.isAutoRepeat) {
+                                keyPressed = false
+                                event.accepted = true
+                            }
+                        }
+
+
+                        Keys.onRightPressed: colorList.forceActiveFocus()
 
                         function handleSelect() {
                             let path = decodeURIComponent(
                                 wallpaperFolder.get(wallpaperList.currentIndex, "fileUrl")
-                                    .toString()
-                                    .replace("file://", "")
-                            );
+                                    .toString().replace("file://", ""));
                             wall.setWallpaper(path);
-                        }
-
-                        Keys.onRightPressed: {
-                            colorList.forceActiveFocus();
                         }
 
                         model: wallpaperFolder
                         delegate: Item {
-                            width: 320
-                            height: wallpaperList.currentIndex === index ? (200 - 20) : (200 - 20) * 0.8
+                            id: wpDelegate
+                            readonly property bool isCurrent: ListView.isCurrentItem
+                            readonly property string filePath: decodeURIComponent(
+                                fileUrl.toString().replace("file://", ""))
 
-                            Behavior on height {
-                                NumberAnimation {
-                                    duration: 240
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
+                            width: wallpaperList.width
+                            height: wallpaperList.itemH   // FIXED
 
                             ClippingRectangle {
                                 id: thumb
-
-                                width: wallpaperList.currentIndex === index ? parent.width : parent.width * 0.8
-                                height: parent.height
-
-                                Behavior on width {
-                                    NumberAnimation {
-                                        duration: 240
-                                        easing.type: Easing.OutQuad
-                                    }
-                                }
-
-                                anchors.centerIn:parent
-
+                                anchors.fill: parent
                                 radius: 10
                                 color: Colors.wallpaperSwitcherTransparentColor
-                                //border.color: wallpaperList.currentIndex === index ? Colors.wallpaperThemeActiveColor : Colors.wallpaperSwitcherTransparentColor
-                                
-                                
 
-                                border.color: wallpaperList.currentIndex === index ? Colors.wallpaperThemeActiveColor : wall.currentWallpaperPath === decodeURIComponent(
-                                    wallpaperFolder.get(index, "fileUrl")
-                                        .toString()
-                                        .replace("file://", "")
-                                ) ? Colors.wallpaperThemeSelectedColor : Colors.wallpaperSwitcherTransparentColor
-
-                                Behavior on border.color {
-                                    ColorAnimation { duration: 150 }
-                                }
-                                
                                 border.width: 2
+                                border.color: wpDelegate.isCurrent ? Colors.wallpaperThemeActiveColor
+                                            : wall.currentWallpaperPath === wpDelegate.filePath ? Colors.wallpaperThemeSelectedColor
+                                            : Colors.wallpaperSwitcherTransparentColor
 
+                                // "selected = bigger" via scale (cheap, smooth)
+                                scale: (mouseArea.pressed || (wpDelegate.isCurrent && wallpaperList.keyPressed)) ? 0.72 : wpDelegate.isCurrent ? 1.0 : 0.8
 
+                                Behavior on border.color { ColorAnimation { duration: 150 } }
+                                Behavior on scale { NumberAnimation { duration: 240; easing.type: Easing.OutCubic } }
 
                                 Text {
                                     id: loadingIcon
-
-                                    text: ""
+                                    text: ""
                                     anchors.centerIn: parent
                                     opacity: 0.2
                                     color: Colors.wallpaperLoadingTextColor
                                     visible: img.status !== Image.Ready
-                                    scale: 1.0
+
                                     SequentialAnimation on scale {
                                         loops: Animation.Infinite
-
-                                        NumberAnimation {
-                                            from: 1.0
-                                            to: 3.5
-                                            duration: 800
-                                            easing.type: Easing.InOutQuad
-                                        }
-
-                                        NumberAnimation {
-                                            from: 3.5
-                                            to: 1.0
-                                            duration: 800
-                                            easing.type: Easing.InOutQuad
-                                        }
-                                    }
-                                }
-
-                                scale: mouseArea.pressed ? 0.92 : 1.0
-
-                                Behavior on scale {
-                                    NumberAnimation {
-                                        duration: 240
-                                        easing.type: Easing.OutQuad
+                                        NumberAnimation { from: 1.0; to: 3.5; duration: 800; easing.type: Easing.InOutQuad }
+                                        NumberAnimation { from: 3.5; to: 1.0; duration: 800; easing.type: Easing.InOutQuad }
                                     }
                                 }
 
@@ -295,16 +239,12 @@ FocusScope {
                                     asynchronous: true
                                     cache: true
                                     fillMode: Image.PreserveAspectCrop
+                                    sourceSize.width: 640   // decode smaller = faster, less memory
 
-                                    // opacity: status === Image.Ready ? (wallpaperList.currentIndex === index ? 1 : 0.7) : 0
-                                    opacity: status === Image.Ready ? (Math.max(0,1 - Math.abs(wallpaperList.currentIndex - index) * 0.25)):0
-                                    
-
-                                    Behavior on opacity {
-                                        NumberAnimation {
-                                            duration: 240
-                                        }
-                                    }
+                                    opacity: status === Image.Ready
+                                             ? Math.max(0, 1 - Math.abs(wallpaperList.currentIndex - index) * 0.25)
+                                             : 0
+                                    Behavior on opacity { NumberAnimation { duration: 240 } }
                                 }
 
                                 MouseArea {
@@ -314,140 +254,105 @@ FocusScope {
                                     cursorShape: Qt.PointingHandCursor
 
                                     onWheel: function(event) {
-                                        const step = 1;
-
-                                        if (event.angleDelta.y > 0) {
-                                            wallpaperList.currentIndex = Math.max(0, wallpaperList.currentIndex - step);
-                                        } else if (event.angleDelta.y < 0) {
-                                            wallpaperList.currentIndex = Math.min(wallpaperList.count - 1, wallpaperList.currentIndex + step);
-                                        }
-
+                                        if (event.angleDelta.y > 0)
+                                            wallpaperList.currentIndex = Math.max(0, wallpaperList.currentIndex - 1);
+                                        else if (event.angleDelta.y < 0)
+                                            wallpaperList.currentIndex = Math.min(wallpaperList.count - 1, wallpaperList.currentIndex + 1);
                                         event.accepted = true;
                                     }
+
                                     onClicked: {
                                         if (index !== wallpaperList.currentIndex) {
-                                            wallpaperList.highlightMoveDuration = 0
-                                            wallpaperList.currentIndex = index
-                                            wallpaperList.highlightMoveDuration = 320
+                                            wallpaperList.currentIndex = index;
                                             return;
                                         }
-                                        wallpaperList.highlightMoveDuration = 0
-                                        wallpaperList.currentIndex = index
-                                        wallpaperList.highlightMoveDuration = 320
-                                        let path = decodeURIComponent(
-                                            img.source.toString().replace("file://", "")
-                                        );
-                                        wall.setWallpaper(path);
+                                        wall.setWallpaper(wpDelegate.filePath);
                                     }
-
-
-                                    // onClicked: {
-                                    //     if (index !== wallpaperList.currentIndex) {
-                                    //         wallpaperList.currentIndex = index;
-                                    //         return;
-                                    //     }
-                                    //     wallpaperList.currentIndex = index;
-                                    //     let path = decodeURIComponent(
-                                    //         img.source.toString().replace("file://", "")
-                                    //     );
-                                    //     wall.setWallpaper(path);
-                                    // }
                                 }
                             }
                         }
                     }
                 }
 
-                // theme part
+                // ================= theme part =================
                 Rectangle {
-                    id:themeBG
-                    Layout.preferredWidth: 300//360
+                    id: themeBG
+                    Layout.preferredWidth: 250
                     Layout.fillHeight: true
                     color: Colors.wallpaperSwitcherTransparentColor
-                    // border.color: "red"
-                    // border.width: 2
 
                     ListView {
                         id: colorList
+                        readonly property real cardH: 58
+
                         anchors.fill: parent
                         spacing: 6
                         clip: true
-
                         orientation: ListView.Vertical
+
                         highlightRangeMode: ListView.StrictlyEnforceRange
-                        preferredHighlightBegin: (height / 2)-30
-                        preferredHighlightEnd: preferredHighlightBegin
+                        preferredHighlightBegin: (height - cardH) / 2
+                        preferredHighlightEnd: preferredHighlightBegin + cardH
                         highlightMoveDuration: 320
                         highlightMoveVelocity: -1
 
+                        Component.onCompleted: currentIndex = Colors.theme
 
-                        Keys.onReturnPressed: {
-                            Colors.theme = colorList.currentIndex;
+                        // Keys.onReturnPressed: Colors.theme = colorList.currentIndex
+                        // Keys.onEnterPressed: Colors.theme = colorList.currentIndex
+
+                        property bool keyPressed: false
+
+                        Keys.onPressed: function(event) {
+                            if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                                if (!event.isAutoRepeat) {
+                                    keyPressed = true
+                                    Colors.theme = colorList.currentIndex
+                                }
+                                event.accepted = true
+                            }
                         }
-                        Keys.onLeftPressed: {
-                            wallpaperList.forceActiveFocus();
+                        Keys.onReleased: function(event) {
+                            if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter) && !event.isAutoRepeat) {
+                                keyPressed = false
+                                event.accepted = true
+                            }
                         }
+
+                        Keys.onLeftPressed: wallpaperList.forceActiveFocus()
 
                         model: Colors.themeColors.length
                         delegate: Item {
-                            property int parentIndex: index
-                            width: themeBG.width
-                            height: card.implicitHeight
+                            id: themeDelegate
+                            readonly property bool isCurrent: ListView.isCurrentItem
 
-                            // onParentIndexChanged:{
-                            //     console.log("viewArea imw:",viewArea.implicitWidth,"needed total:",themeBG.width + wallpaperBG.width+40,"\n","  themeBG imw:",themeBG.width,"wallpaperBG imw:",wallpaperBG.width)
-                            // }
-                            
-
-                            Behavior on height {
-                                NumberAnimation {
-                                    duration: 240
-                                    easing.type: Easing.OutQuad
-                                }
-                            }
+                            width: colorList.width
+                            height: colorList.cardH   // FIXED
 
                             Rectangle {
                                 id: card
-                                // anchors.horizontalCenter:parent.horizontalCenter
-                                // anchors.horizontalCenterOffset:10
-                                anchors.right:parent.right
-                                anchors.rightMargin:20
-
-                                implicitHeight: colorRow.implicitHeight + 40
-                                implicitWidth: Math.max(colorRow.implicitWidth + 20, nameText.implicitWidth + 20)
+                                anchors.right: parent.right
+                                anchors.rightMargin: 20
+                                height: colorList.cardH
+                                width: Math.max(colorRow.implicitWidth, nameText.implicitWidth) + 20
                                 radius: 10
                                 color: Colors.wallpaperThemeBackgroundColor
-                                //border.color: colorList.currentIndex === index ? Colors.activeColor : "transparent"
-                                border.color: colorList.currentIndex === index ? Colors.wallpaperThemeActiveColor
-                                : Colors.theme === index ? Colors.wallpaperThemeSelectedColor
-                                : Colors.wallpaperSwitcherTransparentColor
-                                
+
                                 border.width: 2
-                                // opacity: colorList.currentIndex === index ? 1 : 0.7
-                                opacity: Math.max(0,1 - Math.abs(colorList.currentIndex - index) * 0.25)
-                                // opacity: colorList.currentIndex === index ? 1 : Math.abs(colorList.currentIndex - index)==4?0.0:0.7
+                                border.color: themeDelegate.isCurrent ? Colors.wallpaperThemeActiveColor
+                                            : Colors.theme === index ? Colors.wallpaperThemeSelectedColor
+                                            : Colors.wallpaperSwitcherTransparentColor
 
+                                opacity: Math.max(0, 1 - Math.abs(colorList.currentIndex - index) * 0.25)
 
-                                Behavior on border.color {
-                                    ColorAnimation { duration: 150 }
-                                }
+                                transformOrigin: Item.Right
+                                scale: (themeMouseArea.pressed || (themeDelegate.isCurrent && colorList.keyPressed)) ? 0.88 : themeDelegate.isCurrent ? 1.0 : 0.92
 
-                                scale: themeMouseArea.pressed ? 0.92 : 1.0
-                                Behavior on scale {
-                                    NumberAnimation {
-                                        duration: 240
-                                        easing.type: Easing.OutQuad
-                                    }
-                                }
-                                Behavior on opacity {
-                                    NumberAnimation {
-                                        duration: 240
-                                        easing.type: Easing.OutQuad
-                                    }
-                                }
+                                Behavior on border.color { ColorAnimation { duration: 180; easing.type: Easing.OutCubic } }
+                                Behavior on scale { NumberAnimation { duration: 240; easing.type: Easing.OutCubic } }
+                                Behavior on opacity { NumberAnimation { duration: 240; easing.type: Easing.OutCubic } }
 
-
-                               
+                                // === Theme name ===
                                 Text {
                                     id: nameText
                                     anchors.horizontalCenter: parent.horizontalCenter
@@ -456,45 +361,33 @@ FocusScope {
                                     text: Colors.themeColors[index][0]
                                     font.family: "Quicksand"
                                     font.weight: Font.Bold
-                                    font.pixelSize: colorList.currentIndex === parentIndex ? 18 : 16
+                                    font.pixelSize: 17   // FIXED
                                     color: Colors.wallpaperThemeTextColor
-                                    Behavior on font.pixelSize {
-                                        NumberAnimation {
-                                            duration: 240
-                                            easing.type: Easing.OutQuad
-                                        }
-                                    }
                                 }
 
+                                // === Color preview ===
                                 Row {
                                     id: colorRow
-                                    spacing: colorList.currentIndex === parentIndex ? 8 : 4
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     anchors.bottom: parent.bottom
                                     anchors.bottomMargin: 10
+                                    spacing: 5   // FIXED
 
                                     Repeater {
-                                        model: Colors.themeColors[index].slice(2, 12)
+                                        // If index 1 is NOT a color in your palette, use slice(2, 12)
+                                        model: Colors.themeColors[index].slice(1)
                                         delegate: Rectangle {
-                                            width: colorList.currentIndex === parentIndex ? 18 : 16
-                                            height: width
-                                            radius:  width / 2
+                                            width: 16   // FIXED
+                                            height: 16
+                                            radius: 8
                                             color: modelData
                                             border.color: Colors.wallpaperThemeIconColor
                                             border.width: 1
-
-                                            Behavior on width {
-                                                NumberAnimation {
-                                                    duration: 240
-                                                    easing.type: Easing.OutQuad
-                                                }
-                                            }
                                         }
                                     }
                                 }
-                                
 
-
+                                // === Interaction ===
                                 MouseArea {
                                     id: themeMouseArea
                                     anchors.fill: parent
@@ -502,54 +395,26 @@ FocusScope {
                                     cursorShape: Qt.PointingHandCursor
 
                                     onWheel: function(event) {
-                                        const step = 1;
-                                        if (event.angleDelta.y > 0) {
-                                            colorList.currentIndex = Math.max(0, colorList.currentIndex - step);
-                                        } else if (event.angleDelta.y < 0) {
-                                            colorList.currentIndex = Math.min(colorList.count - 1, colorList.currentIndex + step);
-                                        }
+                                        if (event.angleDelta.y > 0)
+                                            colorList.currentIndex = Math.max(0, colorList.currentIndex - 1);
+                                        else if (event.angleDelta.y < 0)
+                                            colorList.currentIndex = Math.min(colorList.count - 1, colorList.currentIndex + 1);
                                         event.accepted = true;
                                     }
 
                                     onClicked: {
                                         if (index !== colorList.currentIndex) {
-                                            colorList.highlightMoveDuration = 0
-                                            colorList.currentIndex = index
-                                            colorList.highlightMoveDuration = 320
+                                            colorList.currentIndex = index;
                                             return;
                                         }
-                                        colorList.highlightMoveDuration = 0
-                                        colorList.currentIndex = index
-                                        colorList.highlightMoveDuration = 320
                                         Colors.theme = index;
                                     }
-
-
-
-                                    // onClicked: {
-                                    //     if (index !== colorList.currentIndex) {
-                                    //         colorList.currentIndex = index;
-                                    //         return;
-                                    //     }
-                                    //     colorList.currentIndex = index;
-                                    //     Colors.theme = index;
-                                    // }
                                 }
                             }
                         }
                     }
                 }
-
-
-
             }
         }
     }
 }
-
-
-
-
-
-
-// //awww img --transition-type grow --transition-duration 2 --transition-fps 160 ~/.config/res/wallpapers/ac1.png
