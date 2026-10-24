@@ -89,25 +89,50 @@ Row {
     }
 
 
+    // property bool lowBatteryNotified: false
+
+    // onLevelChanged: {
+    //     if (level <= 35 && !charging && root.lowBatteryNotified != true) {
+    //         Quickshell.execDetached(["notify-send", "-a", "X2-Shell", "-u", "critical", "Low Battery", "Battery is low. Please charge.."])
+    //         // Quickshell.execDetached(["notify-send", "-a", "X2-Shell", "-u", "critical", "-t", "50000", "Battery", "Low Battery.. please charge.."])
+    //         lowBatteryNotified = true
+    //     }
+    // }
+
+    // onChargingChanged:{
+    //     if (charging){
+    //         NotificationService.clearNotification("X2-Shell", "Low Battery")    
+    //         root.lowBatteryNotified = false
+
+    //     }
+    // }
+
     property bool lowBatteryNotified: false
 
     onLevelChanged: {
         if (level <= 35 && !charging && !lowBatteryNotified) {
-            Quickshell.execDetached(["notify-send", "-a", "X2-Shell", "-u", "critical", "Low Battery", "Battery is low. Please charge.."])
-            // Quickshell.execDetached(["notify-send", "-a", "X2-Shell", "-u", "critical", "-t", "50000", "Battery", "Low Battery.. please charge.."])
             lowBatteryNotified = true
-        }
-    }
 
-    onChargingChanged:{
-        if (charging){
-            NotificationService.clearNotification("X2-Shell", "Low Battery")    
+            Quickshell.execDetached([
+                "notify-send",
+                "-a", "X2-Shell",
+                "-u", "critical",
+                "Low Battery",
+                "Battery is low. Please charge."
+            ])
+        }
+
+        // Reset only after the battery rises above the threshold.
+        if (level > 35) {
             lowBatteryNotified = false
-
         }
     }
 
-
+    onChargingChanged: {
+        if (charging) {
+            NotificationService.clearNotification("X2-Shell", "Low Battery")
+        }
+    }
 
 
 
