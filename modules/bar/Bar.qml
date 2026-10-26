@@ -8,20 +8,21 @@ import "../../components"
 import "./bar_comp"
 
 
-
-
-
-
 Scope{
     id:root
     property color borderColor: Colors.barBorderColor
-    property int shadowSpace: 12   // extra room so the shadow isn't clipped
-    property int rootRadius: 20
-    property int tBarHei: 40
-    property int lBarWid: 15
-    property int rBarWid: 15
-    property int bBarHei: 15
+    property real rootRadius: 17.5  // max 'tbHei/2' min 0
+    property int screenCorners: 10//rootRadius/3  
+    property int lrBarWid: 15
+    property int topCBarWid: 240
+    property int bottomCBarWid: 640
+    property int tbHei: 35 // Main visible top,bottom bar height
+    property int hei: tbHei+(tbHei/3.5) //Total height for top/bottom PanelWindow
 
+
+
+    property int conHei: 5 //  connectors height  (max 5)
+    property real conHeiMar: 0//-(conHei-0.8) //  hei Margin..
 
     Variants{
         model:Quickshell.screens
@@ -30,151 +31,331 @@ Scope{
             id:screenRoot
             required property var modelData
 
+
             // ============================================================
-            // top Bar
+            // Top bars
             // ============================================================
-            PanelWindow{
-                id:topBarWindow
-                property int barHeight: root.tBarHei
-                property int radius: root.rootRadius
-                property int borderThickness: 0
-                color: Colors.barBackgroundColor
-                anchors.top: true
-                anchors.left: true
-                anchors.right: true
-                implicitHeight: borderThickness+barHeight+radius
-                exclusiveZone: borderThickness+barHeight
-                WlrLayershell.layer:WlrLayer.Top
+            PanelWindow {
+                id: topbar
 
-                Item {
-                    id: shape0
-                    anchors.fill: parent
+                WlrLayershell.layer: WlrLayer.Top
 
-                    Rectangle{
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                        anchors.left: parent.left
-                        height: topBarWindow.barHeight
-                        color: Colors.barBorderFallbackColor
-
-                        Rectangle{
-                            anchors.fill: parent
-                            color: root.borderColor
-                            topLeftRadius: root.rootRadius
-                            topRightRadius: root.rootRadius
-
-                            TopBar{
-                                rad:root.rootRadius
-                                anchors.leftMargin:30
-                                anchors.rightMargin:30
-                                midB_Status:top_main_pop.show
-                            }
-                        }
-                    }
-
-                }
-
-
-                MultiEffect {
-                    opacity: Colors.barShadowOpacity
-                    shadowColor: Colors.barShadowColor
-                    anchors.fill: shape0
-                    source: shape0
-
-                    shadowEnabled: true
-                    shadowBlur: 0.6
-                    shadowScale: 1
-                    shadowVerticalOffset:3
-                    shadowHorizontalOffset:0
+                anchors {
+                    top: true
+                    left: true
+                    right: true
                     
                 }
-            }
+                
+                exclusiveZone: root.tbHei   // handles reserved space
 
-            // ============================================================
-            // bottom Bar
-            // ============================================================
-            PanelWindow{
-                id:bottomBarWindow
-                property int barHeight: root.bBarHei
-                property int radius: root.rootRadius
-                property int borderThickness: 0
                 color: Colors.barBackgroundColor
-                anchors.bottom: true
-                anchors.left: true
-                anchors.right: true
-                implicitHeight: borderThickness+barHeight+radius
-                exclusiveZone: borderThickness+barHeight
-                WlrLayershell.layer:WlrLayer.Top
+                
 
-                Item {
-                    id: shape01
-                    anchors.fill: parent
+                implicitHeight: root.hei
 
-                    Rectangle{
-                        anchors.bottom: parent.bottom
-                        anchors.right: parent.right
-                        anchors.left: parent.left
-                        height: bottomBarWindow.barHeight
-                        color: Colors.barBorderFallbackColor
-                        
-                        Rectangle{
-                            anchors.fill: parent
-                            color: root.borderColor
-                            bottomLeftRadius: root.rootRadius
-                            bottomRightRadius: root.rootRadius
-                        }
+                
+
+                TopB{
+                    id: topB
+                    z:1
+                    
+                    rad:root.rootRadius
+                    wid:root.bottomCBarWid*2-(rootRadius*2)
+                    hei:root.tbHei
+
+                    anchors {
+                        top: parent.top
+                        horizontalCenter: parent.horizontalCenter
                     }
-
                 }
 
+                LeftTopB {
+                    id: leftB
+                    z:1
+                    rad:root.rootRadius
+                    se:root.screenCorners
+                    wid:root.topCBarWid
+                    hei:root.tbHei
 
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+                }
+
+                RightTopB {
+                    id: rightB
+                    z:1
+                    rad:root.rootRadius
+                    se:root.screenCorners
+                    wid:root.topCBarWid
+                    hei:root.tbHei
+
+                    anchors {
+                        right: parent.right
+                        top: parent.top
+                    }
+                }
+
+  
+
+                // ===top bar connector===
+                Rectangle{
+                    id: topConnectorBar1
+                    z:2
+                    anchors {
+                        top: parent.top
+                        left:leftB.right
+                        right:topB.left
+                        topMargin:root.conHeiMar
+                    }
+                    
+                    height: root.conHei
+                    color:root.borderColor
+
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.left: parent.left
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        z: 10
+                    }
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.right: parent.right
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        mirrored: true
+                        z: 10
+                    }
+
+
+
+
+                }
+                // Shadow
                 MultiEffect {
-                    opacity: Colors.barShadowOpacity
-                    shadowColor: Colors.barShadowColor
-                    anchors.fill: shape01
-                    source: shape01
+                    anchors.fill: topConnectorBar1
+
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
+
+                    source: topConnectorBar1
 
                     shadowEnabled: true
-                    shadowBlur: 0.6
-                    shadowScale: 1
-                    shadowVerticalOffset:-3
+                    shadowBlur: 0.5
+                    shadowScale: 0.998
+
+                    shadowVerticalOffset: 3
                     shadowHorizontalOffset: 0
+                }
+                Rectangle{
+                    id: topConnectorBar2
+                    z:2
+                    anchors {
+                        top: parent.top
+                        left:topB.right
+                        right:rightB.left
+                        topMargin:root.conHeiMar
+                    }
+                    
+                    height: root.conHei
+                    color:root.borderColor
+
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.left: parent.left
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        z: 10
+                    }
+                    Curves{
+                        anchors.top: parent.bottom
+                        anchors.right: parent.right
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        mirrored: true
+                        z: 10
+                    }
+
+                    
+
+                }
+                // Shadow
+                MultiEffect {
+                    anchors.fill: topConnectorBar2
+
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
+
+                    source: topConnectorBar2
+
+                    shadowEnabled: true
+                    shadowBlur: 0.5
+                    shadowScale: 0.998
+
+                    shadowVerticalOffset: 3
+                    shadowHorizontalOffset: 0
+                }
+
+
+            }
+            // ============================================================
+            // Bottom bars
+            // ============================================================
+            PanelWindow {
+                id: bottomBar
+
+                WlrLayershell.layer: WlrLayer.Top
+
+                anchors {
+                    bottom: true
+                    left: true
+                    right: true
                     
                 }
+                
+                exclusiveZone: root.tbHei   // handles reserved space
+
+                color: Colors.barBackgroundColor
+                
+                // margins.top: -root.tbHei
+
+                implicitHeight: root.hei
+                
+
+                LeftBottomB {
+                    id: leftBot
+                    z:1
+                    rad:root.rootRadius
+                    se:root.screenCorners
+                    wid:root.bottomCBarWid
+                    hei:root.tbHei
+                    anchors {
+                        left: parent.left
+                        bottom: parent.bottom
+                    }
+                }
+ 
+                RightBottomB {
+                    id: rightBot
+                    z:1
+                    rad:root.rootRadius
+                    se:root.screenCorners
+                    wid:root.bottomCBarWid
+                    hei:root.tbHei
+                    anchors {
+                        right: parent.right
+                        bottom: parent.bottom
+                    }
+                }
+
+
+                //===bottom bar connector===
+                Rectangle{
+                    id: bottomConnectorBar
+                    z:2
+                    height: root.conHei
+                    color:root.borderColor
+                    anchors {
+                        bottom: parent.bottom
+                        left:leftBot.right
+                        right:rightBot.left
+                        bottomMargin:root.conHeiMar
+                    }
+
+                    Curves{
+                        anchors.bottom: parent.top
+                        anchors.left: parent.left
+                        radius: root.rootRadius
+                        isTop: false
+                        color: root.borderColor
+                        z: 10
+                    }
+                    Curves{
+                        anchors.bottom: parent.top
+                        anchors.right: parent.right
+                        radius: root.rootRadius
+                        isTop: false
+                        color: root.borderColor
+                        mirrored: true
+                        z: 10
+                    }
+                    
+
+                }
+                // Shadow
+                MultiEffect {
+                    anchors.fill: bottomConnectorBar
+
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
+
+                    source: bottomConnectorBar
+
+                    shadowEnabled: true
+                    shadowBlur: 0.5
+                    shadowScale: 0.998
+
+                    shadowVerticalOffset: -3
+                    shadowHorizontalOffset: 0
+                }
+
+
+
+                // open control center when notification when button is clicked
+                Connections {
+                    target: rightBot
+
+                    function onNotificationClicked() {
+                        right_bottom_power_pop.show = !right_bottom_power_pop.show
+                    }
+                }
+                
+
+
+
+
             }
+
 
             // ============================================================
             // Right Bar
             // ============================================================
             PanelWindow{
                 id:rightBarWindow
-                property int barWidth: root.rBarWid
+                property int barWidth: root.lrBarWid
                 property int radius: root.rootRadius
+                property int borderThickness: 0
+                property color borderColor: root.borderColor
                 color: Colors.barBackgroundColor
                 anchors.top: true
                 anchors.bottom: true
                 anchors.right: true
-                implicitWidth: barWidth+radius
-                exclusiveZone: barWidth
+                implicitWidth: borderThickness+barWidth+radius
+                exclusiveZone: borderThickness+barWidth
                 WlrLayershell.layer:WlrLayer.Top
 
                 Item {
-                    id: shape1
+                    id: shape
                     anchors.fill: parent
 
                     Rectangle{
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.right: parent.right
-                        anchors.leftMargin: 0
                         width: rightBarWindow.barWidth
                         color: root.borderColor
+
 
                         Curves{
                             anchors.top: parent.top
                             anchors.right: parent.left
-                            width: root.rootRadius
-                            height: root.rootRadius
                             radius: root.rootRadius
                             isTop: true
                             color: root.borderColor
@@ -184,8 +365,6 @@ Scope{
                         Curves{
                             anchors.bottom: parent.bottom
                             anchors.right: parent.left
-                            width: root.rootRadius
-                            height: root.rootRadius
                             radius: root.rootRadius
                             isTop: false
                             mirrored: true
@@ -193,17 +372,15 @@ Scope{
                             z: 10
                         }
                     }
-
-
-
+                    
                 }
 
-                // shadow
+
                  MultiEffect {
-                    opacity: Colors.barShadowOpacity
-                    shadowColor: Colors.barShadowColor
-                    anchors.fill: shape1
-                    source: shape1
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
+                    anchors.fill: shape
+                    source: shape
 
                     shadowEnabled: true
                     shadowBlur: 0.6
@@ -213,14 +390,12 @@ Scope{
                     
                 }
             }
-
-
             // ============================================================
             // Left Bar
             // ============================================================
             PanelWindow{
                 id:leftBarWindow
-                property int barWidth: root.lBarWid
+                property int barWidth: root.lrBarWid
                 property int radius: root.rootRadius
                 color: Colors.barBackgroundColor
                 anchors.top: true
@@ -228,7 +403,6 @@ Scope{
                 anchors.left: true
                 implicitWidth: barWidth+radius
                 exclusiveZone: barWidth
-                WlrLayershell.layer:WlrLayer.Top
 
                 Item {
                     id: shape2
@@ -241,34 +415,32 @@ Scope{
                         anchors.leftMargin: 0
                         width: leftBarWindow.barWidth
                         color: root.borderColor
+                        z:1
 
-                        Curves{
-                            anchors.top: parent.top
-                            anchors.left: parent.right
-                            width: root.rootRadius
-                            height: root.rootRadius
-                            radius: root.rootRadius
-                            isTop: true
-                            color: root.borderColor
-                            z: 10
-                        }
-                        Curves{
-                            anchors.bottom: parent.bottom
-                            anchors.left: parent.right
-                            width: root.rootRadius
-                            height: root.rootRadius
-                            radius: root.rootRadius
-                            isTop: false
-                            color: root.borderColor
-                            z: 10
-                        }
+                    Curves{
+                        anchors.top: parent.top
+                        anchors.left: parent.right
+                        radius: root.rootRadius
+                        isTop: true
+                        color: root.borderColor
+                        z: 10
                     }
+                    Curves{
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.right
+                        radius: root.rootRadius
+                        isTop: false
+                        color: root.borderColor
+                        z: 10
+                    }
+                    }
+
+                    
                 }
 
-                // shadow
                  MultiEffect {
-                    opacity: Colors.barShadowOpacity
-                    shadowColor: Colors.barShadowColor
+                    opacity: Colors.barV2ShadowOpacity
+                    shadowColor: Colors.barV2ShadowColor
                     anchors.fill: shape2
                     source: shape2
 
@@ -280,20 +452,45 @@ Scope{
                     
                 }
             }
+ 
 
 
             // ============================================================
-            // Popups Handler
+            // POPUPS
             // ============================================================
+            
+
+
+            Pop8{
+                id:right_bottom_power_pop
+                show:false
+                anchorRight:true
+                // anchorBottom:true
+
+                rad:root.rootRadius
+                
+                file:"../modules/controlCenter/ControlCenter.qml"//"../modules/bluetooth/BluetoothPanel.qml" 
+                
+                
+                IpcHandler {
+                    target: "bluetooth"
+                    function toggle() {
+                        right_bottom_power_pop.show=!right_bottom_power_pop.show;
+                    }
+
+                }
+            }
             Pop8{
                 id:right_power_pop
                 show:false
-                anchorRight:true
+                // anchorRight:true
+                // anchorBottom:true
+                anchorLeft:true
+                anchorTop:true
 
                 rad:root.rootRadius
                 
                 file:"../modules/powerMenu/PowerMenu.qml"
-
                 
                 IpcHandler {
                     target: "power"
@@ -303,25 +500,8 @@ Scope{
 
                 }
             }
-            Pop8{
-                id:top_main_pop
-                show:false
-                anchorTop:true
 
-                rad:root.rootRadius
-                
-                
-                file:"../modules/overview/Overview.qml"
 
-                
-                IpcHandler {
-                    target: "main"
-                    function toggle() {
-                        top_main_pop.show=!top_main_pop.show;
-                    }
-
-                }
-            }
             Pop8{
                 id:left_wall_pop
                 show:false
@@ -342,39 +522,59 @@ Scope{
 
                 }
             }
-            Pop8{
-                id:buttom_al_pop
-                show:false
-                anchorBottom:true
 
-                rad:root.rootRadius
-                
-                file:"../modules/applauncher/AppLauncher.qml"
 
-                
-                IpcHandler {
-                    target: "app"
-                    function toggle() {
-                        buttom_al_pop.show=!buttom_al_pop.show;
-                    }
-
-                }
+            Component.onCompleted: {
+                Controls.allowedWindows = [
+                    topbar,
+                    bottomBar,
+                    leftBarWindow,
+                    rightBarWindow
+                ]
             }
 
 
-            // IpcHandler {
-            //     target: "notify"
-            //     function toggle() {
-            //         root.right=!root.right;
+
+            // PanelWindow {
+            //     id: midpop
+
+            //     color: "Transparent"
+
+            //     anchors {
+            //         top: true
+            //         right: true
+            //         left: true
+            //         bottom: true
             //     }
 
+            //     WlrLayershell.layer:mb.clic?WlrLayer.Overlay: WlrLayer.Top
+            //     WlrLayershell.keyboardFocus: mb.clic ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+
+            //     exclusiveZone: 0
+
+            //     margins.top: -root.tbHei
+
+            //     property var midMask: Region {
+            //         item: mb
+            //     }
+
+            //     mask: midMask
+
+            //     // MidTopB {
+            //     //     id: mb
+
+            //     //     anchors.horizontalCenter: parent.horizontalCenter
+            //     //     openRad:root.rootRadius+(root.rootRadius/2)
+            //     //     closeRed:{
+            //     //         if (root.rootRadius<22){
+            //     //             return root.rootRadius
+            //     //         }else{
+            //     //             return 22
+            //     //         }
+            //     //     }
+            //     // }
             // }
-
-
-
-
         }
     }
-
 
 }
