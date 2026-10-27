@@ -54,6 +54,12 @@ Scope {
     property var anchorRight: false
 
 
+    property real topMargin: 0
+    property real bottomMargin: 0
+    property real leftMargin: 0
+    property real rightMargin: 0
+
+
     property int menuHeight: maxArea.itemHei+20
     property int menuWidth:  maxArea.itemWid+20
     required property int rad
@@ -106,6 +112,15 @@ Scope {
         }
     }
 
+    // disable animation for a dimension (it stays at full size while the other one animates)
+    property bool d_HAni: false
+    property bool d_WAni: false
+
+    // close-phase durations
+    property real closeHDur: animDuration
+    property real closeWDur: animDuration * (menuHeight < menuWidth ? 1.02 : 0.908)
+    property real closeHoldDur: Math.max(d_HAni ? 0 : closeHDur, d_WAni ? 0 : closeWDur)
+
     PanelWindow {
         id: menuWindow
 
@@ -131,6 +146,13 @@ Scope {
         property var midMask: Region {item: menu}
 
         mask: midMask
+
+        margins{
+            top: root.topMargin
+            bottom: root.bottomMargin
+            left: root.leftMargin
+            right: root.rightMargin
+        }
 
 
 
@@ -198,18 +220,86 @@ Scope {
                     }
                 ]
 
+                // transitions: [
+                //     Transition {
+                //         from: "closed"; to: "open"
+                //         SequentialAnimation {
+                //             ParallelAnimation {
+                //                 // container morph (bounce open)
+                //                 NumberAnimation {
+                //                     target: menu
+                //                     properties: "width,height"
+                //                     duration: root.animDuration
+                //                     easing.type: Easing.OutCubic//OutBack
+                //                     easing.overshoot: 1.2
+                //                 }
+                //                 // content reveal, staggered slightly behind the container
+                //                 SequentialAnimation {
+                //                     PauseAnimation { duration: root.animDuration * 0.35 }
+                //                     ParallelAnimation {
+                //                         NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
+                //                         NumberAnimation {
+                //                             target: load; property: "scale"
+                //                             duration: root.animDuration
+                //                             easing.type: Easing.OutBack
+                //                             easing.overshoot: 1.2
+                //                         }
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     },
+                //     Transition {
+                //         from: "open"; to: "closed"
+                //         SequentialAnimation {
+                //             ParallelAnimation {
+                //                 // content collapses first
+                //                 NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
+                //                 NumberAnimation {
+                //                     target: load; property: "scale"
+                //                     duration: root.animDuration/1.3
+                //                     easing.type: Easing.InBack
+                //                     easing.overshoot: 1.0
+                //                 }
+                //                 // container starts shrinking slightly after content begins fading
+                //                 SequentialAnimation {
+                //                     PauseAnimation { duration: root.animDuration * 0.25 }
+                //                     ParallelAnimation {
+                //                         NumberAnimation {
+                //                             target: menu
+                //                             properties: "height"
+                //                             duration: root.animDuration
+                //                             easing.type: Easing.InOutQuad
+                //                         }
+                //                         NumberAnimation {
+                //                             target: menu
+                //                             properties: "width"
+                //                             duration: root.animDuration*(root.menuHeight < root.menuWidth ? 1.02 : 0.908)
+                //                             easing.type: Easing.InOutQuad
+                //                         }
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                // ]
                 transitions: [
                     Transition {
                         from: "closed"; to: "open"
                         SequentialAnimation {
                             ParallelAnimation {
-                                // container morph (bounce open)
+                                // container morph: a disabled dimension snaps to full size instantly
                                 NumberAnimation {
                                     target: menu
-                                    properties: "width,height"
-                                    duration: root.animDuration
-                                    easing.type: Easing.OutCubic//OutBack
-                                    easing.overshoot: 1.2
+                                    property: "width"
+                                    duration: root.d_WAni ? 0 : root.animDuration
+                                    easing.type: Easing.OutCubic
+                                }
+                                NumberAnimation {
+                                    target: menu
+                                    property: "height"
+                                    duration: root.d_HAni ? 0 : root.animDuration
+                                    easing.type: Easing.OutCubic
                                 }
                                 // content reveal, staggered slightly behind the container
                                 SequentialAnimation {
@@ -243,17 +333,28 @@ Scope {
                                 SequentialAnimation {
                                     PauseAnimation { duration: root.animDuration * 0.25 }
                                     ParallelAnimation {
-                                        NumberAnimation {
-                                            target: menu
-                                            properties: "height"
-                                            duration: root.animDuration
-                                            easing.type: Easing.InOutQuad
+
+                                        // ---- HEIGHT ----
+                                        // disabled: hold full height for the other dimension's duration, then snap to 0
+                                        SequentialAnimation {
+                                            PauseAnimation { duration: root.d_HAni ? root.closeHoldDur : 0 }
+                                            NumberAnimation {
+                                                target: menu
+                                                property: "height"
+                                                duration: root.d_HAni ? 0 : root.closeHDur
+                                                easing.type: Easing.InOutQuad
+                                            }
                                         }
-                                        NumberAnimation {
-                                            target: menu
-                                            properties: "width"
-                                            duration: root.animDuration*(root.menuHeight < root.menuWidth ? 1.02 : 0.908)
-                                            easing.type: Easing.InOutQuad
+
+                                        // ---- WIDTH ----
+                                        SequentialAnimation {
+                                            PauseAnimation { duration: root.d_WAni ? root.closeHoldDur : 0 }
+                                            NumberAnimation {
+                                                target: menu
+                                                property: "width"
+                                                duration: root.d_WAni ? 0 : root.closeWDur
+                                                easing.type: Easing.InOutQuad
+                                            }
                                         }
                                     }
                                 }
@@ -261,7 +362,6 @@ Scope {
                         }
                     }
                 ]
-
 
 
                 // -------------------------------------------------------------   Real menu   ---------------------------------------------------------------------------------------------------------------------menu itms
