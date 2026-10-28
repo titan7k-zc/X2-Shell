@@ -71,7 +71,7 @@ Scope {
 
     property int animDuration:{
         if (Math.min(load.width,load.height)<350){
-            return 300
+            return 350
         }
         return 400
     }
@@ -97,24 +97,16 @@ Scope {
     }
 
 
-    property real h_ani:{
-        if (anchorTop||anchorBottom){
-            return 1.4
-        }else{
-            return 1
-        }
-    }
-    property real w_ani:{
-        if (anchorLeft||anchorRight){
-            return 1.4
-        }else{
-            return 1
-        }
-    }
+
 
     // disable animation for a dimension (it stays at full size while the other one animates)
     property bool d_HAni: false
     property bool d_WAni: false
+
+
+    property bool a_popHAni: false
+    property bool a_popWAni: false
+    property real s_popAniPer: 15
 
     // close-phase durations
     property real closeHDur: animDuration
@@ -139,8 +131,7 @@ Scope {
         implicitHeight: root.menuHeight+root.rad*2
 
         // Only actually detach/hide the surface once fully closed
-        visible: menu.height!==0
-
+        visible: menu.height!==0 && menu.width!==0
         
 
         property var midMask: Region {item: menu}
@@ -209,80 +200,17 @@ Scope {
                     State {
                         name: "open"
                         PropertyChanges { target: menu; width: root.menuWidth; height: root.menuHeight }
-                        PropertyChanges { target: maxArea; opacity: 1 }
+                        PropertyChanges { target: load; opacity: 1 }
                         PropertyChanges { target: load; scale: 1 }
                     },
                     State {
                         name: "closed"
-                        PropertyChanges { target: menu; width: 0; height: 0 }
-                        PropertyChanges { target: maxArea; opacity: 0.2 }
-                        PropertyChanges { target: load; scale: 0 }
+                        PropertyChanges { target: menu; explicit: true ; width: root.a_popWAni? (root.menuWidth/100)*root.s_popAniPer : 0; height: root.a_popHAni? (root.menuHeight/100)*root.s_popAniPer : 0 }
+                        PropertyChanges { target: load; opacity: 0 }
+                        PropertyChanges { target: load; scale: 0.965 }
                     }
                 ]
 
-                // transitions: [
-                //     Transition {
-                //         from: "closed"; to: "open"
-                //         SequentialAnimation {
-                //             ParallelAnimation {
-                //                 // container morph (bounce open)
-                //                 NumberAnimation {
-                //                     target: menu
-                //                     properties: "width,height"
-                //                     duration: root.animDuration
-                //                     easing.type: Easing.OutCubic//OutBack
-                //                     easing.overshoot: 1.2
-                //                 }
-                //                 // content reveal, staggered slightly behind the container
-                //                 SequentialAnimation {
-                //                     PauseAnimation { duration: root.animDuration * 0.35 }
-                //                     ParallelAnimation {
-                //                         NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
-                //                         NumberAnimation {
-                //                             target: load; property: "scale"
-                //                             duration: root.animDuration
-                //                             easing.type: Easing.OutBack
-                //                             easing.overshoot: 1.2
-                //                         }
-                //                     }
-                //                 }
-                //             }
-                //         }
-                //     },
-                //     Transition {
-                //         from: "open"; to: "closed"
-                //         SequentialAnimation {
-                //             ParallelAnimation {
-                //                 // content collapses first
-                //                 NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
-                //                 NumberAnimation {
-                //                     target: load; property: "scale"
-                //                     duration: root.animDuration/1.3
-                //                     easing.type: Easing.InBack
-                //                     easing.overshoot: 1.0
-                //                 }
-                //                 // container starts shrinking slightly after content begins fading
-                //                 SequentialAnimation {
-                //                     PauseAnimation { duration: root.animDuration * 0.25 }
-                //                     ParallelAnimation {
-                //                         NumberAnimation {
-                //                             target: menu
-                //                             properties: "height"
-                //                             duration: root.animDuration
-                //                             easing.type: Easing.InOutQuad
-                //                         }
-                //                         NumberAnimation {
-                //                             target: menu
-                //                             properties: "width"
-                //                             duration: root.animDuration*(root.menuHeight < root.menuWidth ? 1.02 : 0.908)
-                //                             easing.type: Easing.InOutQuad
-                //                         }
-                //                     }
-                //                 }
-                //             }
-                //         }
-                //     }
-                // ]
                 transitions: [
                     Transition {
                         from: "closed"; to: "open"
@@ -305,7 +233,7 @@ Scope {
                                 SequentialAnimation {
                                     PauseAnimation { duration: root.animDuration * 0.35 }
                                     ParallelAnimation {
-                                        NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
+                                        NumberAnimation { target: load; property: "opacity"; duration: root.animDuration/1.2 }
                                         NumberAnimation {
                                             target: load; property: "scale"
                                             duration: root.animDuration
@@ -322,7 +250,7 @@ Scope {
                         SequentialAnimation {
                             ParallelAnimation {
                                 // content collapses first
-                                NumberAnimation { target: maxArea; property: "opacity"; duration: root.animDuration/2 }
+                                NumberAnimation { target: load; property: "opacity"; duration: root.animDuration/1.2 }
                                 NumberAnimation {
                                     target: load; property: "scale"
                                     duration: root.animDuration/1.3
